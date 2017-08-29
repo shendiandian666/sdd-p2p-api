@@ -1,0 +1,300 @@
+<div th:fragment="login-popup" id="login-popup" class="cd-popup"
+	style="display: none">
+	<div class="cd-popup-container">
+		<div class="login_box">
+			<h1>账号登录</h1>
+			<dl class="login_fill">
+				<form method="post" action="/login" id="login-form">
+					<dt>
+						<div class="input_div">
+							<span class="fl login_arrow png"></span>
+							<div class="r_cell">
+								<input type="text" id="login-popup-mobile" name="username"
+									class="login_text" placeholder="手机号" />
+							</div>
+						</div>
+						<div class="input_div">
+							<span class="fl login_arrow login_arrow2 png"></span>
+							<div class="r_cell">
+								<input type="password" id="password" name="password"
+									class="login_text" placeholder="密码" />
+							</div>
+						</div>
+						<div class="d">
+							<span class="fr"><a href="/reset_password">忘记密码？</a></span> <span
+								class="sel_box"> <input type="checkbox" id="remember"
+								name="remember" value="yes" /> <label for="a-1">记住我</label>
+							</span>
+						</div>
+					</dt>
+					<dd>
+						<input type="submit" class="shop_btn login_btn" value="立即登录" />
+					</dd>
+					<dd style="padding-top: 20px; text-align: center">
+						<a href="#"
+							onclick="$('#login-popup').hide();$('#register-popup').show();return false">注册账号</a>
+					</dd>
+				</form>
+			</dl>
+
+		</div>
+		<a href="#" onclick="$('#login-popup').hide();return false"
+			class="cd-popup-close"></a>
+	</div>
+</div>
+
+<div th:fragment="register-popup" id="register-popup" class="cd-popup"
+	style="display: none">
+	<div class="cd-popup-container">
+		<div class="login_box">
+			<h1>账号注册</h1>
+			<dl class="login_fill">
+				<form method="post" action="/register" id="register-form">
+					<dt>
+						<div class="input_div">
+							<span class="fl login_arrow png"></span>
+							<div class="r_cell">
+								<input type="text" id="register-popup-mobile" name="mobile"
+									class="login_text" placeholder="手机号码" />
+							</div>
+						</div>
+						<div class="input_div">
+							<span class="f_ma"> <a href="#" id="register_captcha_btn"><img
+									id="register_captcha_image" th:src="@{/images/captcha.png}"
+									width="100" height="30" /></a>
+							</span> <span class="fl login_arrow login_arrow3 png"></span>
+							<div class="r_cell">
+								<input type="text" id="vrifyCode" name="vrifyCode"
+									class="login_text" placeholder="验证码"
+									id="register_captcha_input" />
+							</div>
+							<input type="hidden" name="captcha_data"
+								id="register_captcha_data" value="" />
+						</div>
+						<div class="dd">
+							<label for="register-agreement"> <input type="checkbox"
+								id="register-agreement" name="agreement" /> 我已同意<a
+								th:href="@{/page/others/agreement}" target="_blank">《马上多返利网站服务协议》</a>
+							</label>
+						</div>
+					</dt>
+					<dd style="margin: 1em 0 0em 0;">
+						<input type="submit" class="shop_btn login_btn"
+							id="register-submit" value="立即注册" disabled="disabled" />
+					</dd>
+				</form>
+			</dl>
+		</div>
+		<a href="#" onclick="$('#register-popup').hide();return false"
+			class="cd-popup-close"></a>
+	</div>
+</div>
+
+<div th:fragment="register-info-popup" id="register-info-popup"
+	class="cd-popup" style="display: none">
+	<div class="cd-popup-container" style="margin-top: 150px;">
+		<div class="login_box">
+			<h1>账号注册</h1>
+			<dl class="login_fill">
+				<form method="post" th:action="@{/register}" id="register-info-form">
+					<dt>
+						<div class="input_div">
+							<span class="fl login_arrow png"></span>
+							<div class="r_cell">
+								<input type="text" id="register-info-popup-mobile" name="mobile"
+									class="login_text" readonly="readonly" />
+							</div>
+						</div>
+						<div class="input_div">
+							<span class="f_ma2"><a href="#" id="resend-mobile-code">重新发送验证码</a></span>
+							<span class="fl login_arrow login_arrow3 png"></span>
+							<div class="r_cell">
+								<input type="text" id="register-info-popup-mobile-code"
+									name="mobile_code" class="login_text" placeholder="手机验证码" />
+							</div>
+						</div>
+						<div class="input_div">
+							<span class="fl login_arrow login_arrow_qq png"></span>
+							<div class="r_cell">
+								<input type="text" name="qq" class="login_text"
+									placeholder="QQ号码,用于客服联系" />
+							</div>
+						</div>
+						<div class="input_div">
+							<span class="fl login_arrow login_arrow2 png"></span>
+							<div class="r_cell">
+								<input type="password" class="login_text" name="password"
+									placeholder="设置登录密码" />
+							</div>
+						</div>
+
+					</dt>
+					<dd style="margin: 1em 0 0em 0;">
+						<input type="submit" class="shop_btn login_btn" value="完成注册" />
+					</dd>
+				</form>
+			</dl>
+		</div>
+		<a href="#" onclick="$('#register-info-popup').hide();return false"
+			class="cd-popup-close"></a>
+	</div>
+</div>
+
+<div th:fragment="send-mobile-code-popup" id="send-mobile-code-popup"
+	class="cd-popup" style="display: none">
+	<div class="cd-popup-container">
+		<div class="login_box">
+			<h1></h1>
+			<dl class="login_fill">
+				<form method="post" action="">
+					<input type="hidden" name="type" value="" />
+					<dt>
+						<div class="input_div">
+							<span class="f_ma"> <a href="#"
+								id="send-mobile-code-popup-img"><img
+									th:src="@{/images/captcha.png}" width="100" height="30" /></a>
+							</span> <span class="fl login_arrow login_arrow3 png"></span>
+							<div class="r_cell">
+								<input type="text" name="captcha" class="login_text"
+									placeholder="图像验证码" /> <input type="hidden" name="mobile"
+									value="" />
+							</div>
+							<input type="hidden" name="captcha_data" value="" />
+						</div>
+					</dt>
+					<dd style="margin: 1em 0 0em 0;">
+						<input type="submit" class="shop_btn login_btn" value="获取手机验证码" />
+					</dd>
+				</form>
+			</dl>
+		</div>
+		<a href="#" onclick="$('#send-mobile-code-popup').hide();return false"
+			class="cd-popup-close"></a>
+	</div>
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+	(function() {
+		function getCaptcha() {
+			$('#register_captcha_input').val('');
+			$('#register_captcha_image').attr('src', [[@{/defaultKaptcha}]]);
+			$('#register_captcha_data').val('xxxx');
+		}
+
+		$('#register_captcha_btn').click(function() {
+			getCaptcha();
+			return false;
+		});
+
+		$('#register_captcha_input').focus(function() {
+			if ($('#register_captcha_data').val() == '') {
+				getCaptcha();
+			}
+		});
+
+		var resendMobileCode = $('#resend-mobile-code');
+		var resendMobileCodeData = null;
+		var resendVrifyCode = null;
+		var mobileCodeSendWait = 60;
+
+		function mobileCodeWait() {
+			if (mobileCodeSendWait > 0) {
+				mobileCodeSendWait--;
+				resendMobileCode
+						.text('重新发送验证码(' + mobileCodeSendWait + ')');
+				setTimeout(mobileCodeWait, 1000);
+			} else {
+				resendMobileCode.text('重新发送验证码');
+			}
+		}
+
+		resendMobileCode.click(function() {
+			if (mobileCodeSendWait == 0) {
+				$.post(/*[[@{/register_send_code}]]*/+'', 
+               		{
+					  vrifyCode: resendVrifyCode,
+					  mobile: resendMobileCodeData
+                 }, function (data) {
+                    if (data.errorCode != 0) {
+                        layer.msg(data.errorMessage);
+                        return;
+                    }
+                    mobileCodeSendWait = 60;
+                    mobileCodeWait();
+                    layer.msg('验证码已发送');
+                });
+			}
+			return false;
+		});
+
+		$('#register-form').submit(
+				function() {
+					var mobile = $('#register-popup-mobile').val();
+					$.post(/*[[@{/register_send_code}]]*/+'', $(this)
+							.serializeArray(), function(data) {
+						if (data.status == 1210) {
+							layer.msg(data.message);
+							$('#register-popup').hide();
+							$('#login-popup').show();
+							$('#login-popup-mobile').val(mobile);
+							return;
+						}
+						if (data.status != '200') {
+							layer.msg(data.message);
+							return;
+						}
+						layer.msg('手机验证码已发送');
+						$('#register-popup').hide();
+						$('#register-info-popup').show();
+						$('#register-info-popup-mobile').attr('value',
+								mobile);
+						$('#register-info-popup-mobile-code').focus();
+						resendMobileCodeData = data.mobileEncrypt;
+						resendVrifyCode = data.vrifyCode;
+						mobileCodeWait();
+					});
+					return false;
+				});
+
+		$.form('#register-info-form', /*[[@{/register}]]*/+'', function(
+				data) {
+			window._hmt.push(['_trackEvent', 'account', 'register', '-']);
+			layer.msg("注册成功!");
+			setTimeout(function() {
+				location.reload();
+			}, 1000);
+		});
+
+		$('#register-agreement').click(
+				function() {
+					$('#register-submit').attr('disabled',
+							!$(this).is(':checked'));
+				});
+
+		$('#login-form').submit(
+				function() {
+					$.post(/*[[@{/login}]]*/+'', $(this).serializeArray(),
+						function(data, textStatus, request) {
+							if (data.status != '200') {
+								$.formErrorsRender('#login-form',
+										data.data);
+								return;
+							}
+							if ($("#remember").attr("checked")) {
+				                var str_username = $("#login-popup-mobile").val();  
+				                var str_password = $("#password").val();  
+				                $.cookie("msd.rmbUser", "true", { expires: 30 }); //存储一个带30天期限的cookie  
+				                $.cookie("msd.username", str_username, { expires: 30 });  
+				                $.cookie("msd.password", str_password, { expires: 30 });  
+				            } else {
+				                $.cookie("msd.rmbUser", null);  
+				                $.cookie("msd.username", null); 
+				                $.cookie("msd.password", null);  
+				            }
+							location.reload();
+						});
+					return false;
+				});
+	})();
+</script>
+

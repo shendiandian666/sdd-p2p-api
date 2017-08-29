@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdd.mapper.SmsSendMapper">
+
+	
+	<insert id="add" parameterType="java.util.Map">
+		insert into p2p_sms_send
+		(mobile, type)
+		values
+		(#{mobile},#{type})
+	</insert>
+	
+	<select id="isSend" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(1) from p2p_sms_send
+		where mobile = #{mobile}
+		  and type = #{type}
+		  
+	</select>
+   
+</mapper>

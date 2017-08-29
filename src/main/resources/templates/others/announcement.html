@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="renderer" content="webkit"/>
+	<meta name="viewport" content="width=1200"/>
+	<title>官方公告_马上多返利网</title>
+	<meta name="description"
+		content="马上多返利网是一个理财返利平台,为您提供理财返利、P2P返利、网贷返利、投资返利等全方位高收益理财返利活动"/>
+	<dif th:replace="/common/common"/>
+</head>
+<body>
+	<dif th:replace="/common/head"/>
+
+	<!--star动画-->
+	<div class="banner">
+		<ul class="bd">
+			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc3.jpg} + ');'">
+			    <a href="javascript:;"></a>
+			</li>
+			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc2.jpg} + ');'">
+			<a href="javascript:;"></a>
+			</li>
+			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc1.jpg} + ');'">
+			<a href="javascript:;"></a>
+			</li>
+		</ul>
+		<ul class="hd"></ul>
+		<div class="btn btn_l prev transition_a">&lt;</div>
+		<div class="btn btn_r next transition_a">&gt;</div>
+	</div>
+	<!--end动画-->
+	
+	<div class="w_1200 box_w_b clearfix">
+		<dl class="about_tab_th round_m_a">
+			<dd>
+				<a th:href="@{/announcement}" class="tab_light">官方公告</a> <a th:href="@{/about(title='about')}">关于我们</a>
+				<a th:href="@{/service}">增值服务</a> <a th:href="@{/help}">帮助中心</a> <a
+					th:href="@{/agreement}">注册协议</a>
+			</dd>
+		</dl>
+		<div class="white_box clearfix box_w_b">
+			<h4 class="th_text">官方公告</h4>
+			<ul class="ann_list">
+				<li th:each="item,status : ${newsList}" th:inline="text">
+					<span class="fr">[[${#dates.format(item.date, 'yyyy-MM-dd HH:mm:ss')}]]</span>
+					<a th:href="@{'/announcement/news/'+${item.id}}">[[${item.title}]]</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<dif th:replace="/common/login_register"/>
+	<dif th:replace="/common/footer"/>
+</body>
+</html>

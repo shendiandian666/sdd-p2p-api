@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<title>P2P理财_返利_网贷_马上多返利网</title>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="renderer" content="webkit" />
+	<meta name="viewport" content="width=1200" />
+	<meta name="description"
+		content="马上多返利网是一个理财返利平台,为您提供理财返利、P2P返利、网贷返利、投资返利等全方位高收益理财返利活动" />
+	<dif th:replace="/common/common"/>
+</head>
+<body>
+	<dif th:replace="/common/head"/>
+
+	<!--star动画-->
+	<div class="banner">
+		<ul class="bd">
+			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc3.jpg} + ');'">
+			    <a href="javascript:;"></a>
+			</li>
+			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc2.jpg} + ');'">
+			<a href="javascript:;"></a>
+			</li>
+			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc1.jpg} + ');'">
+			<a href="javascript:;"></a>
+			</li>
+		</ul>
+		<ul class="hd"></ul>
+		<div class="btn btn_l prev transition_a">&lt;</div>
+		<div class="btn btn_r next transition_a">&gt;</div>
+	</div>
+	<!--end动画-->
+	
+	<div class="white_box min_1200">
+        <div class="white_box w_1200">
+            <div class="hide_box">
+                <ul class="list_5 h_tool clearfix">
+                    <li>
+                    	<span class="b_arrow png"></span>
+                    	<h5>返利最高</h5>
+                        <p>全网返利最高价</p>
+                    </li>
+                    <li>
+                    	<span class="b_arrow b_arrow2 png"></span>
+                    	<h5>返利最快</h5>
+                        <p>提交订单后<br>1-3个工作日返现</p>
+                    </li>
+                    <li>
+                    	<span class="b_arrow b_arrow3 png"></span>
+                    	<h5>安全保障</h5>
+                        <p>一手渠道<br>返现安全有保障</p>
+                    </li>
+                    <li>
+                    	<span class="b_arrow b_arrow4 png"></span>
+                    	<h5>风险量化</h5>
+                        <p>所有活动附带风控评级<br>风险一目了然</p>
+                    </li>
+                    <li>
+                    	<span class="b_arrow b_arrow5 png"></span>
+                    	<h5>独家风控</h5>
+                        <p>线上分析，线下考察<br>Ｎ道风控手段</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+	<!--end白色背景-->
+	
+	<div class="w_1200 box_w">
+		<div class="hide_box">
+			<ul class="list_3 h_rec hover_ul">
+				<li class="li_o transition_move" th:each="item,status : ${activityList}" th:inline="text">
+				<a th:if="${item.isFirst == '1'}" th:href="@{/first/getActivity(activity_id=${item.id})}" class="box transition_a">
+					<span class="f_rec f_rec3 png">热门</span>
+						<div class="brand_logo png_img round_r">
+							<div class="brand_logo_border round_r">
+								<span class="text_box f_text_box round_s" th:if="${item.isFirst == '1'}">首投</span> 
+								<span class="text_box text_box_orange f_text_box round_s" th:if="${item.isFirst == '2'}">复投</span> 
+								<img th:src="@{${item.platform_img}}" alt="" width="100" height="40" />
+							</div>
+						</div>
+						<div class="text">
+							<p>
+								投<b class="font_20">[[${#numbers.formatDecimal(item.bestDeposit, 1, 'COMMA', 0, 'POINT')}]]</b>获得<b class="orange_text font_20">[[${#numbers.formatDecimal(item.bestMoney, 1, 'COMMA', 0, 'POINT')}]]</b>元， 年化<b
+								class="orange_text font_20">≈ [[${#numbers.formatDecimal(item.bestInterest, 1, 'COMMA', 2, 'POINT')}]]%</b>
+							</p>
+							<p>
+								已有<b class="font_20">[[${item.joins}]]</b>人参加活动
+							</p>
+						</div>
+						<ul class="tag_ul clearfix list_2">
+							<li><span class="tag_a round_m">全网最高</span></li>
+							<li><span class="tag_a round_m">返利最快</span></li>
+							<li><span class="tag_a tag_a_box round_m">风控评级：[[${item.risk}]]</span></li>
+							<li><span class="tag_a tag_a_box round_m">[[${item.riskDisplay}]]</span></li>
+						</ul>
+						<div class="text_line hide1">
+							优势：<span th:each="tag,stat : ${#strings.arraySplit(item.platform_tags,',')}">[[${tag}]]<span class="m_l"></span></span>
+						</div>
+						<div class="btn">
+							<span class="shop_btn round_s transition_a">我要参加</span>
+						</div>
+				</a>
+				<a th:if="${item.isFirst != '1'}" th:href="@{/repetition/getActivity(activity_id=${item.id})}" class="box transition_a">
+						<span class="f_rec f_rec3 png">热门</span>
+						<div class="brand_logo png_img round_r">
+							<div class="brand_logo_border round_r">
+								<span class="text_box f_text_box round_s" th:if="${item.isFirst == '1'}">首投</span> 
+								<span class="text_box text_box_orange f_text_box round_s" th:if="${item.isFirst == '2'}">复投</span> 
+								<img th:src="@{${item.platform_img}}" alt="" width="100" height="40" />
+							</div>
+						</div>
+						<div class="text">
+							<p>
+								投<b class="font_20">[[${#numbers.formatDecimal(item.bestDeposit, 1, 'COMMA', 0, 'POINT')}]]</b>获得<b class="orange_text font_20">[[${#numbers.formatDecimal(item.bestMoney, 1, 'COMMA', 0, 'POINT')}]]</b>元， 年化<b
+								class="orange_text font_20">≈ [[${#numbers.formatDecimal(item.bestInterest, 1, 'COMMA', 2, 'POINT')}]]%</b>
+							</p>
+							<p>
+								已有<b class="font_20">[[${item.joins}]]</b>人参加活动
+							</p>
+						</div>
+						<ul class="tag_ul clearfix list_2">
+							<li><span class="tag_a round_m">全网最高</span></li>
+							<li><span class="tag_a round_m">返利最快</span></li>
+							<li><span class="tag_a tag_a_box round_m">风控评级：[[${item.risk}]]</span></li>
+							<li><span class="tag_a tag_a_box round_m">[[${item.riskDisplay}]]</span></li>
+						</ul>
+						<div class="text_line hide1">
+							优势：<span th:each="tag,stat : ${#strings.arraySplit(item.platform_tags,',')}">[[${tag}]]<span class="m_l"></span></span>
+						</div>
+						<div class="btn">
+							<span class="shop_btn round_s transition_a">我要参加</span>
+						</div>
+				</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+<!--/*--> 
+	<div class="w_1200 box_w clearfix white_box png_img">
+		<ul class="h_list hover_ul">
+			<li class="transition_a li_o transition_color transition_move" th:each="item,status : ${activityList}" th:inline="text">
+				<a th:href="@{/getActivity(activity_id=${item.id},title=${item.isFirst == '1' ? 'first' : 'repetition'})}"
+				class="box clearfix">
+					<div class="fl brand_logo_l">
+						<div class="brand_logo_t">
+							<img
+								th:src="@{${item.platform_img}}"
+								alt="" width="120" height="50" /> <span
+								class="text_box f_text_box round_s">[[${item.isFirst == '1' ? '首投' : '复投'}]]</span>
+						</div>
+					</div>
+					<div class="r_cell">
+						<div class="fr" th:if="${item.status == '1'}">
+							<span class="shop_btn round_s transition_a">我要参加</span>
+						</div>
+						<div class="fr h_list_btn" th:if="${item.status != '1'}">
+                            <span class="shop_btn pause_btn round_s transition_a">活动暂停</span>
+                        </div>
+						<div class="r_cell">
+							投<b class="font_20">[[${item.bestDeposit}]]</b>获得<b class="orange_text font_20">[[${item.bestMoney}]]</b>元， 年化<b
+								class="orange_text font_20">≈ [[${item.bestInterest}]]%</b>
+								， 已有<b class="font_20">[[${item.joins}]]</b>人参加活动
+							<ul class="tags">
+                               <li>风控评级：[[${item.risk}]]</li>
+                               <li>[[${item.riskDisplay}]]</li>
+                               <li th:each="tag,stat : ${#strings.arraySplit(item.platform_tags,',')}">[[${tag}]]</li>
+                            </ul>
+						</div>
+					</div>
+			</a></li>
+		</ul>
+	</div>
+	<div class="w_1200 box_w clearfix white_box png_img">
+		<ul class="h_list hover_ul">
+
+		</ul>
+	</div>
+<!--*/-->
+
+	<div class="w_1200 box_w clearfix white_box png_img">
+		<h4 class="h_th">
+			<b class="fl">合作伙伴</b>
+		</h4>
+		<ul class="list_5 h_brand clearfix">
+			<li th:each="item,status : ${coPartnerList}" th:inline="text">
+				<a href="#" class="box">
+					<div class="black transition_a">[[${item.platform_tags}]]</div> 
+					<img th:src="@{${item.platform_img}}" th:alt="${item.name}" width="170" height="60"/>
+				</a>
+			</li>
+		</ul>
+		<p class="flink">
+			友情链接：<a href="http://www.jspfanli.com/" target="_blank">理财返利</a> <a
+				href="https://www.qianlaiye.cn/" target="_blank">钱来也财经</a> <a
+				href="http://www.daiyicha.com/" target="_blank">贷易查</a> <a
+				href="http://www.whyxdb.com/" target="_blank">武汉汽车抵押贷款</a>
+		</p>
+		<div class="btn_c">
+			<a href="//wpa.qq.com/msgrd?v=3&amp;uin=545243400&amp;site=qq&amp;menu=yes" class="shop_btn transition_a round_s" target="_blank">成为合作伙伴</a>
+		</div>
+	</div>
+	
+	<dif th:replace="/common/login_register"/>
+	
+	<dif th:replace="/common/footer"/>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdd.mapper.AccountInfoMapper">
+
+	<insert id="add" parameterType="java.util.Map">
+		insert into p2p_account_info
+		(account,nick_name,qq)
+		values
+		(#{mobile},#{mobile},#{qq,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="getAccountInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		select * from p2p_account_info
+		where account = #{account}
+	</select>
+	
+	<update id="updateNickName" parameterType="java.util.Map">
+		update p2p_account_info
+		   set nick_name = #{nickname}
+		 where account = #{account}
+	</update>
+	
+	<update id="updateQQ" parameterType="java.util.Map">
+		update p2p_account_info
+		   set qq = #{qq}
+		 where account = #{account}
+	</update>
+	
+	<update id="updateMail" parameterType="java.util.Map">
+		update p2p_account_info
+		   set mail = #{email}
+		 where account = #{account}
+	</update>
+	
+	<update id="updateAlipay" parameterType="java.util.Map">
+		update p2p_account_info
+		   set alipay_account = #{alipay_account}
+		 where account = #{account}
+	</update>
+   
+</mapper>

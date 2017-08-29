@@ -1,0 +1,69 @@
+<div th:fragment="headerWrap" class="headerwrap" id="headerWrap">
+	<div class="header_t min_1200">
+		<dl class="header_t w_1200">
+			<dt class="fl">
+				<span class="m_t_b fl"> 
+					<img th:src="@{/images/clock.svg}" width="25px;" height="25px;"/>
+					服务时间：<b class="font_14">9:00~23:00</b>
+				</span> <span class="fl qq_box"> 
+					<img th:src="@{/images/qq.svg}" width="30px;" height="30px;"/>
+					官方QQ群
+					<div class="sec_qq">
+						<span class="sec_arrow png"></span>
+						<p>
+							<a target="_blank" 
+								href="//shang.qq.com/wpa/qunwpa?idkey=d6f277946c0bd4b0080c1354b79f74fa06e107c57feef0af0e3708a400816107">
+								<img th:src="@{/images/icon/qq.gif}" alt="马上多官方一群" title="马上多官方一群" width="23" height="16">马上多官方一群：248811548</a>
+						</p>
+					</div>
+				</span>
+			</dt>
+			<dd class="fr" sec:authorize="isAuthenticated()">
+				<span class="" th:inline="text">
+					<a th:href="@{/page/auth/index}">
+					<span th:text="${session.safename}"></span>
+					</a>
+				</span> 
+				<em class="china">|</em>
+				<a th:href="@{/logout}">退出</a> 
+				<em class="china">|</em> 
+				<a th:href="@{/page/auth/index}">会员中心</a> 
+				<em class="china">|</em>
+			</dd>
+			<dd class="fr" sec:authorize="isAnonymous()">
+				<a href="#" onclick="$('#register-popup').show();return false">免费注册</a>
+				<em class="china">|</em> <a href="#"
+					onclick="$('#login-popup').show();return false">登录</a> <em
+					class="china">|</em> <a th:href="@{/help}">帮助中心</a>
+			</dd>
+		</dl>
+	</div>
+	<div class="header_c min_1200">
+		<div class="w_1200">
+			<h1 class="logo png_img fl">
+				<a href="/"><img th:src="@{/images/logo.png}" alt="马上多返利" /></a>
+			</h1>
+			<div class="tnav" id="slideNav">
+				<span> <a th:href="@{/index}"
+					th:class="${#httpServletRequest.getRequestURI().contains('index') || #httpServletRequest.getRequestURI().contains('/web') ? 'current_nav' : ''}">首页</a>
+				</span> <span> <a th:href="@{/first}"
+					th:class="${#httpServletRequest.getRequestURI().contains('first') ? 'current_nav' : ''}">首投</a>
+				</span> <span> <a th:href="@{/repetition}"
+					th:class="${#httpServletRequest.getRequestURI().contains('repetition') ? 'current_nav' : ''}">复投</a>
+				</span>
+				<span> <a th:href="@{/car}"
+					th:class="${#httpServletRequest.getRequestURI().contains('car') ? 'current_nav' : ''}">搭车</a>
+				</span>
+				<span>
+					<a th:href="@{/down}" th:class="${#httpServletRequest.getRequestURI().contains('down') ? 'current_nav' : ''}">APP下载</a>
+				</span>
+				<span> <a
+					th:href="@{/announcement}"
+					th:class="${#httpServletRequest.getRequestURI().contains('announcement') ? 'current_nav' : ''}">公告</a>
+				</span> <span> <a th:href="@{/about}"
+					th:class="${#httpServletRequest.getRequestURI().contains('about') ? 'current_nav' : ''}">关于我们</a>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>

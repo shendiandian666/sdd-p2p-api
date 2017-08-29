@@ -1,0 +1,67 @@
+<div th:fragment="footer" class="clearfix footer min_1200"></div>
+
+<div th:fragment="footer_d" class="min_1200 clearfix footer_d">
+	<dl class="w_1200 clearfix footer_d">
+		<dt class="fl">
+			<a th:href="@{/index}">网站首页</a> <em class="china">|</em>
+			<a th:href="@{/first}">首投活动</a> <em class="china">|</em>
+			<a th:href="@{/repetition}">复投活动</a> <em class="china">|</em> 
+			<a th:href="@{/car}">搭车</a> <em class="china">|</em>
+			<a th:href="@{/down}">APP下载</a> <em class="china">|</em>
+			<a th:href="@{/announcement}">公告</a> <em class="china">|</em> 
+			<a th:href="@{/about}">帮助中心</a> <em class="china">|</em>
+			<p>版权所有 &copy; CopyRight 2017 www.msdfanli.com All
+				Rights Reserved. 湘ICP备17014873号-1</p>
+		</dt>
+		<dd class="r_cell">
+			<a href="#" class="f_a"></a> <a href="#" class="f_a f_a2"></a> <a
+				href="#" class="f_a f_a3"></a> <a href="#" class="f_a f_a4"></a> <a
+				href="#" class="f_a f_a5"></a> <a href="#" class="f_a f_a6"></a>
+		</dd>
+	</dl>
+</div>
+
+<div class="ftool" id="ftool">
+    <div class="ftool_item">
+        <a href="#" class="top_ftoolab ftoolab png" id="ftoolTop" style="display: none;"></a>
+    </div>
+    <!--/*--> 
+    <div class="ftool_item">
+        <a href="//wpa.qq.com/msgrd?v=3&amp;uin=539199195&amp;site=qq&amp;menu=yes" target="_blank" class="tel_ftoolab ftoolab png"></a>
+        <div class="ftool_code ftool_code_s" style="display: none; opacity: 0; right: 100px;">在线客服
+            <div class="ftool_code_gt">◆</div>
+        </div>
+    </div>
+    <div class="ftool_item">
+        <a href="#" class="wechat_ftoolab ftoolab png"></a>
+        <div class="ftool_code" style="display: none; opacity: 0; right: 100px;">
+            <img src="/images/icon/wap_qrcode.png" alt="" class="ftool_code_img">
+            <div class="ftool_code_gt">◆</div>
+        </div>
+    </div>
+    <!--*/-->
+    <div class="ftool_item">
+        <a href="#" class="qq_ftoolab ftoolab png"></a>
+        <div class="ftool_code" style="display: none; opacity: 0; right: 100px;">
+            <img th:src="@{/images/qq.png}" alt="" class="ftool_code_img">
+            <div class="ftool_code_gt">◆</div>
+        </div>
+    </div>
+    <div class="ftool_item">
+        <a href="#" class="phone_ftoolab ftoolab png"></a>
+        <div class="ftool_code" style="display: none; opacity: 0; right: 100px;">
+            <img th:src="@{/images/msdfanli.png}" alt="" class="ftool_code_img">
+            <div class="ftool_code_gt">◆</div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	if ($.cookie("msd.rmbUser") == "true") {
+		$("#remember").attr("checked", true);
+		$("#login-popup-mobile").val($.cookie("msd.username"));
+		$("#password").val($.cookie("msd.password"));
+	}
+});
+</script>

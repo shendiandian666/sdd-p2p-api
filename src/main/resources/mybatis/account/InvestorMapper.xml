@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdd.mapper.InvestorMapper">
+
+	<resultMap type="com.sdd.model.Investor" id="investorMap">
+		<id property="id" column="Id" javaType="int" jdbcType="INTEGER"/>
+		<result property="account" column="account" javaType="string" jdbcType="VARCHAR"/>
+		<result property="mobile" column="mobile" javaType="string" jdbcType="VARCHAR"/>
+		<result property="name" column="name" javaType="string" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="add" parameterType="com.sdd.model.Investor" useGeneratedKeys="true" keyProperty="id">
+		insert into p2p_invest_info
+		(account,mobile,name)
+		values
+		(#{account},#{mobile},#{name})
+	</insert>
+	
+	<delete id="delete" parameterType="com.sdd.model.Investor">
+		delete from p2p_invest_info 
+		where id = ${id} 
+		  and account = #{account}
+	</delete>
+
+	<select id="investorList" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select * from p2p_invest_info
+		where account=#{account}
+	</select>
+	
+	<select id="getInvestor" parameterType="string" resultType="java.util.Map">
+		select * from p2p_invest_info
+		where Id = #{id}
+	</select>
+
+
+
+
+</mapper>

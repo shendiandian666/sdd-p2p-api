@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdd.mapper.PostOrderMapper">
+
+	<insert id="add" parameterType="java.util.Map">
+		insert into p2p_post_order
+		(account,
+		investor_name,
+		investor_phone,
+		invest_date,
+		deposit,
+		platform_id,
+		platform_name,
+		activity_id,
+		is_first,
+		plan_id,
+		plan_name,
+		plan_item,
+		deposit_range,
+		rebate,
+		cash_back,
+		rebatePlus,
+		rate,
+		interest,
+		redback,
+		bbin,
+		bbin_interest,
+		totalIncome,
+		year_rate,
+		days,
+		received_date,
+		<if test="username != null and username != ''">
+			username,
+		</if>
+		<if test="img != null and img != ''">
+			img,
+		</if>
+		remark
+		)
+		values
+		(#{account},
+		#{investor_name,jdbcType=VARCHAR},
+		#{investor_phone,jdbcType=VARCHAR},
+		#{invest_date},
+		#{deposit},
+		#{platform_id},
+		#{platform_name,jdbcType=VARCHAR},
+		#{activity_id},
+		#{is_first},
+		#{plan_id},
+		#{plan_name,jdbcType=VARCHAR},
+		#{plan_item,jdbcType=VARCHAR},
+		#{deposit_range,jdbcType=VARCHAR},
+		#{rebate,jdbcType=DOUBLE},
+		#{cash_back,jdbcType=DOUBLE},
+		#{rebatePlus,jdbcType=DOUBLE},
+		#{rate,jdbcType=DOUBLE},
+		#{interest,jdbcType=DOUBLE},
+		#{redback,jdbcType=DOUBLE},
+		#{bbin,jdbcType=DOUBLE},
+		#{bbin_interest,jdbcType=DOUBLE},
+		#{totalIncome,jdbcType=DOUBLE},
+		#{year_rate,jdbcType=DOUBLE},
+		#{days},
+		#{received_date},
+		<if test="username != null and username != ''">
+			#{username,jdbcType=VARCHAR},
+		</if>
+		<if test="img != null and img != ''">
+			#{img,jdbcType=VARCHAR},
+		</if>
+		#{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<select id="list" parameterType="java.util.Map" resultType="java.util.Map">
+		select a.*,
+		       (select name
+		          from jt_dictionaries
+		         where parent_id in
+		               (select dic_id
+		                  from jt_column_dic dic
+		                 where dic.table_name = 'p2p_post_order'
+		                   and dic.table_column = 'status')
+		           and bianma = a.status) status_des
+		  from p2p_post_order a
+		 where a.account = #{account}
+		 <if test="invest_date  != null and invest_date != ''">
+			and a.invest_date = #{invest_date}
+		 </if>
+		 <if test="received_date  != null and received_date != ''">
+			and a.received_date = #{received_date}
+		 </if>
+		 order by a.post_date desc
+	</select>
+	
+	<select id="sumInvestAndRebate" parameterType="java.util.Map" resultType="java.util.Map">
+	select 
+		ifnull(sum(deposit),0) totalDeposit,
+		ifnull(sum(cash_back),0) totalCashBack,
+		ifnull(sum(interest),0) totalInterest
+	  from p2p_post_order
+	 where account = #{account}
+	 and status = '1'
+	</select>
+	
+	<select id="getDetail" parameterType="java.util.Map" resultType="java.util.Map">
+		select a.*,
+		       (select name
+		          from jt_dictionaries
+		         where parent_id in
+		               (select dic_id
+		                  from jt_column_dic dic
+		                 where dic.table_name = 'p2p_post_order'
+		                   and dic.table_column = 'status')
+		           and bianma = a.status) status_des
+		  from p2p_post_order a
+		 where id = #{id} and a.account = #{account}
+	</select>
+
+</mapper>

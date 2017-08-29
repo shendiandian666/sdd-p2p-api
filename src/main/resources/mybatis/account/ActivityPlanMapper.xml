@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdd.mapper.ActivityPlanMapper">
+
+	<insert id="add" parameterType="java.util.Map">
+		insert into p2p_activity_plan
+		  (Id,activity_id,
+		   name,
+		   item,
+		   depositDisplay_s,
+		   depositDisplay_e,
+		   rebate,
+		   rebateCycle,
+		   rebatePlus,
+		   days,
+		   rate,
+		   redback,
+		   bbin,
+		   others,
+		   totalIncome,
+		   interest,
+		   orderby)
+		values
+		  (#{id},#{activity_id,jdbcType=INTEGER},
+		   #{name,jdbcType=VARCHAR},
+		   #{item,jdbcType=VARCHAR},
+		   #{depositDisplay_s,jdbcType=DOUBLE},
+		   #{depositDisplay_e,jdbcType=DOUBLE},
+		   #{rebate,jdbcType=DOUBLE},
+		   #{rebateCycle,jdbcType=VARCHAR},
+		   #{rebatePlus,jdbcType=DOUBLE},
+		   #{days,jdbcType=INTEGER},
+		   #{rate,jdbcType=DOUBLE},
+		   #{redback,jdbcType=DOUBLE},
+		   #{bbin,jdbcType=DOUBLE},
+		   #{others,jdbcType=DOUBLE},
+		   #{totalIncome,jdbcType=DOUBLE},
+		   #{interest,jdbcType=DOUBLE},
+		   #{orderby,jdbcType=INTEGER})
+	</insert>
+	
+	<select id="getPlanlist" parameterType="string" resultType="java.util.Map">
+		select * from p2p_activity_plan
+	  where activity_id = #{activityId}
+	  order by orderby
+	</select>
+	
+	<select id="getPlan" parameterType="string" resultType="java.util.Map">
+		select * from p2p_activity_plan
+	  where id = #{planId}
+	</select>
+	
+    
+    
+   
+</mapper>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdd.mapper.AccountMapper">
+
+	<resultMap type="com.sdd.model.User" id="userMap">
+		<id property="id" column="id" javaType="string" jdbcType="VARCHAR"/>
+		<result property="account" column="account" javaType="string" jdbcType="VARCHAR"/>
+		<result property="passwd" column="passwd" javaType="string" jdbcType="VARCHAR"/>
+		<result property="balance" column="balance" javaType="string" jdbcType="NUMERIC"/>
+		<result property="rebate" column="rebate" javaType="string" jdbcType="NUMERIC"/>
+		<result property="rebateLate" column="rebate_late" javaType="string" jdbcType="NUMERIC"/>
+		<result property="loginCount" column="login_count" javaType="int" jdbcType="INTEGER"/>
+		<result property="status" column="status" javaType="string" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="add" parameterType="java.util.Map">
+		insert into p2p_account
+		(account,passwd)
+		values
+		(#{mobile},#{passwd})
+	</insert>
+	
+	<select id="isExists" parameterType="string" resultType="int">
+		select count(1) from p2p_account
+		where account = #{account}
+	</select>
+	
+	<select id="getUserInfo" parameterType="string" resultType="java.util.Map">
+		select a.account,a.balance,a.invest,a.rebate,a.rebate_late,a.reward,b.nick_name,b.mail,b.alipay_account,b.qq 
+		from p2p_account a,p2p_account_info b
+		where a.account = b.account
+		  and a.account = #{account}
+	</select>
+	
+	<select id="getAccount"  parameterType="string" resultMap="userMap">
+	  SELECT id, account, passwd, balance, rebate, rebate_late, login_count, status
+		FROM p2p_account
+	   WHERE account = #{account}
+    </select>
+    
+    <update id="loginCount" parameterType="string">
+    	update p2p_account
+    	   set login_count = login_count + 1
+    	 where account = #{account}
+    </update>
+    
+    <update id="updatePassword" parameterType="java.util.Map">
+    	update p2p_account
+    	   set passwd = #{new_password}
+    	 where account = #{account}
+    </update>
+    
+    <update id="addBalance" parameterType="java.util.Map">
+    	update p2p_account
+    	   set balance = balance + #{balance}
+    	 where account = #{account}
+    </update>
+    
+    <update id="subBalance" parameterType="java.util.Map">
+    	update p2p_account
+    	   set balance = balance - #{balance}
+    	 where account = #{account}
+    </update>
+    
+    <update id="addRebate" parameterType="java.util.Map">
+    	update p2p_account
+    	   set rebate = rebate + #{rebate}
+    	 where account = #{account}
+    </update>
+    
+    <update id="subRebate" parameterType="java.util.Map">
+    	update p2p_account
+    	   set rebate = rebate - #{rebate}
+    	 where account = #{account}
+    </update>
+    
+    <update id="addRebateLate" parameterType="java.util.Map">
+    	update p2p_account
+    	   set rebate_late = rebate_late + #{rebate_late}
+    	 where account = #{account}
+    </update>
+    
+    <update id="subRebateLate" parameterType="java.util.Map">
+    	update p2p_account
+    	   set rebate_late = rebate_late - #{rebate_late}
+    	 where account = #{account}
+    </update>
+    
+    <select id="getBalance" parameterType="string" resultType="Double">
+    	select balance
+    	  from p2p_account
+    	 where account = #{account}
+    </select>
+    
+    <select id="balanceRecord" parameterType="java.util.Map" resultType="java.util.Map">
+    select * from p2p_balance_list
+    where account = #{account}
+    </select>
+    
+    <insert id="addRecord" parameterType="java.util.Map">
+    insert into p2p_balance_list
+    (account,type,balance,rebate,rebate_late,remark,oper_user) 
+    select account,#{type},balance,rebate,rebate_late,#{remark},#{account}
+    from p2p_account
+    where account = #{account}
+    </insert>
+   
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdd.mapper.ActivityMapper">
+
+	<insert id="add" parameterType="java.util.Map">
+		insert into p2p_activity
+		  (Id,
+		   platform_id,
+		   title,
+		   isFirst,
+		   bestName,
+		   bestDeposit,
+		   bestMoney,
+		   bestInterest,
+		   joins,
+		   status,
+		   statusDisplay,
+		   requiredImage,
+		   requiredUsername,
+		   url,
+		   mobileUrl,
+		   content,
+		   orderby)
+		values
+		  (#{id,jdbcType=INTEGER},
+		   #{platform_id,jdbcType=INTEGER},
+		   #{title,jdbcType=VARCHAR},
+		   #{isFirst,jdbcType=VARCHAR},
+		   #{bestName,jdbcType=VARCHAR},
+		   #{bestDeposit,jdbcType=DOUBLE},
+		   #{bestMoney,jdbcType=DOUBLE},
+		   #{bestInterest,jdbcType=DOUBLE},
+		   #{joins,jdbcType=INTEGER},
+		   #{status,jdbcType=VARCHAR},
+		   #{statusDisplay,jdbcType=VARCHAR},
+		   #{requiredImage,jdbcType=VARCHAR},
+		   #{requiredUsername,jdbcType=VARCHAR},
+		   #{url,jdbcType=VARCHAR},
+		   #{mobileUrl,jdbcType=VARCHAR},
+		   #{content,jdbcType=VARCHAR},
+		   #{orderby})
+	</insert>
+	
+	<select id="getActivity" parameterType="string" resultType="java.util.Map">
+		select a.*,b.name,b.plat_name,b.platform_intro,b.platform_img,b.platform_tags,b.risk, 
+		  b.riskDisplay,b.finance_bg,b.platform_bg,b.bank_manage,b.icp_card,
+		  b.cash_speed,b.principal,b.online,b.remark
+		  from p2p_activity a,p2p_platform b
+		  where a.platform_id=b.id
+		  and a.id = #{id}
+	</select>
+	
+	<select id="getActivityList" parameterType="java.util.Map" resultType="java.util.Map">
+	  select a.*,b.name,b.plat_name,b.platform_intro,b.platform_img,b.platform_tags,b.risk, 
+	  b.riskDisplay,b.finance_bg,b.platform_bg,b.bank_manage,b.icp_card,
+	  b.cash_speed,b.principal,b.online,b.remark
+	  from p2p_activity a,p2p_platform b
+	  where a.platform_id=b.id
+	    <if test="keywords!= null and keywords != ''">
+			and b.name LIKE CONCAT(CONCAT('%', #{keywords}),'%') 
+		</if>
+		<if test="grade != null and grade != ''">
+			and b.risk = #{grade}
+		</if>
+		<if test="first != null and first != ''">
+			and a.isFirst = #{first}
+		</if>
+		<if test="minDays != null and minDays != ''">
+			and a.id in (select activity_id from p2p_activity_plan where days &gt;= #{minDays} 
+			<if test="maxDays != null and maxDays != '' and maxDays != '0'">
+			and days &lt;= #{maxDays}
+			</if>
+			)
+		</if>
+		order by a.orderby desc
+    </select>
+    
+    <select id="getHotActivity" resultType="java.util.Map">
+	  select a.*,b.name,b.plat_name,b.platform_intro,b.platform_img,b.platform_tags,b.risk, 
+	  b.riskDisplay,b.finance_bg,b.platform_bg,b.bank_manage,b.icp_card,
+	  b.cash_speed,b.principal,b.online,b.remark
+	  from p2p_activity a,p2p_platform b
+	  where a.platform_id=b.id
+	  and a.status = '1'
+	  order by a.orderby desc
+    </select>
+    
+    <update id="updateJoins" parameterType="string">
+    	update p2p_activity
+    	   set joins = joins + 1
+    	 where id = #{activity_id}
+    </update>
+    
+    
+   
+</mapper>

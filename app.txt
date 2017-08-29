@@ -1,0 +1,8 @@
+cordova build android --release
+
+keytool -genkey -v -keystore release-key.keystore -alias mobile_msd_android -keyalg RSA -keysize 2048 -validity 10000
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore release-key.keystore android-release-unsigned.apk mobile_msd_android
+
+zipalign -v 4 android-release-unsigned.apk mobile_msd_android.apk
+

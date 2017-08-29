@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="renderer" content="webkit" />
+	<meta name="viewport" content="width=1200" />
+	<title>组团活动_P2P理财返利_马上多返利网</title>
+	<meta name="description"
+		content="马上多返利网是一个理财返利平台,为您提供理财返利、P2P返利、网贷返利、投资返利等全方位高收益理财返利活动" />
+	<style>
+	.status{
+	  text-align: center;
+	  font-size:14px;
+	  color: #fff;
+	  background-color: #09BB07;
+	  border-radius: 4px;
+	  padding: 0 4px;
+	  background-clip: padding-box;
+	}
+	.status-2 {
+	  text-align: center;
+	  font-size:14px;
+	  color: #fff;
+	  background-color: #FFBE00;
+	  border-radius: 4px;
+	  padding: 0 4px;
+	  background-clip: padding-box;
+	}
+	</style>
+	<dif th:replace="/common/common"/>
+</head>
+<body th:inline="text">
+	<dif th:replace="/common/head"/>
+	
+	<div class="banner">
+		<ul class="bd">
+			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc2.jpg} + ');'">
+			<a href="javascript:;"></a>
+			</li>
+		</ul>
+		<ul class="hd"></ul>
+		<div class="btn btn_l prev transition_a">&lt;</div>
+		<div class="btn btn_r next transition_a">&gt;</div>
+	</div>
+    
+	<dl class="site_th w_1200" th:inline="text">
+        <dd>当前位置：<a th:href="@{/index}">马上多返利</a><em class="china">&gt;</em><a th:href="@{/car}">搭车活动</a><em class="china">&gt;</em>东宏金融组团冲量第一车</dd>
+    </dl>
+    
+    <div class="w_1200 box_d clearfix white_box">
+        <div class="white_box car-header">
+            <h1>[[${teamActivity.title}]]</h1>
+            <h5>搭车活动说明：</h5>
+            <p>1. 本次搭车内的活动在活动有效期: <b>[[${teamActivity.begin_date}]]</b> 开始到 <b>[[${teamActivity.end_date}]]</b> 截止 (均包含当天)</p>
+            <p>2. 在下列活动中总的已完成投资额满 <b>[[${#numbers.formatDecimal(teamActivity.target_account, 1, 'COMMA', 0, 'POINT')}]]</b> 元</p>
+            <p>3. 奖励金: 搭车成功 +<b>[[${teamActivity.add_rebate}]]%</b>奖励，搭车失败 原价</p>
+            <p>4. 搭车成功后的奖励金会在活动结束后3个工作日内单独发放到您的余额中。</p>
+            <div style="margin-top:10px;width:750px;" class="layui-progress layui-progress-big" lay-showPercent="true">
+			  <div style="" class="layui-progress-bar layui-bg-blue" th:attr="lay-percent=${teamActivity.totalFinish/teamActivity.target_account*100}+'%'"></div>
+			</div>
+        </div>
+    </div>
+    
+    <div class="w_1200 box_w_b clearfix png_img h_tab">
+		<div class="white_box clearfix i_box">
+			<ul class="h_list i_list hover_ul">
+				<li class="transition_a li_o transition_color transition_move" th:each="item,status : ${activityList}" th:inline="text">
+				<a th:href="@{/car/getActivity(activity_id=${item.id})}"
+				class="box clearfix transition_a">
+					<div class="fl brand_logo_l">
+						<div class="brand_logo_t">
+							<img
+								th:src="@{${item.platform_img}}"
+								alt="" width="120" height="50" /> 
+								<span class="text_box f_text_box round_s" th:if="${item.isFirst == '1'}">首投</span> 
+								<span class="text_box text_box_orange f_text_box round_s" th:if="${item.isFirst == '2'}">复投</span> 
+						</div>
+					</div>
+					<div class="r_cell">
+						<div class="fr" th:if="${item.status == '1'}">
+							<span class="shop_btn round_s transition_a">我要参加</span>
+						</div>
+						<div class="fr h_list_btn" th:if="${item.status != '1'}">
+                            <span class="shop_btn pause_btn round_s transition_a">活动暂停</span>
+                        </div>
+						<div class="r_cell">
+							投<b class="font_20">[[${#numbers.formatDecimal(item.bestDeposit, 1, 'COMMA', 0, 'POINT')}]]</b>获得<b class="orange_text font_20">[[${#numbers.formatDecimal(item.bestMoney, 1, 'COMMA', 0, 'POINT')}]]</b>元， 年化<b
+								class="orange_text font_20">≈ [[${#numbers.formatDecimal(item.bestInterest, 1, 'COMMA', 2, 'POINT')}]]%</b>
+								， 已有<b class="font_20">[[${item.joins}]]</b>人参加活动
+							<ul class="tags">
+                               <li>风控评级：[[${item.risk}]]</li>
+                               <li>[[${item.riskDisplay}]]</li>
+                               <li th:each="tag,stat : ${#strings.arraySplit(item.platform_tags,',')}">[[${tag}]]</li>
+                            </ul>
+						</div>
+					</div>
+			</a></li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="w_1200 box_d clearfix white_box">
+        <h4 class="d_th_line"><b>交单记录</b></h4>
+        <div id="order-list">
+            <table class="layui-table" lay-skin="line">
+			  <tbody>
+			    <tr th:each="item,status : ${orderList}" th:inline="text">
+			      <td>[[${status.index+1}]]楼</td>
+			      <td>[[${item.investor_phone}]]</td>
+			      <td>在 [[${item.platform_name}]] 投资<b> ¥[[${#numbers.formatDecimal(item.deposit, 1, 'COMMA', 0, 'POINT')}]]</b></td>
+			      <td> 投资日期：[[${item.invest_date}]]</td>
+			      <td> 交单时间：[[${#dates.format(item.post_date, 'yyyy-MM-dd HH:mm:ss')}]]</td>
+			      <td>
+			      	<div th:class="${item.status == '1'} ? 'status' : 'status-2'">
+		            <b>[[${item.status_des}]]</b>
+		          	</div>
+			      </td>
+			    </tr>
+			  </tbody>
+			</table>
+			<dl class="page">
+				<dt class="fl" th:inline="text">共[[${pageInfo.pages}]]页，每页[[${pageInfo.pageSize}]]，共计[[${pageInfo.total}]]</dt>
+			    <dd class="r_cell">
+		            <em th:if="${pageInfo.hasPreviousPage == false}">上一页</em>
+		        	<a th:href="@{/repetition(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasPreviousPage == true}">上一页</a>
+		        	<a th:href="@{/repetition(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasPreviousPage == true}" th:inline="text">[[${pageInfo.prePage}]]</a>
+		        	<b th:inline="text">[[${pageInfo.pageNum}]]</b>
+		        	<a th:href="@{/repetition(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasNextPage == true}" th:inline="text">[[${pageInfo.nextPage}]]</a>
+					<a th:href="@{/repetition(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasNextPage == true}">下一页</a>
+		            <em th:if="${pageInfo.hasNextPage == false}">下一页</em>
+			    </dd>
+			</dl>
+        </div>
+    </div>
+	<script type="text/javascript" th:src="@{/layui2/layui.all.js}"></script>
+	<dif th:replace="/common/login_register"/>
+	<dif th:replace="/common/footer"/>
+</body>
+</html>

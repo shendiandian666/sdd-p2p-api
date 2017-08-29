@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="renderer" content="webkit" />
+	<meta name="viewport" content="width=1200" />
+	<title th:inline="text">[[${activity.name}]]_P2P理财返利_马上多返利网</title>
+	<meta name="description"
+		content="马上多返利网是一个理财返利平台,为您提供理财返利、P2P返利、网贷返利、投资返利等全方位高收益理财返利活动" />
+	<dif th:replace="/common/common"/>
+</head>
+<body th:inline="text">
+	<dif th:replace="/common/head" />
+
+	<dl class="site_th w_1200">
+		<dd>
+			当前位置：
+			<a th:href="@{/index}">马上多返利</a> 
+			<em class="china">&gt;</em> 
+			<a th:href="@{/first}" th:if="${#httpServletRequest.getRequestURI().contains('first')}">首投活动</a>
+			<a th:href="@{/repetition}" th:if="${#httpServletRequest.getRequestURI().contains('repetition')}">复投活动</a>
+			<a th:href="@{/car}" th:if="${#httpServletRequest.getRequestURI().contains('car')}">搭车活动</a>
+			<em class="china">&gt;</em>
+			[[${activity.name}]]
+		</dd>
+	</dl>
+
+	<div class="w_1200 box_d clearfix" style="margin-top: 1em;">
+		<div class="fl w_750 white_box h_460">
+			<h2 class="display_th clearfix">
+				<div class="fr">
+					<p>
+					<div class="text_box_box round_m">
+						<span class="text_box_th round_m">[[${activity.risk}]]</span> 
+						<span>[[${activity.riskDisplay}]]</span>
+					</div>
+					</p>
+				</div>
+				<div class="r_cell png_img">
+					<div class="brand_logo_t">
+						<img th:src="${activity.platform_img}" th:alt="${activity.name}" height="40" /> 
+						<span class="text_box f_text_box round_s">
+						[[${activity.isFirst == '1' ? '首投' : '复投'}]]
+						</span>
+					</div>
+				</div>
+			</h2>
+			<ul class="display_note clearfix" id="activity-info-area">
+				<li class="clearfix li_o"><span class="fl">返利方案：</span>
+					<div class="r_cell">
+						投 [[${#numbers.formatDecimal(activity.bestDeposit, 0, 'COMMA', 0,
+						'POINT')}]] 获得<b class="orange_text font_20">[[${#numbers.formatDecimal(activity.bestMoney,
+							0, 'COMMA', 0, 'POINT')}]]</b>元， 年化<b class="orange_text font_20">≈
+							[[${activity.bestInterest}]]%</b> (方案: <b>[[${activity.bestName}]]</b>)
+						<div class="btn">
+							<a href="#" id="activity-join-btn"
+								class="shop_btn round_s transition_a"
+								th:if="${activity.status == '1'}">立即参与</a> <a href="#"
+								id="activity-join-btn"
+								class="shop_btn pause_btn round_s transition_a"
+								th:if="${activity.status != '1'}">活动暂停</a> <a href="#"
+								id="activity-calc" class="shop_btn calc_btn">试算</a> <span
+								class="m_l_b">已有<b class="orange_text font_20">[[${activity.joins}]]</b>人参加活动
+							</span>
+						</div>
+					</div></li>
+				<li class="clearfix li_o"><span class="fl">平台介绍：</span>
+					<div class="r_cell">
+						[[${activity.platform_intro}]]
+						<div class="display_key round_m_a"></div>
+					</div></li>
+			</ul>
+			<div id="activity-join-area-loading" class="display_note clearfix"
+				style="display: none; border-top: 1px solid #eee; text-align: center; padding: 30px 0;">
+				获取中,请稍等...</div>
+			<div id="activity-join-area-error" class="display_note clearfix"
+				style="display: none; border-top: 1px solid #eee; text-align: center; padding: 30px 0; color: red;"></div>
+			<div id="activity-join-area-success" class="display_note clearfix"
+				style="display: none; border-top: 1px solid #eee; text-align: center; padding: 30px 0;">
+				<p style="margin-bottom: 20px;">已经收到您提交的信息，您可以在会员中心查看处理进度</p>
+				<a href="#" id="activity-join-area-success-detail-btn"
+					class="layui-btn layui-btn-normal" target="_blank">查看详细信息</a>
+				<button type="button" class="layui-btn layui-btn-normal"
+					id="activity-join-area-success-btn">完成</button>
+			</div>
+			<div id="activity-join-area" class="display_note clearfix"
+				style="display: none; border-top: 1px solid #eee;">
+				<div class="act-join-title">
+					<i class="layui-icon">&#xe63c;</i> 在线交单 <span>投资完成后请在下方录入投资信息</span>
+
+					<a onclick="return openPlatformTip()" th:href="${activity.url}"
+						class="layui-btn layui-btn-danger" target="_blank">打开投资链接</a>
+
+				</div>
+				<form class="layui-form act-join-form" action="" method="post"
+					id="activity-form">
+					<input type="hidden" name="token" th:value="${session.token}" /> <input
+						type="hidden" name="activity_id" th:value="${activity.id}" /> <input
+						type="hidden" name="activity_name" th:value="${activity.name}" />
+					<div class="layui-form-item">
+						<label class="layui-form-label">投资人</label>
+						<div class="layui-input-inline" style="width: 320px;">
+							<select name="investorId" lay-verify="required" lay-search="">
+								<option></option>
+							</select>
+						</div>
+						<div class="select-right layui-word-aux">
+							<button type="button" id="add-investor-btn"
+								class="layui-btn layui-btn-small layui-btn-normal">
+								<i class="layui-icon">&#xe608;</i> 添加
+							</button>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">投资方案</label>
+						<div class="layui-input-inline">
+							<select name="planId" lay-verify="required">
+								<option></option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">投资金额</label>
+						<div class="layui-input-inline">
+							<input type="text" name="deposit" lay-verify="required|number"
+								placeholder="￥" autocomplete="off" class="layui-input" />
+						</div>
+						<div class="layui-form-mid layui-word-aux">请填写数字，例如：15000</div>
+					</div>
+					<div class="layui-form-item" style="display: none"
+						id="activity-join-form-username">
+						<label class="layui-form-label">用户名</label>
+						<div class="layui-input-inline">
+							<input type="text" name="username" placeholder="对方平台要求提供用户名"
+								autocomplete="off" class="layui-input" />
+						</div>
+						<div class="layui-form-mid layui-word-aux">请输入在投资平台注册的用户名</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">投资日期</label>
+						<div class="layui-input-inline" style="width: 120px">
+							<input class="layui-input" name="date" id="invest_date" lay-verify="required|date"/>
+						</div>
+						<div class="layui-input-inline" style="display: none"
+							id="activity-join-form-images">
+							<div class="layui-form-mid">投资截图</div>
+							<button type="button" class="layui-btn layui-btn-normal"
+								id="activity-join-form-images-btn" style="width: 123px;">
+								<i class="layui-icon">&#xe62f;</i> <span>上传</span>
+							</button>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button class="layui-btn layui-btn-warm" lay-submit=""
+								lay-filter="postOrder">立即交单</button>
+							<span style="margin-left: 10px;">严禁交假单，违者封号处理</span>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="fr w_420 white_box h_460">
+			<ul class="display_data clearfix">
+				<li class="clearfix li_o"><span class="fl text_l">风控信息</span>
+					<div class="r_cell r_text">
+						<ul class="tag_ul clearfix tag_ul_green list_2">
+							<li><span class="tag_a tag_a_box round_m">风控评级：[[${activity.risk}]]</span></li>
+							<li><span class="tag_a tag_a_box round_m">[[${activity.riskDisplay}]]</span></li>
+						</ul>
+					</div></li>
+				<li class="clearfix li_o"><span class="fl text_l">背景</span>
+					<div class="r_cell text_c r_text">
+						<div class="fr w_5">
+							<div class="text_box_g round_s">平台背景：[[${activity.platform_bg}]]</div>
+						</div>
+						<div class="fl w_5">
+							<div class="text_box_g round_s">融资背景：[[${activity.finance_bg}]]</div>
+						</div>
+					</div></li>
+				<li class="clearfix li_o"><span class="fl text_l">银行存管</span>
+					<div class="r_cell r_text">
+						<div class="text_box_g round_s">[[${activity.bank_manage}]]</div>
+					</div></li>
+
+				<li class="clearfix li_o"><span class="fl text_l">ICP证</span>
+					<div class="r_cell r_text">
+						<div class="text_box_g round_s">[[${activity.icp_card}]]</div>
+					</div></li>
+				<li class="clearfix li_o"><span class="fl text_l">提现速度</span>
+					<div class="r_cell r_text">
+						<div class="text_box_g round_s">[[${activity.cash_speed}]]</div>
+					</div></li>
+				<li class="clearfix li_o"><span class="fl text_l">基本资料</span>
+					<div class="r_cell r_text">
+						<div class="text_box_g round_s">[[${activity.plat_name}]]</div>
+						<div class="o_text o_text">
+							<div class="fr w_5">
+								<div class="text_box_g round_s">上线：[[${activity.online}]]</div>
+							</div>
+							<div class="fl w_5">
+								<div class="text_box_g round_s">注册资本：[[${activity.principal}]]</div>
+							</div>
+						</div>
+					</div></li>
+				<li class="clearfix li_o li_more"><span class="fl text_l">友情提示</span>
+					<div class="r_cell r_text text_c">
+						<div class="text_box_g text_box_g2 round_s">理财不等于存款，网贷有风险，投资需谨慎</div>
+					</div></li>
+			</ul>
+			<p style="padding-left: 25px; padding-right: 25px; color: #888;">马上多返利网仅为信息平台，所有活动不保证100%安全，风控评级仅供参考，不作为安全投资依据，如果对方平台出问题，我方不承担任何责任。我们不包赔也不兜底。</p>
+		</div>
+	</div>
+
+	<div class="w_1200 box_d clearfix white_box">
+		<table class="list_table">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>方案</th>
+					<th>投资项目</th>
+					<th>充值金额</th>
+					<th width="80" class="orange_text">马上多返利</th>
+					<th>年化利率</th>
+					<th>红包</th>
+					<th>体验金</th>
+					<th>其他</th>
+					<th>周期</th>
+					<th>总收益</th>
+					<th>综合年化</th>
+					<th>返利周期</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr bgcolor="#fffff4" th:each="item,status : ${planList}"
+					th:inline="text">
+					<td width="30">[[${status.index+1}]]</td>
+					<td><b class="gray_text_b">[[${item.name}]]</b></td>
+					<td>[[${item.item}]]</td>
+					<td><b class="gray_text_b">¥[[${#numbers.formatDecimal(item.depositDisplay_s,
+							1, 'COMMA', 0, 'POINT')}]]<span
+							th:if="${item.depositDisplay_e != 1}"> -
+								[[${item.depositDisplay_e == 0 ?
+								'无上限':#numbers.formatDecimal(item.depositDisplay_e, 1, 'COMMA',
+								0, 'POINT')}]]</span>
+					</b></td>
+					<td><b class="orange_text">[[${#numbers.formatDecimal(item.rebate,
+							1, 'COMMA', 2, 'POINT')}]]%</b></td>
+					<td>[[${item.rate}]]%</td>
+					<td>¥[[${#numbers.formatDecimal(item.redback, 1, 'COMMA', 0,
+						'POINT')}]]</td>
+					<td>¥[[${#numbers.formatDecimal(item.bbin, 1, 'COMMA', 0,
+						'POINT')}]]</td>
+					<td>¥[[${#numbers.formatDecimal(item.others, 1, 'COMMA', 0,
+						'POINT')}]]</td>
+					<td>[[${item.days}]]天</td>
+					<td>≈ [[${#numbers.formatDecimal(item.totalIncome, 1, 'COMMA',
+						0, 'POINT')}]] +</td>
+					<td>≈ [[${#numbers.formatDecimal(item.interest, 1, 'COMMA', 1,
+						'POINT')}]]%</td>
+					<td>[[${item.rebateCycle}]]</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="w_1200 box_d clearfix white_box">
+		<div class="display_explain">
+			<h4 class="d_th_line">
+				<b>详细说明</b>
+			</h4>
+			<div class="d_text" th:utext="${activity.content}"></div>
+			<div class="d_text">
+				<b>活动提示：</b>
+				<ol>
+					<li>马上多只负责与您结算<b>返利+奖励</b>部分，其他金额由投资平台结算。
+					</li>
+					<li>红包金额以对方平台为准，我方不保证一定正确；因对方平台可能随时更改红包规则，我方只保证返现并无责任对红包金额进行赔偿。</li>
+					<li>本站所显示的利息只是作为参照依据，如果与对方平台不一致请咨询马上多客服。</li>
+					<li>交单金额请填写整数，例如：投资10000，使用28红包后总投资金额变为10028，交单时请填写10000。或者用完红包后投资金额变为9972也请填写10000。</li>
+					<li>除非特别说明，投资金额千位以下不结算。例如: 投资 21300 元，只按照 21000 元结算。</li>
+					<li>除非特别说明【红包、加息券】不可使用，否则都可以使用。</li>
+				</ol>
+			</div>
+		</div>
+	</div>
+
+	<div class="w_1200 box_d clearfix white_box">
+		<h4 class="d_th_line">
+			<b>QQ群</b>
+		</h4>
+		<div class="qq_box_more clearfix">
+			<p>
+				<a target="_blank" 
+					href="//shang.qq.com/wpa/qunwpa?idkey=d6f277946c0bd4b0080c1354b79f74fa06e107c57feef0af0e3708a400816107">
+					<img th:src="@{/images/icon/qq.gif}" alt="马上多官方一群" title="马上多官方一群" width="23" height="16">
+					马上多官方一群：248811548
+					</a>
+			</p>
+			<p>
+				<img th:src="@{/images/icon/qq.gif}" alt="qq" width="23" height="16" />马上多官方二群：等待开放
+			</p>
+			<p>
+				<img th:src="@{/images/icon/qq.gif}" alt="qq" width="23" height="16" />马上多官方三群：等待开放
+			</p>
+		</div>
+	</div>
+
+	<div class="w_1200 box_d clearfix white_box">
+		<h4 class="d_th_line">
+			<b>免责声明</b>
+		</h4>
+		<div class="d_text">
+			<p>马上多返利仅为信息平台，本身不吸纳用户资金。
+				活动平台不保证100%安全，如出现意外情况（包括但不局限于平台提现困难/逾期/倒闭/跑路等导致无法拿回本金的情况），马上多返利不承担任何责任。</p>
+		</div>
+	</div>
+
+	<div id="add-investor-temp" style="display: none;">
+		<form class="layui-form add-investor-form" action="" method="post"
+			id="add-investor-form">
+			<input type="hidden" name="token" th:value="${session.token}" />
+			<div class="layui-form-item">
+				<label class="layui-form-label">手机号码</label>
+				<div class="layui-input-block">
+					<input type="text" name="mobile" required="required"
+						lay-verify="required|phone" placeholder="请输入手机号码"
+						autocomplete="off" class="layui-input" />
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">真实姓名</label>
+				<div class="layui-input-block">
+					<input type="text" name="name" required="required"
+						lay-verify="required" placeholder="真实姓名" autocomplete="off"
+						class="layui-input" />
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn layui-btn-normal" lay-submit=""
+						lay-filter="postInvestor">添加</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div id="activity-get-qrcode-popup" class="cd-popup"
+		style="display: none">
+		<div class="cd-popup-container">
+			<div class="login_box">
+				<h1>请用手机扫描下方二维码</h1>
+				<div id="activity-get-qrcode-popup-content"
+					style="padding: 20px; text-align: center;"></div>
+			</div>
+			<a href="#"
+				onclick="$('#activity-get-qrcode-popup').hide();return false"
+				class="cd-popup-close"></a>
+		</div>
+	</div>
+
+	<div id="upload-popup" class="cd-popup" style="display: none">
+		<div class="cd-popup-container">
+			<div class="login_box">
+				<h1>正在上传图片</h1>
+				<dl class="login_fill">
+				</dl>
+			</div>
+		</div>
+	</div>
+
+	<div id="clac-popup" class="cd-popup" style="display: none">
+		<div class="cd-popup-container">
+			<div class="login_box" style="padding-bottom: 15px;">
+				<h1>投资收益试算</h1>
+				<form class="layui-form" action="" id="clac-form"
+					style="margin-top: 20px;">
+					<div class="layui-form-item">
+						<label class="layui-form-label">投资方案</label>
+						<div class="layui-input-inline">
+							<select name="plan" lay-verify="required">
+
+								<option th:each="item,status : ${planList}" th:inline="text"
+									th:value="${item.rebate+','+item.rebatePlus+','+item.rate+','+item.days+','+item.redback+','+item.bbin}">[[${item.name}]]</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">投资金额</label>
+						<div class="layui-input-inline" style="width: 120px;">
+							<input type="text" name="deposit" lay-verify="required|number"
+								placeholder="￥" value="10000" autocomplete="off"
+								class="layui-input" />
+						</div>
+						<div class="layui-input-inline" style="width: 60px;">
+							<button class="layui-btn layui-btn-normal"
+								style="padding: 0; text-align: center; width: 100%"
+								lay-submit="" lay-filter="clac">计算</button>
+						</div>
+					</div>
+					<dl id="clac-result">
+						<dt>马上多返现</dt>
+						<dd class="_r">
+							<b></b> 元
+						</dd>
+						<dt>平台收益</dt>
+						<dd class="_p">
+							≈ <b></b> 元
+						</dd>
+					</dl>
+				</form>
+			</div>
+			<a href="#" onclick="$('#clac-popup').hide();return false"
+				class="cd-popup-close"></a>
+		</div>
+	</div>
+
+<script type="text/javascript" th:inline="javascript">
+function openPlatformTip() {
+  if (false) {
+    return confirm('高反区意味着 高风险、高收益，您确定要继续投资吗？');
+  }
+  return true;
+}
+(function(){
+	var laydate = layui.laydate;
+    //执行一个laydate实例
+    laydate.render({
+      elem: '#invest_date' //指定元素
+      ,done: function(value, date, endDate){
+      	//alert(value); //得到日期生成的值，如：2017-08-18
+      	$('#dateForm').submit();
+        }
+    });	
+    var form = layui.form;
+    var uploadPopup = $('#upload-popup');
+    var joinBtn = $('#activity-join-btn');
+    var infoArea = $('#activity-info-area');
+    var joinArea = $('#activity-join-area');
+    var joinAreaLoading = $('#activity-join-area-loading');
+    var joinAreaError = $('#activity-join-area-error');
+    var joinAreaSuccess = $('#activity-join-area-success');
+    var joinAreaSuccessBtn = $('#activity-join-area-success-btn');
+    var investorEmpty = false;
+    var requiredImage = false;
+    var uploadedFiles = [];
+
+    joinBtn.click(function () {
+        if (!ACCOUNT_IS_LOGIN) {
+            $('#login-popup').show();
+            return false;
+        }
+        infoArea.hide();
+        joinAreaLoading.show();
+
+        $.post(/*[[@{/api/auth/activity/activity_join}]]*/+'', {token: [[${session.token}]],activity_id: [[${activity.id}]]}, function (data) {
+        	joinAreaLoading.hide();
+        	if (data.status != '200') {
+                joinAreaError.show().text(data.message);
+                return;
+            }
+
+            uploadedFiles = [];
+            joinArea.show();
+
+            if (data.data.activity.requiredUsername) {
+                $('#activity-join-form-username').show();
+                $('#activity-join-form-username [name=username]').attr('lay-verify', 'required');
+            } else {
+                $('#activity-join-form-username').hide();
+                $('#activity-join-form-username [name=username]').removeAttr('lay-verify');
+            }
+
+            if (data.data.activity.requiredImage) {
+                $('#activity-join-form-images').show();
+                requiredImage = true;
+            } else {
+                $('#activity-join-form-images').hide();
+                requiredImage = false;
+            }
+
+            var investor = $("select[name='investorId']", joinArea);
+            if (data.data.investorList.length > 0) {
+                investor.empty();
+                $.each(data.data.investorList, function(i, n){
+                    investor.append('<option value="'+ n.id +'">'+ n.mobile + "  " +  n.name +"</option>");
+                });
+                investorEmpty = false;
+            } else {
+                investor.append('<option>请添加投资人</option>');
+                investorEmpty = true;
+            }
+
+            var plan = $("select[name='planId']", joinArea);
+            plan.empty();
+            $.each(data.data.planList, function(i, n){
+                plan.append('<option value="'+ n.id +'">'+ n.name + "</option>");
+            });
+
+            form.render('select');
+        });
+        return false;
+    });
+
+    joinAreaSuccessBtn.click(function () {
+        infoArea.show();
+        joinAreaSuccess.hide();
+        $('#activity-form')[0].reset();
+        $('#activity-join-form-images-btn span').text('上传');
+    });
+
+    var uploader = new plupload.Uploader({
+      //runtimes : 'html5,flash,silverlight',//设置运行环境，会按设置的顺序，可以选择的值有html5,gears,flash,silverlight,browserplus,html
+        flash_swf_url : /*[[@{/js/plupload/Moxie.swf}]]*/,
+        silverlight_xap_url : /*[[@{/js/plupload/Moxie.xap}]]*/,
+        url: /*[[@{/api/auth/file/upload(token=${session.token})}]]*/,
+        max_file_size : '3gb',//100b, 10kb, 10mb, 1gb
+        chunk_size : '1mb',//分块大小，小于这个大小的不分块
+        unique_names : true,//生成唯一文件名
+        browse_button : 'activity-join-form-images-btn', 
+        filters : {
+            max_file_size : '5mb',
+            mime_types: [
+                {title : "Image files", extensions : "jpg,gif,png"}
+            ]
+        },
+        init: {
+            FilesAdded: function(up, files) {
+               /* uploadPopup.show();
+                var content = uploadPopup.find('dl');
+                content.empty();
+                plupload.each(files, function(file) {
+                    content.append('<dd id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b>等待中</b></dd>');
+                });*/
+                uploader.start();
+                return false;
+            },
+            UploadProgress: function(up, file) {
+                //$('#' + file.id + ' b').text(file.percent + '%');
+            },
+            FileUploaded: function(up, file, result) {
+                //var data = $.parseJSON(result.response);
+                //uploadedFiles.push(data.id);
+            	console.log("单独文件上传完毕");
+            },
+            UploadComplete: function (up, files) {
+                uploadPopup.hide();
+                $('#activity-join-form-images-btn span').text('已上传' + uploadedFiles.length + '张');
+            },
+            Error: function(up, err) {
+                layer.msg('上传图片错误：' + err.message);
+            }
+        }
+    });
+    uploader.init();
+
+    var index_add_investor;
+
+    $("#add-investor-btn").click( function () {
+        index_add_investor = layer.open({
+          type: 1,
+          title: '添加投资人信息',
+          content: $("#add-investor-temp")
+        });
+    });
+
+    //监听交单
+    form.on('submit(postOrder)', function(data){
+        var post = data.field;
+        if (investorEmpty) {
+            layer.msg('请先添加一位投资人');
+            return false;
+        }
+        if (requiredImage) {
+            if (uploadedFiles.length == 0) {
+                layer.msg('请上传投资截图');
+                return false;
+            }
+            post.images = uploadedFiles.join(',');
+        }
+        $.formPost('#activity-form', /*[[@{/api/auth/order/add_order}]]*/+'', post, function (resp) {
+        	window._hmt.push(['_trackEvent', 'PostOrder', 'add', '-']);
+        	$('#activity-join-area-success-detail-btn').attr('href', /*[[@{/page/auth/account_order}]]*/+'');
+            joinAreaSuccess.show();
+            joinArea.hide();
+        });
+        return false;
+    });
+
+    //监听添加投资账号
+    form.on('submit(postInvestor)', function(data){
+        $.formPost('#add-investor-form', /*[[@{/api/auth/investor/add_investor}]]*/+'', data.field, function (resp) {
+        	if (investorEmpty) {
+                $("select[name='investorId']").empty();
+                investorEmpty = false;
+            }
+        	var data = resp.data;
+            alert(JSON.stringify(data));
+        	$("select[name='investorId']").append('<option value="'+ data.id +'" selected="selected">'+ data.mobile + "  " +  data.name +"</option>");
+            layer.close(index_add_investor);
+            form.render("select");
+        });
+        return false;
+    });
+
+    $('#activity-get-qrcode').click(function () {
+      if (openPlatformTip()) {
+        $('#activity-get-qrcode-popup').show();
+        $('#activity-get-qrcode-popup-content').html(
+            '<img src="/a/190/open.png?'+(+new Date())+'" width="100%"/>'
+        );
+      }
+      return false;
+    });
+
+    // 试算
+    $('#activity-calc').click(function () {
+      $('#clac-popup').show();
+      form.render("select");
+      return false;
+    });
+    
+    form.on('submit(clac)', function(data){
+        var v = parseInt(data.field.deposit);
+        var x = data.field.plan.split(',');
+        var rebate = (v * parseFloat(x[0]) / 100).toFixed(2); // 给用户的返现
+        var rebatePlus =  x[1]=='-' ? null : (v * parseFloat(x[1]) / 100).toFixed(2); // 奖励
+        var credits = Math.floor(v * 0.001); // 积分
+        var interest = (v * parseFloat(x[2]) / 100 / 365 * parseInt(x[3])).toFixed(2); // 平台利息收益
+        var redback = parseFloat(x[4]);//红包
+        var bbin = parseFloat(x[5]);//体验金
+        var el = $('#clac-result');
+        el.find('._r b').text(rebate);
+        //el.find('._rp b').text(rebatePlus==null?'登陆后查看':rebatePlus);
+        //el.find('._c b').text(credits); // 积分
+        var intertxt = interest;
+        if(redback > 0){
+        	intertxt += ' + ' + redback;
+        }
+        /*<![CDATA[*/
+        el.find('._p b').text(intertxt);
+        /*]]>*/
+        el.show();
+        return false;
+    });
+})();
+</script>
+
+	<dif th:replace="/common/login_register" />
+
+	<dif th:replace="/common/footer" />
+</body>
+</html>

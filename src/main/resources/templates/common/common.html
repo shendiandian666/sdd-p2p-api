@@ -1,0 +1,41 @@
+<head th:fragment="commonhead">
+<link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/css.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/code.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/layui2/css/layui.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/tip.css}" />
+<script type="text/javascript" th:src="@{/js/jquery-1.8.2.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.cookie.js}"></script>
+<script type="text/javascript" th:src="@{/layui2/layui.all.js}"></script>
+<script type="text/javascript"
+	th:src="@{/js/jquery.SuperSlide.2.1.2.js}"></script>
+<script type="text/javascript"
+	th:src="@{/js/plupload/plupload.full.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/tool.js}"></script>
+<script type="text/javascript" th:src="@{/js/tip.js}"></script>
+<script type="text/javascript" th:src="@{/js/tip_box.js}"></script>
+<script type="text/javascript" th:src="@{/js/web.js}"></script>
+<!--[if lt IE 9]>
+<script type="text/javascript" th:src="@{/js/html5.js}"></script>
+<![endif]-->
+<script sec:authorize="isAuthenticated()" type="text/javascript">
+	/*<![CDATA[*/
+	var ACCOUNT_IS_LOGIN = true;
+	/*]]>*/
+</script>
+<script sec:authorize="!isAuthenticated()" type="text/javascript">
+	/*<![CDATA[*/
+	var ACCOUNT_IS_LOGIN = false;
+	/*]]>*/
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?38936dfe3f9ea9ac38ef830e808f7321";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>

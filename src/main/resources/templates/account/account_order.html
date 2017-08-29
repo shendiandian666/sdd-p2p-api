@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="renderer" content="webkit" />
+	<meta name="viewport" content="width=1200" />
+	<title>会员中心_马上多返利网</title>
+	<meta name="description" content="马上多返利网是一个理财返利平台,为您提供理财返利、P2P返利、网贷返利、投资返利等全方位高收益理财返利活动" />
+	<style>
+	.status{
+	  text-align: center;
+	  font-size:14px;
+	  color: #fff;
+	  background-color: #09BB07;
+	  border-radius: 4px;
+	  padding: 0 4px;
+	  background-clip: padding-box;
+	}
+	.status-2 {
+	  text-align: center;
+	  font-size:14px;
+	  color: #fff;
+	  background-color: #FFBE00;
+	  border-radius: 4px;
+	  padding: 0 4px;
+	  background-clip: padding-box;
+	}
+	</style>
+	<dif th:replace="/common/common"/>
+</head>
+<body>
+	<dif th:replace="/common/head"/>
+
+    <dl class="site_th w_1200">
+        <dd>当前位置：<a th:href="@{/index}">马上多返利</a><em class="china">&gt;</em>会员中心</dd>
+    </dl>
+
+    <div class="clearfix w_1200 i_center white_box">
+        <div class="fl w_200 l_box">
+            <dl class="l_club">
+                <dt class="round_img">
+                    <a th:href="@{/page/auth/index}"> <img th:src="@{/images/icon/user_logo.png}" alt=""
+						width="100" height="100" />
+						<h4><span th:text="${session.safename}"></span></h4>
+					</a>
+                </dt>
+                <dd class="active">
+					<a th:href="@{/page/auth/account_order}">交单记录</a>
+				</dd>
+				<dd>
+					<a th:href="@{/page/auth/account_investor}">投资人</a>
+				</dd>
+				<dd>
+					<a th:href="@{/page/auth/account_withdraw}">提现</a>
+				</dd>
+				<dd>
+					<a th:href="@{/page/auth/account_setting}">帐号设置</a>
+				</dd>
+            </dl>
+        </div>
+        <!--end左边-->
+	    
+		<div class="fr w_950 r_box">
+	    <h4 class="r_th"><b class="fl th_line_b">交单记录</b></h4>
+			<form th:action="@{/page/auth/account_order}" method="post" id="dateForm">
+				<div class="layui-form-item invest_order_stat" th:inline="text">
+					<label class="layui-form-label">投资日期</label>
+					<div class="layui-input-inline" style="width: 180px">
+						<input class="layui-input" name="invest_date" id="invest_date" lay-verify="required|date"
+							 th:value="${invest_date}"
+							/>
+					</div>
+					<label class="layui-form-label">回款日期</label>
+					<div class="layui-input-inline" style="width: 180px">
+						<input class="layui-input" name="received_date" id="received_date" lay-verify="required|date"
+							th:value="${received_date}"/>
+					</div>
+				</div>
+			</form>
+			<div class="invest_order_stat" th:inline="text">
+		        累计投资: <b>[[${#numbers.formatDecimal(sumOrder.totalDeposit, 1, 'COMMA', 2, 'POINT')}]]</b>
+		        累计返现: <b>[[${#numbers.formatDecimal(sumOrder.totalCashBack, 1, 'COMMA', 2, 'POINT')}]]</b>
+		        累计利息: <b>[[${#numbers.formatDecimal(sumOrder.totalInterest, 1, 'COMMA', 2, 'POINT')}]]</b>
+		    </div>
+			<ul class="order_list">
+		        <li th:each="item,status : ${postOrderList}" th:inline="text">
+		            <div class="order_list_logo">
+		                <a href="http://www.jlccaifu.com/" target="_blank">
+		                <img src="/upload/platform/logo/1_GXrBW3c.jpg" alt="金联创" width="100" height="40">
+		                </a>
+		            </div>
+		            <div class="order_list_status status-10">[[${item.status_des}]]</div>
+		            <div class="order_list_desc">
+		                <h4><b>[[${item.invest_date}]]</b>
+		                    <span class="F">首投</span>
+		                    <b>¥[[${#numbers.formatDecimal(item.deposit, 1, 'COMMA', 0, 'POINT')}]]</b> 元，周期
+		                    <b>[[${item.days}]]</b> 天，<b>3</b>天内返现
+		                </h4>
+		                <h5>投资人 <b>[[${item.investor_name}]]</b>
+		                    <i>|</i> 平台利息 <b>≈¥[[${item.interest}]]</b>
+		                    <i>|</i> 回款日期 [[${item.received_date == null ? '' : item.received_date}]]
+		                </h5>
+		            </div>
+		            <div class="order_list_rebate">返现<b><i></i>[[${#numbers.formatDecimal(item.cash_back, 1, 'COMMA', 0, 'POINT')}]]</b></div>
+		            <div class="order_list_interest">综合年化<b>[[${#numbers.formatDecimal(item.year_rate, 1, 'COMMA', 0, 'POINT')}]]<i>%</i></b></div>
+		            <a class="order_list_detail" th:href="@{'/page/auth/account_order/detail/' + ${item.id}}">详情</a>
+		        </li>
+		    </ul>
+		    <dl class="page">
+			    <dt class="fl" th:inline="text">共[[${pageInfo.pages}]]页，每页[[${pageInfo.pageSize}]]，共计[[${pageInfo.total}]]</dt>
+			    <dd class="r_cell">
+		            <em th:if="${pageInfo.hasPreviousPage == false}">上一页</em>
+		        	<a th:href="@{/page/auth/account_order(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasPreviousPage == true}">上一页</a>
+		        	<a th:href="@{/page/auth/account_order(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasPreviousPage == true}" th:inline="text">[[${pageInfo.prePage}]]</a>
+		        	<b th:inline="text">[[${pageInfo.pageNum}]]</b>
+		        	<a th:href="@{/page/auth/account_order(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasNextPage == true}" th:inline="text">[[${pageInfo.nextPage}]]</a>
+					<a th:href="@{/page/auth/account_order(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasNextPage == true}">下一页</a>
+		            <em th:if="${pageInfo.hasNextPage == false}">下一页</em>
+			    </dd>
+			</dl>
+        </div>
+    </div>
+    <script type="text/javascript" th:inline="javascript">
+    layui.use('laydate', function(){
+      var laydate = layui.laydate;
+      //执行一个laydate实例
+      laydate.render({
+        elem: '#invest_date' //指定元素
+        ,done: function(value, date, endDate){
+        	//alert(value); //得到日期生成的值，如：2017-08-18
+        	$('#dateForm').submit();
+          }
+      });
+      laydate.render({
+        elem: '#received_date' //指定元素
+        ,done: function(value, date, endDate){
+        	//alert(value); //得到日期生成的值，如：2017-08-18
+        	$('#dateForm').submit();
+          }
+      });
+    });
+    </script>
+    <dif th:replace="/common/login_register"/>
+	<dif th:replace="/common/footer"/>
+</body>
+</html>

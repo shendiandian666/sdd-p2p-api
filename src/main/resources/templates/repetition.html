@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="renderer" content="webkit" />
+	<meta name="viewport" content="width=1200" />
+	<title>复投活动_P2P理财返利_马上多返利网</title>
+	<meta name="description"
+		content="马上多返利网是一个理财返利平台,为您提供理财返利、P2P返利、网贷返利、投资返利等全方位高收益理财返利活动" />
+	<dif th:replace="/common/common"/>
+</head>
+<body>
+	<dif th:replace="/common/head"/>
+
+	<dl class="site_th w_1200">
+        <dd>当前位置：<a th:href="@{/index}">马上多返利</a><em class="china">&gt;</em>复投活动</dd>
+    </dl>
+    
+	<div class="w_1200 box_w_b clearfix png_img h_tab">
+		<div class="activity_header">
+			<dl class="i_tab_nav round_m_a">
+				<dd>
+					<a th:href="@{/repetition}" th:class="${grade == '' ? 'tab_light' : ''}">全部</a> 
+					<a th:href="@{/repetition/A}" th:class="${grade == 'A' ? 'tab_light' : ''}">A 保守区</a> 
+					<a th:href="@{/repetition/B}" th:class="${grade == 'B' ? 'tab_light' : ''}">B 稳健区</a> 
+					<a th:href="@{/repetition/C}" th:class="${grade == 'C' ? 'tab_light' : ''}">C 进取区</a> 
+					<a th:href="@{/repetition/D}" th:class="${grade == 'D' ? 'tab_light' : ''}">D 激进区</a> 
+					<a th:href="@{/repetition/E}" th:class="${grade == 'E' ? 'tab_light' : ''}">E 高返区</a>
+				</dd>
+			</dl>
+			<form method="get" th:action="@{/repetition}">
+				<input type="hidden" name="title" value="repetition" />
+				<input type="text" name="keywords" class="fill_text" value="" />
+				<button type="submit" class="shop_btn">搜索</button>
+			</form>
+		</div>
+		
+		<div class="activity_filter">
+            <dl>
+                <dt>投资周期：</dt>
+                <dd>
+                <a href="?" th:class="${minDays == '' ? 'active' : ''}">全部</a>
+                <a href="?minDays=1&amp;maxDays=7" th:class="${minDays == '1' ? 'active' : ''}">1-7天</a>
+                <a href="?minDays=8&amp;maxDays=15" th:class="${minDays == '8' ? 'active' : ''}">8-15天</a>
+                <a href="?minDays=16&amp;maxDays=35" th:class="${minDays == '16' ? 'active' : ''}">一月</a>
+                <a href="?minDays=36&amp;maxDays=50" th:class="${minDays == '36' ? 'active' : ''}">一月半</a>
+                <a href="?minDays=51&amp;maxDays=70" th:class="${minDays == '51' ? 'active' : ''}">二月</a>
+                <a href="?minDays=71&amp;maxDays=100" th:class="${minDays == '71' ? 'active' : ''}">三月</a>
+                <a href="?minDays=101&amp;maxDays=0" th:class="${minDays == '101' ? 'active' : ''}">三个月以上</a>
+                </dd>
+            </dl>
+        </div>
+
+		<div class="white_box clearfix i_box">
+			<ul class="h_list i_list hover_ul">
+				<li class="transition_a li_o transition_color transition_move" th:each="item,status : ${activityList}" th:inline="text">
+				<a th:href="@{/repetition/getActivity(activity_id=${item.id})}"
+				class="box clearfix transition_a">
+					<div class="fl brand_logo_l">
+						<div class="brand_logo_t">
+							<img
+								th:src="@{${item.platform_img}}"
+								alt="" width="120" height="50" /> 
+								<span class="text_box f_text_box round_s" th:if="${item.isFirst == '1'}">首投</span> 
+								<span class="text_box text_box_orange f_text_box round_s" th:if="${item.isFirst == '2'}">复投</span> 
+						</div>
+					</div>
+					<div class="r_cell">
+						<div class="fr" th:if="${item.status == '1'}">
+							<span class="shop_btn round_s transition_a">我要参加</span>
+						</div>
+						<div class="fr h_list_btn" th:if="${item.status != '1'}">
+                            <span class="shop_btn pause_btn round_s transition_a">活动暂停</span>
+                        </div>
+						<div class="r_cell">
+							投<b class="font_20">[[${#numbers.formatDecimal(item.bestDeposit, 1, 'COMMA', 0, 'POINT')}]]</b>获得<b class="orange_text font_20">[[${#numbers.formatDecimal(item.bestMoney, 1, 'COMMA', 0, 'POINT')}]]</b>元， 年化<b
+								class="orange_text font_20">≈ [[${#numbers.formatDecimal(item.bestInterest, 1, 'COMMA', 2, 'POINT')}]]%</b>
+								， 已有<b class="font_20">[[${item.joins}]]</b>人参加活动
+							<ul class="tags">
+                               <li>风控评级：[[${item.risk}]]</li>
+                               <li>[[${item.riskDisplay}]]</li>
+                               <li th:each="tag,stat : ${#strings.arraySplit(item.platform_tags,',')}">[[${tag}]]</li>
+                            </ul>
+						</div>
+					</div>
+				</a></li>
+			</ul>
+			<dl class="page">
+				<dt class="fl" th:inline="text">共[[${pageInfo.pages}]]页，每页[[${pageInfo.pageSize}]]，共计[[${pageInfo.total}]]</dt>
+			    <dd class="r_cell">
+		            <em th:if="${pageInfo.hasPreviousPage == false}">上一页</em>
+		        	<a th:href="@{/repetition(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasPreviousPage == true}">上一页</a>
+		        	<a th:href="@{/repetition(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasPreviousPage == true}" th:inline="text">[[${pageInfo.prePage}]]</a>
+		        	<b th:inline="text">[[${pageInfo.pageNum}]]</b>
+		        	<a th:href="@{/repetition(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasNextPage == true}" th:inline="text">[[${pageInfo.nextPage}]]</a>
+					<a th:href="@{/repetition(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasNextPage == true}">下一页</a>
+		            <em th:if="${pageInfo.hasNextPage == false}">下一页</em>
+			    </dd>
+			</dl>
+		</div>
+	</div>
+
+	<dif th:replace="/common/login_register"/>
+	
+	<dif th:replace="/common/footer"/>
+</body>
+</html>

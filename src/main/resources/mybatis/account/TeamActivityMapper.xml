@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdd.mapper.TeamActivityMapper">
+
+	<select id="teamList" parameterType="java.util.Map" resultType="java.util.Map">
+		select a.id,a.title,a.target_account,a.add_rebate,a.begin_date,a.end_date,
+		ifnull((select sum(b.deposit) 
+		from p2p_post_order b 
+		where b.activity_id in (a.activity_ids)
+		and b.invest_date &gt;= a.begin_date
+		and b.invest_date &lt;= a.end_date
+		and b.status='1'
+		),0) totalFinish,
+		ifnull((select sum(b.deposit) 
+		from p2p_post_order b 
+		where b.activity_id in (a.activity_ids)
+		and b.invest_date &gt;= a.begin_date
+		and b.invest_date &lt;= a.end_date
+		and b.status='0'
+		),0) totalUnfinished
+		from p2p_team_activity a
+		where 1=1 
+	</select>
+	
+	<select id="teamById" parameterType="java.util.Map" resultType="java.util.Map">
+		select a.id,a.activity_ids,a.title,a.target_account,a.add_rebate,a.begin_date,a.end_date,
+		ifnull((select sum(b.deposit) 
+		from p2p_post_order b 
+		where b.activity_id in (a.activity_ids)
+		and b.invest_date &gt;= a.begin_date
+		and b.invest_date &lt;= a.end_date
+		and b.status='1'
+		),0) totalFinish,
+		ifnull((select sum(b.deposit) 
+		from p2p_post_order b 
+		where b.activity_id in (a.activity_ids)
+		and b.invest_date &gt;= a.begin_date
+		and b.invest_date &lt;= a.end_date
+		and b.status='0'
+		),0) totalUnfinished
+		from p2p_team_activity a
+		where 1=1 
+		and a.id = #{id}
+	</select>
+	
+	<select id="activityList" parameterType="string" resultType="java.util.Map">
+	select a.*,b.name,b.plat_name,b.platform_intro,b.platform_img,b.platform_tags,b.risk, 
+	  b.riskDisplay,b.finance_bg,b.platform_bg,b.bank_manage,b.icp_card,
+	  b.cash_speed,b.principal,b.online,b.remark
+	  from p2p_activity a,p2p_platform b
+	  where a.platform_id=b.id
+	  and a.id in (${_parameter})
+	</select>
+	
+	<select id="orderList" parameterType="java.util.Map" resultType="java.util.Map">
+		select 
+		CONCAT(mid(investor_phone,1,3),'****',mid(investor_phone,8,4)) investor_phone,
+		platform_name,deposit,invest_date,post_date,
+		(select name
+		          from jt_dictionaries
+		         where parent_id in
+		               (select dic_id
+		                  from jt_column_dic dic
+		                 where dic.table_name = 'p2p_post_order'
+		                   and dic.table_column = 'status')
+		           and bianma = status) status_des,
+		status
+		from p2p_post_order b 
+		where b.activity_id in (${activity_ids})
+		and b.invest_date &gt;= #{begin_date}
+		and b.invest_date &lt;= #{end_date}
+		and b.status in ('0','1')
+		order by b.post_date
+	</select>
+	
+   
+</mapper>

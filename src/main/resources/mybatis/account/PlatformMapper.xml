@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdd.mapper.PlatformMapper">
+
+	<insert id="add" parameterType="java.util.Map">
+		insert into p2p_platform
+		  (id,name,
+		   plat_name,
+		   platform_intro,
+		   platform_img,
+		   platform_tags,
+		   risk,
+		   riskDisplay,
+		   finance_bg,
+		   platform_bg,
+		   bank_manage,
+		   icp_card,
+		   cash_speed,
+		   principal,
+		   online)
+		values
+		  (#{id},#{name,jdbcType=VARCHAR},
+		   #{plat_name,jdbcType=VARCHAR},
+		   #{platform_intro,jdbcType=VARCHAR},
+		   #{platform_img,jdbcType=VARCHAR},
+		   #{platform_tags,jdbcType=VARCHAR},
+		   #{risk,jdbcType=VARCHAR},
+		   #{riskDisplay,jdbcType=VARCHAR},
+		   #{finance_bg,jdbcType=VARCHAR},
+		   #{platform_bg,jdbcType=VARCHAR},
+		   #{bank_manage,jdbcType=VARCHAR},
+		   #{icp_card,jdbcType=VARCHAR},
+		   #{cash_speed,jdbcType=VARCHAR},
+		   #{principal,jdbcType=VARCHAR},
+		   #{online,jdbcType=DATE})
+	</insert>
+	
+	<update id="update" parameterType="java.util.Map">
+		update p2p_platform
+	   set name=#{name,jdbcType=VARCHAR},
+		   plat_name=#{plat_name,jdbcType=VARCHAR},
+		   platform_intro=#{platform_intro,jdbcType=VARCHAR},
+		   platform_img=#{platform_img,jdbcType=VARCHAR},
+		   platform_tags=#{platform_tags,jdbcType=VARCHAR},
+		   risk=#{risk,jdbcType=VARCHAR},
+		   riskDisplay=#{riskDisplay,jdbcType=VARCHAR},
+		   finance_bg=#{finance_bg,jdbcType=VARCHAR},
+		   platform_bg=#{platform_bg,jdbcType=VARCHAR},
+		   bank_manage=#{bank_manage,jdbcType=VARCHAR},
+		   icp_card=#{icp_card,jdbcType=VARCHAR},
+		   cash_speed=#{cash_speed,jdbcType=VARCHAR},
+		   principal=#{principal,jdbcType=VARCHAR},
+		   online=#{online,jdbcType=DATE}
+		 where id = #{id}
+	</update>
+	
+	<select id="exists" parameterType="string" resultType="java.lang.Integer">
+		select count(1) from p2p_platform where id = #{id}
+	</select>
+	
+	<select id="listById" parameterType="string" resultType="java.util.Map">
+		SELECT t.*
+		FROM p2p_platform t
+		where t.id=#{id}
+	</select>
+	
+	<select id="list" parameterType="java.util.Map" resultType="java.util.Map">
+	  SELECT t.*
+		FROM p2p_platform t where 1=1 
+		<if test="keywords!= null and keywords != ''">
+			and t.plat_name LIKE CONCAT(CONCAT('%', #{keywords}),'%') 
+		</if>
+		<if test="grade != null and grade != ''">
+			and t.grade = #{grade}
+		</if>
+		<if test="first != null and first != ''">
+			and t.first = #{first}
+		</if>
+		order by t.id desc
+    </select>
+    
+    
+   
+</mapper>

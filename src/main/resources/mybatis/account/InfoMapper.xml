@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdd.mapper.InfoMapper">
+
+	<select id="query" resultType="java.util.Map">
+		select * from p2p_info
+	</select>
+	
+	<update id="updateInvest" parameterType="string">
+		update p2p_info
+		   set total_invest = total_invest + #{invest}
+	</update>
+	
+	<update id="updateRebate" parameterType="string">
+		update p2p_info
+		   set total_rebate = total_rebate + #{rebate}
+	</update>
+	
+	<update id="updateAccount" parameterType="string">
+		update p2p_info
+		   set total_account = total_account + 1
+	</update>
+   
+</mapper>
