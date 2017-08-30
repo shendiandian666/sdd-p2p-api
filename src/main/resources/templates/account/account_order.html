@@ -88,16 +88,16 @@
 			<ul class="order_list">
 		        <li th:each="item,status : ${postOrderList}" th:inline="text">
 		            <div class="order_list_logo">
-		                <a href="http://www.jlccaifu.com/" target="_blank">
-		                <img src="/upload/platform/logo/1_GXrBW3c.jpg" alt="金联创" width="100" height="40">
+		                <a th:href="${item.url}" target="_blank">
+		                <img th:src="@{${item.logo}}" th:alt="${item.platform_name}" width="100" height="40">
 		                </a>
 		            </div>
-		            <div class="order_list_status status-10">[[${item.status_des}]]</div>
+		            <div th:class="${item.status == '1' ? 'order_list_status status-10' : 'order_list_status status-20'}"><b>[[${item.status_des}]]</b></div>
 		            <div class="order_list_desc">
-		                <h4><b>[[${item.invest_date}]]</b>
-		                    <span class="F">首投</span>
-		                    <b>¥[[${#numbers.formatDecimal(item.deposit, 1, 'COMMA', 0, 'POINT')}]]</b> 元，周期
-		                    <b>[[${item.days}]]</b> 天，<b>3</b>天内返现
+		                <h4><b>[[${item.invest_date}]]</b> <i>|</i>
+		                    <b>[[${item.is_first}]]</b> <i>|</i> 
+		                    <b>¥[[${#numbers.formatDecimal(item.deposit, 1, 'COMMA', 0, 'POINT')}]]</b> <i>|</i> 
+		                    <b>[[${item.days}]]</b> 天
 		                </h4>
 		                <h5>投资人 <b>[[${item.investor_name}]]</b>
 		                    <i>|</i> 平台利息 <b>≈¥[[${item.interest}]]</b>
@@ -106,7 +106,7 @@
 		            </div>
 		            <div class="order_list_rebate">返现<b><i></i>[[${#numbers.formatDecimal(item.cash_back, 1, 'COMMA', 0, 'POINT')}]]</b></div>
 		            <div class="order_list_interest">综合年化<b>[[${#numbers.formatDecimal(item.year_rate, 1, 'COMMA', 0, 'POINT')}]]<i>%</i></b></div>
-		            <a class="order_list_detail" th:href="@{'/page/auth/account_order/detail/' + ${item.id}}">详情</a>
+		            <a class="order_list_detail" th:href="@{'/page/auth/account_order/detail/' + ${item.id}}"><b>详情</b></a>
 		        </li>
 		    </ul>
 		    <dl class="page">

@@ -12,6 +12,7 @@ import com.sdd.cache.SmsCache;
 import com.sdd.controller.api.ApiController;
 import com.sdd.model.SmsEntity;
 import com.sdd.service.AccountService;
+import com.sdd.service.SwiperService;
 import com.sdd.util.JSONResult;
 import com.sdd.util.MD5;
 import com.sdd.util.Tools;
@@ -24,6 +25,16 @@ public class IndexController extends ApiController {
 	private AccountService accountService;
 	@Autowired
 	private SmsCache smsCache;
+	@Autowired
+	private SwiperService swiperService;
+	
+	@RequestMapping("/getSwiper")
+	@ResponseBody
+	public String getSwiper() throws Exception {
+		Map<String, Object> params = getParamters();
+		List<Map<String, Object>> list = swiperService.getSwiper(Tools.getMapString(params, "type"));
+		return JSONResult.fillResultString(JSONResult.SC_OK, JSONResult.SC_OK_MSG, list);
+	}
 	
 	@RequestMapping("/forgetPasswd")
 	@ResponseBody

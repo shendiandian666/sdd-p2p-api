@@ -4014,24 +4014,25 @@ ol>li {
 .order_list_detail {
     float: right;
     display: block;
-    background-color: #fdd000;
+    background-color: #FFBE00;
     border-radius: 3px;
     padding: 3px 10px;
-    color: #000;
+    color: #fff;
     margin-top: 7px
 }
 
 .order_list_detail:hover {
-    background-color: #fdad00;
+    background-color: #FFBE00;
     color: #000
 }
 
 .status-10 {
-    background-color: #d9e1f2;
+    background-color: #09BB07;
+    color:#fff;
 }
 
 .status-20 {
-    background-color: #4472c4;
+    background-color: #FFBE00;
     color: #fff
 }
 
@@ -4061,6 +4062,12 @@ ol>li {
 
 .order_list_desc > h4 > .R {
     color: #f19e71
+}
+
+.order_list_desc > h4 > i {
+    font-style: normal;
+    color: #eee;
+    margin: 0 5px
 }
 
 .order_list_desc > h5 {

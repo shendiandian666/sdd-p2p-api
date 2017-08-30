@@ -18,14 +18,8 @@
 	<!--star动画-->
 	<div class="banner">
 		<ul class="bd">
-			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc3.jpg} + ');'">
-			    <a href="javascript:;"></a>
-			</li>
-			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc2.jpg} + ');'">
-			<a href="javascript:;"></a>
-			</li>
-			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc1.jpg} + ');'">
-			<a href="javascript:;"></a>
+			<li th:each="item,status : ${swiperList}" th:inline="text" th:style="'background-image:url(' + @{${item.img}} + ');'">
+			    <a th:href="@{${item.url}}"></a>
 			</li>
 		</ul>
 		<ul class="hd"></ul>
@@ -194,10 +188,9 @@
 			</li>
 		</ul>
 		<p class="flink">
-			友情链接：<a href="http://www.jspfanli.com/" target="_blank">理财返利</a> <a
-				href="https://www.qianlaiye.cn/" target="_blank">钱来也财经</a> <a
+			友情链接：<a href="http://www.renrendai.com/" target="_blank">理财返利</a> <a
 				href="http://www.daiyicha.com/" target="_blank">贷易查</a> <a
-				href="http://www.whyxdb.com/" target="_blank">武汉汽车抵押贷款</a>
+				href="http://www.fanli.com/" target="_blank">返利网</a>
 		</p>
 		<div class="btn_c">
 			<a href="//wpa.qq.com/msgrd?v=3&amp;uin=545243400&amp;site=qq&amp;menu=yes" class="shop_btn transition_a round_s" target="_blank">成为合作伙伴</a>

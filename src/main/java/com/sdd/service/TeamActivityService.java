@@ -13,20 +13,24 @@ public class TeamActivityService {
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
 	
+	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> teamList(int pageNum, int pageSize, Map<String, Object> params) throws Exception {
 		PageHelper.startPage(pageNum, pageSize);
 		List<Map<String, Object>> list = (List<Map<String, Object>>) dao.findForList("com.sdd.mapper.TeamActivityMapper.teamList", params);
 		return list;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> teamById(Map<String, Object> params) throws Exception {
 		return (Map<String, Object>) dao.findForObject("com.sdd.mapper.TeamActivityMapper.teamById", params);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> activityList(String activityIds) throws Exception {
 		return (List<Map<String, Object>>) dao.findForList("com.sdd.mapper.TeamActivityMapper.activityList", activityIds);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> orderList(int pageNum, int pageSize, Map<String, Object> params) throws Exception {
 		PageHelper.startPage(pageNum, pageSize);
 		return (List<Map<String, Object>>) dao.findForList("com.sdd.mapper.TeamActivityMapper.orderList", params);

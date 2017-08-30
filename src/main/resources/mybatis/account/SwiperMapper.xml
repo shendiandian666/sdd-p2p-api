@@ -12,8 +12,10 @@
 		(#{img},#{orderby})
 	</insert>
 	
-	<select id="list" resultType="java.util.Map">
+	<select id="getSwiper" parameterType="string" resultType="java.util.Map">
 		select * from p2p_swiper
+		where type = #{_parameter}
+		order by orderby
 	</select>
    
 </mapper>

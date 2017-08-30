@@ -240,12 +240,8 @@
 					<td width="30">[[${status.index+1}]]</td>
 					<td><b class="gray_text_b">[[${item.name}]]</b></td>
 					<td>[[${item.item}]]</td>
-					<td><b class="gray_text_b">¥[[${#numbers.formatDecimal(item.depositDisplay_s,
-							1, 'COMMA', 0, 'POINT')}]]<span
-							th:if="${item.depositDisplay_e != 1}"> -
-								[[${item.depositDisplay_e == 0 ?
-								'无上限':#numbers.formatDecimal(item.depositDisplay_e, 1, 'COMMA',
-								0, 'POINT')}]]</span>
+					<td><b class="gray_text_b">
+					¥[[${item.depositDisplay_txt}]]
 					</b></td>
 					<td><b class="orange_text">[[${#numbers.formatDecimal(item.rebate,
 							1, 'COMMA', 2, 'POINT')}]]%</b></td>
@@ -257,8 +253,7 @@
 					<td>¥[[${#numbers.formatDecimal(item.others, 1, 'COMMA', 0,
 						'POINT')}]]</td>
 					<td>[[${item.days}]]天</td>
-					<td>≈ [[${#numbers.formatDecimal(item.totalIncome, 1, 'COMMA',
-						0, 'POINT')}]] +</td>
+					<td>≈ ¥[[${item.totalIncome_txt}]]</td>
 					<td>≈ [[${#numbers.formatDecimal(item.interest, 1, 'COMMA', 1,
 						'POINT')}]]%</td>
 					<td>[[${item.rebateCycle}]]</td>

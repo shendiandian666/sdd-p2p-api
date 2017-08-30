@@ -17,8 +17,8 @@
 	
     <div class="banner">
 		<ul class="bd">
-			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc2.jpg} + ');'">
-			<a href="javascript:;"></a>
+			<li th:each="item,status : ${swiperList}" th:inline="text" th:style="'background-image:url(' + @{${item.img}} + ');'">
+			    <a th:href="@{${item.url}}"></a>
 			</li>
 		</ul>
 		<ul class="hd"></ul>

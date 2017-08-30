@@ -13,6 +13,8 @@
 		deposit,
 		platform_id,
 		platform_name,
+		logo,
+		url,
 		activity_id,
 		is_first,
 		plan_id,
@@ -47,6 +49,8 @@
 		#{deposit},
 		#{platform_id},
 		#{platform_name,jdbcType=VARCHAR},
+		#{logo},
+		#{url},
 		#{activity_id},
 		#{is_first},
 		#{plan_id},
@@ -119,5 +123,12 @@
 		  from p2p_post_order a
 		 where id = #{id} and a.account = #{account}
 	</select>
+	
+	<update id="examine">
+	update p2p_post_order 
+	   set status = '2'
+	 where status = '0'
+	   and post_date &gt; date_sub(curdate(),interval 1 day)
+	</update>
 
 </mapper>

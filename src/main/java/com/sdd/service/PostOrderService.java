@@ -27,6 +27,8 @@ public class PostOrderService {
 	private ActivityService activityService;
 	@Autowired
 	private ActivityPlanService activityPlanService;
+	@Autowired
+	private PlatformService platformService;
 	
 	/**
 	 * 交单记录添加
@@ -94,7 +96,12 @@ public class PostOrderService {
 		//获取活动信息
 		String activityId = Tools.getMapString(plan, "activity_id");
 		Map<String, Object> activity = activityService.getActivity(activityId);
-		params.put("platform_id", activity.get("platform_id"));
+		String platformId = Tools.getMapString(activity, "platform_id");
+		params.put("platform_id", platformId);
+		//平台logo及url
+		Map<String, Object> platform = platformService.getPlatform(platformId);
+		params.put("logo", platform.get("platform_img"));
+		params.put("url", platform.get("url"));
 		String isFirst = activity.get("isFirst") == null ? "" : activity.get("isFirst").toString();
 		params.put("is_first", "1".equals(isFirst) ? "首投" : "2".equals(isFirst) ? "复投" : "异常");
 		params.put("activity_id", activity.get("id"));
@@ -130,6 +137,10 @@ public class PostOrderService {
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> getDetail(Map<String, Object> params) throws Exception {
 		return (Map<String, Object>) dao.findForObject("com.sdd.mapper.PostOrderMapper.getDetail", params);
+	}
+	
+	public void examine() throws Exception {
+		dao.update("com.sdd.mapper.PostOrderMapper.examine", "");
 	}
 	
 }

@@ -28,6 +28,7 @@
 		resultType="java.util.Map">
 		select * from p2p_invest_info
 		where account=#{account}
+		order by id desc
 	</select>
 	
 	<select id="getInvestor" parameterType="string" resultType="java.util.Map">

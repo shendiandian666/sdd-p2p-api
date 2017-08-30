@@ -14,6 +14,7 @@ import com.sdd.service.ActivityPlanService;
 import com.sdd.service.ActivityService;
 import com.sdd.service.CoPartnerService;
 import com.sdd.service.NewsService;
+import com.sdd.service.SwiperService;
 import com.sdd.service.TeamActivityService;
 import com.sdd.util.Tools;
 
@@ -25,16 +26,24 @@ public class IndexController extends WebController {
 	private ActivityService activityService;
 	@Autowired
 	private CoPartnerService coPartnerService;
+	@Autowired
+	private SwiperService swiperService;
 	
 	@RequestMapping(value = "/web")
 	public String web(HttpServletRequest request, Map<String, Object> map) throws Exception {
+		List<Map<String, Object>> swiperList = swiperService.getSwiper("3");
+		map.put("swiperList", swiperList);
 		List<Map<String, Object>> list = activityService.getHotActivity(1, 15);
 		map.put("activityList", list);
+		List<Map<String, Object>> coPartnerList = coPartnerService.coPartnerList();
+		map.put("coPartnerList", coPartnerList);
 		return "/index";
 	}
 	
 	@RequestMapping(value = "/index")
 	public String index(HttpServletRequest request, Map<String, Object> map) throws Exception {
+		List<Map<String, Object>> swiperList = swiperService.getSwiper("3");
+		map.put("swiperList", swiperList);
 		List<Map<String, Object>> list = activityService.getHotActivity(1, 15);
 		map.put("activityList", list);
 		List<Map<String, Object>> coPartnerList = coPartnerService.coPartnerList();
@@ -100,6 +109,8 @@ public class IndexController extends WebController {
 	@RequestMapping(value = "/car")
 	public String car(HttpServletRequest request, Map<String, Object> map) throws Exception {
 		Map<String, Object> params = getParameters();
+		List<Map<String, Object>> swiperList = swiperService.getSwiper("5");
+		map.put("swiperList", swiperList);
 		List<Map<String, Object>> list = teamActivityService.teamList(getPageNum(), getPageSize(),params);
 		map.put("teamList", list);
 		PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(list);
