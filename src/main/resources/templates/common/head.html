@@ -28,7 +28,6 @@
 				<a th:href="@{/logout}">退出</a> 
 				<em class="china">|</em> 
 				<a th:href="@{/page/auth/index}">会员中心</a> 
-				<em class="china">|</em>
 			</dd>
 			<dd class="fr" sec:authorize="isAnonymous()">
 				<a href="#" onclick="$('#register-popup').show();return false">免费注册</a>
@@ -51,9 +50,11 @@
 				</span> <span> <a th:href="@{/repetition}"
 					th:class="${#httpServletRequest.getRequestURI().contains('repetition') ? 'current_nav' : ''}">复投</a>
 				</span>
+				<!--/*-->
 				<span> <a th:href="@{/car}"
 					th:class="${#httpServletRequest.getRequestURI().contains('car') ? 'current_nav' : ''}">搭车</a>
 				</span>
+				<!--*/-->
 				<span>
 					<a th:href="@{/down}" th:class="${#httpServletRequest.getRequestURI().contains('down') ? 'current_nav' : ''}">APP下载</a>
 				</span>

@@ -2674,25 +2674,25 @@ body {
     font-weight: bold;
     font-size: 15px;
     cursor: pointer;
-    border: 1px solid #09BB07;
-    color: #09BB07;
+    border: 1px solid #FFBE00;
+    color: #FFBE00;
     text-align: center;
 }
 
 .safety_btn {
-    background-color: #09BB07;
+    background-color: #FFBE00;
     color: #fff;
 }
 
 .safety_modify:hover {
     background-color: #f8f8f8;
-    color: #09BB07;
+    color: #000;
 }
 
 .safety_btn:hover {
-    background-color: #09BB07;
-    color: #fff;
-    border-color: #09BB07;
+    background-color: #FFBE00;
+    color: #000;
+    border-color: #FFBE00;
 }
 
 .r_box .page {

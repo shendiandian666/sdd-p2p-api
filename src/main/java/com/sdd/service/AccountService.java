@@ -4,12 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
-
-import org.springframework.aop.ThrowsAdvice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.github.pagehelper.PageHelper;
 import com.sdd.dao.DaoSupport;
 import com.sdd.model.User;
@@ -92,7 +89,7 @@ public class AccountService {
 		addRebate(params);
 		//余额变动记录
 		params.put("type", "3");
-		params.put("remark", "余额提现");
+		params.put("remark", "余额提现:" + Tools.getMapString(params, "balance"));
 		addRecord(params);
 	}
 	
@@ -120,6 +117,7 @@ public class AccountService {
 		dao.update("com.sdd.mapper.AccountMapper.addRebateLate", params);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> balanceRecord(int pageNum, int pageSize, Map<String, Object> params) throws Exception{
 		PageHelper.startPage(pageNum, pageSize);
 		return (List<Map<String, Object>>) dao.findForList("com.sdd.mapper.AccountMapper.balanceRecord", params);

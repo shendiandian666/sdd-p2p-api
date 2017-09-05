@@ -98,7 +98,7 @@
 						<td class="td_c">[[${orderDetail.plan_name}]]</td>
 						<td class="td_c">[[${orderDetail.plan_item}]]</td>
 						<td class="td_c">[[${orderDetail.is_first}]]</td>
-						<td class="td_c">[[${orderDetail.days}]]</td>
+						<td class="td_c">[[${orderDetail.days}]]天</td>
 						<td class="td_c">[[${orderDetail.deposit_range}]]</td>
 						<td class="td_c">[[${orderDetail.rebate}]]</td>
 					</tr>
@@ -116,6 +116,7 @@
 						<th style="text-align: center">手机号</th>
 						<th style="text-align: center">实投金额</th>
 						<th style="text-align: center">返现</th>
+						<th style="text-align: center">交单时间</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -125,6 +126,7 @@
 						<td class="td_c">[[${orderDetail.investor_phone}]]</td>
 						<td class="td_c">[[${#numbers.formatDecimal(orderDetail.deposit, 1, 'COMMA', 2, 'POINT')}]]</td>
 						<td class="td_c">[[${#numbers.formatDecimal(orderDetail.cash_back, 1, 'COMMA', 2, 'POINT')}]]</td>
+						<td class="td_c">[[${#dates.format(orderDetail.post_date, 'yyyy-MM-dd HH:mm:ss')}]]</td>
 					</tr>
 				</tbody>
 			</table>

@@ -83,7 +83,7 @@
 			<div class="invest_order_stat" th:inline="text">
 		        累计投资: <b>[[${#numbers.formatDecimal(sumOrder.totalDeposit, 1, 'COMMA', 2, 'POINT')}]]</b>
 		        累计返现: <b>[[${#numbers.formatDecimal(sumOrder.totalCashBack, 1, 'COMMA', 2, 'POINT')}]]</b>
-		        累计利息: <b>[[${#numbers.formatDecimal(sumOrder.totalInterest, 1, 'COMMA', 2, 'POINT')}]]</b>
+		        累计利息: <b>≈[[${#numbers.formatDecimal(sumOrder.totalInterest, 1, 'COMMA', 2, 'POINT')}]]</b>
 		    </div>
 			<ul class="order_list">
 		        <li th:each="item,status : ${postOrderList}" th:inline="text">
@@ -100,12 +100,12 @@
 		                    <b>[[${item.days}]]</b> 天
 		                </h4>
 		                <h5>投资人 <b>[[${item.investor_name}]]</b>
-		                    <i>|</i> 平台利息 <b>≈¥[[${item.interest}]]</b>
+		                    <i>|</i> 平台利息 <b>≈ ¥[[${item.interest}]]</b>
 		                    <i>|</i> 回款日期 [[${item.received_date == null ? '' : item.received_date}]]
 		                </h5>
 		            </div>
-		            <div class="order_list_rebate">返现<b><i></i>[[${#numbers.formatDecimal(item.cash_back, 1, 'COMMA', 0, 'POINT')}]]</b></div>
-		            <div class="order_list_interest">综合年化<b>[[${#numbers.formatDecimal(item.year_rate, 1, 'COMMA', 0, 'POINT')}]]<i>%</i></b></div>
+		            <div class="order_list_rebate">返现<b><i></i>¥[[${#numbers.formatDecimal(item.cash_back, 1, 'COMMA', 2, 'POINT')}]]</b></div>
+		            <div class="order_list_interest">综合年化<b>[[${#numbers.formatDecimal(item.year_rate, 1, 'COMMA', 2, 'POINT')}]]<i>%</i></b></div>
 		            <a class="order_list_detail" th:href="@{'/page/auth/account_order/detail/' + ${item.id}}"><b>详情</b></a>
 		        </li>
 		    </ul>

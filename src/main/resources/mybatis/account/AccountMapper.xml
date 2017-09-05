@@ -97,6 +97,7 @@
     <select id="balanceRecord" parameterType="java.util.Map" resultType="java.util.Map">
     select * from p2p_balance_list
     where account = #{account}
+    order by date desc
     </select>
     
     <insert id="addRecord" parameterType="java.util.Map">

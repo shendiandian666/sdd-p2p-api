@@ -41,7 +41,7 @@
 				</div>
 				<div class="r_cell png_img">
 					<div class="brand_logo_t">
-						<img th:src="${activity.platform_img}" th:alt="${activity.name}" height="40" /> 
+						<img th:src="${activity.platform_img}" th:alt="${activity.name}" height="40" width="100px" /> 
 						<span class="text_box f_text_box round_s">
 						[[${activity.isFirst == '1' ? '首投' : '复投'}]]
 						</span>
@@ -61,8 +61,9 @@
 								th:if="${activity.status == '1'}">立即参与</a> <a href="#"
 								id="activity-join-btn"
 								class="shop_btn pause_btn round_s transition_a"
-								th:if="${activity.status != '1'}">活动暂停</a> <a href="#"
-								id="activity-calc" class="shop_btn calc_btn">试算</a> <span
+								th:if="${activity.status != '1'}">活动暂停</a>
+								<a href="#"
+								id="activity-calc" class="shop_btn calc_btn">试算</a><span
 								class="m_l_b">已有<b class="orange_text font_20">[[${activity.joins}]]</b>人参加活动
 							</span>
 						</div>
@@ -254,7 +255,7 @@
 						'POINT')}]]</td>
 					<td>[[${item.days}]]天</td>
 					<td>≈ ¥[[${item.totalIncome_txt}]]</td>
-					<td>≈ [[${#numbers.formatDecimal(item.interest, 1, 'COMMA', 1,
+					<td>≈ [[${#numbers.formatDecimal(item.year_rate, 1, 'COMMA', 2,
 						'POINT')}]]%</td>
 					<td>[[${item.rebateCycle}]]</td>
 				</tr>
@@ -271,7 +272,7 @@
 			<div class="d_text">
 				<b>活动提示：</b>
 				<ol>
-					<li>马上多只负责与您结算<b>返利+奖励</b>部分，其他金额由投资平台结算。
+					<li>马上多只负责与您结算<b><font color="red">返利</font></b>部分，其他金额由投资平台结算。
 					</li>
 					<li>红包金额以对方平台为准，我方不保证一定正确；因对方平台可能随时更改红包规则，我方只保证返现并无责任对红包金额进行赔偿。</li>
 					<li>本站所显示的利息只是作为参照依据，如果与对方平台不一致请咨询马上多客服。</li>
@@ -411,7 +412,6 @@
 				class="cd-popup-close"></a>
 		</div>
 	</div>
-
 <script type="text/javascript" th:inline="javascript">
 function openPlatformTip() {
   if (false) {
@@ -592,7 +592,6 @@ function openPlatformTip() {
                 investorEmpty = false;
             }
         	var data = resp.data;
-            alert(JSON.stringify(data));
         	$("select[name='investorId']").append('<option value="'+ data.id +'" selected="selected">'+ data.mobile + "  " +  data.name +"</option>");
             layer.close(index_add_investor);
             form.render("select");
@@ -630,9 +629,9 @@ function openPlatformTip() {
         el.find('._r b').text(rebate);
         //el.find('._rp b').text(rebatePlus==null?'登陆后查看':rebatePlus);
         //el.find('._c b').text(credits); // 积分
-        var intertxt = interest;
+        var intertxt = '利息:' + interest;
         if(redback > 0){
-        	intertxt += ' + ' + redback;
+        	intertxt += ' + 红包:' + redback;
         }
         /*<![CDATA[*/
         el.find('._p b').text(intertxt);

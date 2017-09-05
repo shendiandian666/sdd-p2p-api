@@ -33,6 +33,8 @@ public class IndexController extends WebController {
 	public String web(HttpServletRequest request, Map<String, Object> map) throws Exception {
 		List<Map<String, Object>> swiperList = swiperService.getSwiper("3");
 		map.put("swiperList", swiperList);
+		List<Map<String, Object>> hotList = activityService.getHotActivity(1, 3);
+		map.put("hotList", hotList);
 		List<Map<String, Object>> list = activityService.getHotActivity(1, 15);
 		map.put("activityList", list);
 		List<Map<String, Object>> coPartnerList = coPartnerService.coPartnerList();
@@ -44,6 +46,8 @@ public class IndexController extends WebController {
 	public String index(HttpServletRequest request, Map<String, Object> map) throws Exception {
 		List<Map<String, Object>> swiperList = swiperService.getSwiper("3");
 		map.put("swiperList", swiperList);
+		List<Map<String, Object>> hotList = activityService.getHotActivity(1, 3);
+		map.put("hotList", hotList);
 		List<Map<String, Object>> list = activityService.getHotActivity(1, 15);
 		map.put("activityList", list);
 		List<Map<String, Object>> coPartnerList = coPartnerService.coPartnerList();
@@ -67,6 +71,7 @@ public class IndexController extends WebController {
 	@RequestMapping(value = "/first/{grade}")
 	public String first(@PathVariable("grade")String grade, Map<String, Object> map) throws Exception {
 		Map<String, Object> params = getParameters();
+		params.put("grade", grade);
 		params.put("first", "1");
 		List<Map<String, Object>> list = activityService.getActivityList(getPageNum(), getPageSize(), params);
 		map.put("activityList", list);
@@ -93,6 +98,7 @@ public class IndexController extends WebController {
 	@RequestMapping(value = "/repetition/{grade}")
 	public String repetition(@PathVariable("grade")String grade, HttpServletRequest request, Map<String, Object> map) throws Exception {
 		Map<String, Object> params = getParameters();
+		params.put("grade", grade);
 		params.put("first", "2");
 		List<Map<String, Object>> list = activityService.getActivityList(getPageNum(), getPageSize(), params);
 		map.put("activityList", list);

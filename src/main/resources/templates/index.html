@@ -66,7 +66,7 @@
 	<div class="w_1200 box_w">
 		<div class="hide_box">
 			<ul class="list_3 h_rec hover_ul">
-				<li class="li_o transition_move" th:each="item,status : ${activityList}" th:inline="text">
+				<li class="li_o transition_move" th:each="item,status : ${hotList}" th:inline="text">
 				<a th:if="${item.isFirst == '1'}" th:href="@{/first/getActivity(activity_id=${item.id})}" class="box transition_a">
 					<span class="f_rec f_rec3 png">热门</span>
 						<div class="brand_logo png_img round_r">
@@ -133,7 +133,7 @@
 			</ul>
 		</div>
 	</div>
-<!--/*--> 
+
 	<div class="w_1200 box_w clearfix white_box png_img">
 		<ul class="h_list hover_ul">
 			<li class="transition_a li_o transition_color transition_move" th:each="item,status : ${activityList}" th:inline="text">
@@ -173,7 +173,6 @@
 
 		</ul>
 	</div>
-<!--*/-->
 
 	<div class="w_1200 box_w clearfix white_box png_img">
 		<h4 class="h_th">

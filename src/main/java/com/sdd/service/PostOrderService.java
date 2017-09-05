@@ -115,7 +115,7 @@ public class PostOrderService {
 		//添加账户变动记录
 		Map<String, Object> recordMap = new HashMap<String, Object>();
 		recordMap.put("type", "2");
-		recordMap.put("remark", "交单");
+		recordMap.put("remark", "交单,返现:" + cash_back);
 		recordMap.put("account", params.get("account"));
 		accountService.addRecord(recordMap);
 		return null;
