@@ -1,6 +1,7 @@
 package com.sdd.controller.api.auth;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,12 +9,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.sdd.cache.SmsCache;
 import com.sdd.controller.api.ApiController;
 import com.sdd.model.SmsEntity;
 import com.sdd.service.AccountInfoService;
 import com.sdd.service.AccountService;
+import com.sdd.service.ConfigService;
 import com.sdd.util.JSONResult;
 import com.sdd.util.Tools;
 
@@ -60,6 +61,26 @@ public class AccountController extends ApiController {
 		Map<String, Object> params = getParamters();
 		String mobile = Tools.getMapString(params, "mobile");
 		String account = Tools.getMapString(params, "account");
+		/**
+		 * 提供ios审核用start
+		 */
+		if("13298516963".equals(account)){
+			String mobileCode = Tools.getMapString(params, "mobile_code");
+			if("8888".equals(mobileCode)){
+				accountInfoService.updateAlipay(params);
+			}else{
+				List<Map<String, Object>> fields = new ArrayList<>();
+				Map<String, Object> mobileMap = new HashMap<>();
+				mobileMap.put("field", "mobile_code");
+				mobileMap.put("message", "验证码错误!");
+				fields.add(mobileMap);
+				return JSONResult.fillResultString("1000", "验证码错误", fields);
+			}
+			return JSONResult.fillResultString(JSONResult.SC_OK, JSONResult.SC_OK_MSG, null);
+		}
+		/**
+		 * 提供ios审核用end
+		 */
 		if(!mobile.equals(account)){
 			List<Map<String, Object>> fields = new ArrayList<>();
 			Map<String, Object> mobileMap = new HashMap<>();
@@ -94,11 +115,43 @@ public class AccountController extends ApiController {
 		return accountService.updatePassword(getParamters());
 	}
 	
+	@Autowired
+	private ConfigService configService;
+	
 	@RequestMapping(value = "/withdraw")
 	public String withdraw() throws Exception {
+		//是否系暂停
+		String reson = configService.getStatus("withdraw");
+		if(!"".equals(reson)){
+			return JSONResult.fillResultString("1000", reson, Collections.emptyMap());
+		}
 		Map<String, Object> params = getParamters();
 		String mobile = Tools.getMapString(params, "mobile");
 		String account = Tools.getMapString(params, "account");
+		/**
+		 * 提供ios审核用start
+		 */
+		if("13298516963".equals(account)){
+			String mobileCode = Tools.getMapString(params, "mobile_code");
+			if("8888".equals(mobileCode)){
+				//支付宝提现alipay_account,校验余额
+				//查询余额
+				double balance = accountService.getBalance(Tools.getMapString(params, "account"));
+				double money = Double.valueOf(Tools.getMapString(params, "money"));
+				if(money > balance){
+					return JSONResult.fillResultString("1000", "余额不足!", null);
+				}
+				params.put("balance", money);
+				params.put("rebate", money);
+				accountService.withDraw(params);
+			}else{
+				return JSONResult.fillResultString("1000", "验证码错误!", null);
+			}
+			return JSONResult.fillResultString(JSONResult.SC_OK, JSONResult.SC_OK_MSG, null);
+		}
+		/**
+		 * 提供ios审核用end
+		 */
 		if(!mobile.equals(account)){
 			return JSONResult.fillResultString("1000", "手机号不匹配!", null);
 		}else{
@@ -117,7 +170,6 @@ public class AccountController extends ApiController {
 					params.put("balance", money);
 					params.put("rebate", money);
 					accountService.withDraw(params);
-					//支付宝转账
 				} else {
 					return JSONResult.fillResultString("1000", "验证码错误!", null);
 				}

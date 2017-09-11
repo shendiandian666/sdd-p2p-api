@@ -43,6 +43,27 @@ public class IndexController extends ApiController {
 		String mobile = Tools.getMapString(params, "mobile");
 		String passwd = Tools.getMapString(params, "password");
 		params.put("new_password", MD5.md5(passwd));
+		/**
+		 * 提供ios审核用start
+		 */
+		if("13298516963".equals(mobile)){
+			String mobileCode = Tools.getMapString(params, "mobile_code");
+			if ("8888".equals(mobileCode)) {
+				params.put("account", mobile);
+				accountService.resetPasswd(params);
+			} else {
+				List<Map<String, Object>> fields = new ArrayList<>();
+				Map<String, Object> mobileMap = new HashMap<>();
+				mobileMap.put("field", "mobile_code");
+				mobileMap.put("message", "验证码错误!");
+				fields.add(mobileMap);
+				return JSONResult.fillResultString("1000", "验证码错误", fields);
+			}
+			return JSONResult.fillResultString(JSONResult.SC_OK, JSONResult.SC_OK_MSG, null);
+		}
+		/**
+		 * 提供ios审核用end
+		 */
 		//缓存中获取验证码
 		SmsEntity smsEntity = smsCache.getSms(mobile + "forgetpasswd");
 		if(smsEntity != null){

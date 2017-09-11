@@ -143,8 +143,9 @@
 						<div class="brand_logo_t">
 							<img
 								th:src="@{${item.platform_img}}"
-								alt="" width="120" height="50" /> <span
-								class="text_box f_text_box round_s">[[${item.isFirst == '1' ? '首投' : '复投'}]]</span>
+								alt="" width="120" height="50" />
+								<span class="text_box f_text_box round_s" th:if="${item.isFirst == '1'}">首投</span> 
+								<span class="text_box text_box_orange f_text_box round_s" th:if="${item.isFirst == '2'}">复投</span> 
 						</div>
 					</div>
 					<div class="r_cell">

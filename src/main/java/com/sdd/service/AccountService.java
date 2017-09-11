@@ -62,9 +62,11 @@ public class AccountService {
 	public void resetPasswd(Map<String, Object> params) throws Exception {
 		dao.update("com.sdd.mapper.AccountMapper.updatePassword", params);
 	}
+	
 	@Autowired
 	private AccountService accountService;
 	
+	@Transactional
 	public void addService(Map<String, Object> params) throws Exception{
 		String passwd = Tools.getMapString(params, "password");
 		params.put("passwd", MD5.md5(passwd));
@@ -76,10 +78,13 @@ public class AccountService {
 			Map<String, Object> recordMap = new HashMap<String, Object>();
 			recordMap.put("type", "0");
 			recordMap.put("remark", "用户注册");
-			recordMap.put("account", params.get("account"));
+			recordMap.put("account", params.get("mobile"));
 			accountService.addRecord(recordMap);
 		}
 	}
+	
+	@Autowired
+	private SmsSendService smsSendService;
 	
 	@Transactional
 	public void withDraw(Map<String, Object> params) throws Exception {
@@ -91,6 +96,15 @@ public class AccountService {
 		params.put("type", "3");
 		params.put("remark", "余额提现:" + Tools.getMapString(params, "balance"));
 		addRecord(params);
+		//查询余额
+		Map<String, Object> userInfo = getUserInfo(Tools.getMapString(params, "account"));
+		//支付宝转账(转账成功发送短信通知)
+		smsSendService.sendWithDrawNotice(
+				Tools.getMapString(params, "account"), 
+				Tools.getMapString(params, "account"), 
+				Tools.getMapString(params, "balance"), 
+				Tools.getMapString(userInfo, "alipay_account"), 
+				Tools.getMapString(userInfo, "balance"));
 	}
 	
 	public Double getBalance(String account) throws Exception {

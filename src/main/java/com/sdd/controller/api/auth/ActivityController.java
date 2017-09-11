@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sdd.controller.api.ApiController;
 import com.sdd.service.ActivityPlanService;
 import com.sdd.service.ActivityService;
+import com.sdd.service.ConfigService;
 import com.sdd.service.InvestorService;
 import com.sdd.util.JSONResult;
 import com.sdd.util.Tools;
@@ -27,6 +28,9 @@ public class ActivityController extends ApiController {
 	@Autowired
 	private ActivityPlanService activityPlanService;
 	
+	@Autowired
+	private ConfigService configService;
+	
 	/**
 	 * PC页面join
 	 * @param map
@@ -41,6 +45,11 @@ public class ActivityController extends ApiController {
 		String activityId = getString("activity_id");
 		Map<String, Object> activity = activityService.getActivity(activityId);
 		result.put("activity", activity);
+		//是否系暂停
+		String reson = configService.getStatus("activity_join");
+		if(!"".equals(reson)){
+			return JSONResult.fillResultString("1000", reson, Collections.emptyMap());
+		}
 		//判断活动状态
 		String status = activity.get("status").toString();
 		if("1".equals(status)){
@@ -64,6 +73,11 @@ public class ActivityController extends ApiController {
 	 */
 	@RequestMapping(value = "/join")
 	public String join(Map<String, Object> map) throws Exception {
+		//是否系暂停
+		String reson = configService.getStatus("activity_join");
+		if(!"".equals(reson)){
+			return JSONResult.fillResultString("1000", reson, Collections.emptyMap());
+		}
 		Map<String, Object> params = getParamters();
 		Map<String, Object> result = new HashMap<String, Object>();
 		String planId = getString("planId");
