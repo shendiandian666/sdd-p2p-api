@@ -1,0 +1,1 @@
+mvn install:install-file -DgroupId=com.aliyun.alicom -DartifactId=alipay-sdk-java -Dversion=1.0.0 -Dfile=/Users/Neo/alipay-sdk-java20170829142630.jar -Dpackaging=jar -DgeneratePom=true
