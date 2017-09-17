@@ -15,24 +15,7 @@
 <body>
 	<dif th:replace="/common/head"/>
 
-	<!--star动画-->
-	<div class="banner">
-		<ul class="bd">
-			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc3.jpg} + ');'">
-			    <a href="javascript:;"></a>
-			</li>
-			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc2.jpg} + ');'">
-			<a href="javascript:;"></a>
-			</li>
-			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc1.jpg} + ');'">
-			<a href="javascript:;"></a>
-			</li>
-		</ul>
-		<ul class="hd"></ul>
-		<div class="btn btn_l prev transition_a">&lt;</div>
-		<div class="btn btn_r next transition_a">&gt;</div>
-	</div>
-	<!--end动画-->
+	<dif th:replace="/others/swiper" />
 	
 	<div class="w_1200 box_w_b clearfix">
 		<dl class="about_tab_th round_m_a">

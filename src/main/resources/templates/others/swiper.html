@@ -1,0 +1,9 @@
+<!--star动画-->
+<div class="banner">
+	<ul class="bd">
+		<li th:each="item,status : ${swiperList}" th:inline="text" th:style="'background-image:url(' + @{${item.img}} + ');'">
+		    <a th:href="@{${item.url}}"></a>
+		</li>
+	</ul>
+</div>
+<!--end动画-->

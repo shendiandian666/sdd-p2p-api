@@ -1,14 +1,20 @@
 package com.sdd.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayFundTransOrderQueryRequest;
 import com.alipay.api.request.AlipayFundTransToaccountTransferRequest;
 import com.alipay.api.response.AlipayFundTransToaccountTransferResponse;
+import net.sf.json.JSONObject;
 import com.alipay.api.response.AlipayFundTransOrderQueryResponse;
 
+@Service("alipayToAccount")
 public class AlipayToAccount {
 
 	@Value("${alipay.appId}")
@@ -17,8 +23,13 @@ public class AlipayToAccount {
 	private String privateKey;
 	@Value("${alipay.public.key}")
 	private String alipayPublicKey;
+	@Value("${alipay.payer_show_name}")
+	private String alipayPayerShowName;
+	@Value("${alipay.remark}")
+	private String alipayRemark;
 	
-	public void transfer(String bizNo, String account, String amount) {
+	
+	public JSONObject transfer(String bizNo, String account, String amount) {
 		AlipayClient alipayClient = new DefaultAlipayClient(
 				"https://openapi.alipay.com/gateway.do",
 				appId,
@@ -26,25 +37,29 @@ public class AlipayToAccount {
 				alipayPublicKey,"RSA2");
 		AlipayFundTransToaccountTransferRequest request = new AlipayFundTransToaccountTransferRequest();
 		request.setBizContent("{" +
-		"    \"out_biz_no\":"+bizNo+"," +
+		"    \"out_biz_no\":\""+bizNo+"\"," +
 		"    \"payee_type\":\"ALIPAY_LOGONID\"," +
-		"    \"payee_account\":"+account+"," +
-		"    \"amount\":"+amount+"," +
-		"    \"payer_show_name\":\"马上多返利提现\"," +
+		"    \"payee_account\":\""+account+"\"," +
+		"    \"amount\":\""+amount+"\"," +
+		"    \"payer_show_name\":\""+alipayPayerShowName+"\"," +
 		"    \"payee_real_name\":\"\"," +
-		"    \"remark\":\"转账备注\"," +
+		"    \"remark\":\""+alipayRemark+"\"," +
 		"  }");
 		AlipayFundTransToaccountTransferResponse response;
 		try {
 			response = alipayClient.execute(request);
 			if(response.isSuccess()){
+				System.out.println(JSONObject.fromObject(response).toString());
 				System.out.println("调用成功");
 			} else {
+				System.out.println(JSONObject.fromObject(response).toString());
 				System.out.println("调用失败");
 			}
+			return JSONObject.fromObject(response);
 		} catch (AlipayApiException e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	public void query(){
@@ -62,13 +77,20 @@ public class AlipayToAccount {
 		try {
 			response = alipayClient.execute(request);
 			if(response.isSuccess()){
+				System.out.println(response.toString());
 				System.out.println("调用成功");
 			} else {
+				System.out.println(response.toString());
 				System.out.println("调用失败");
 			}
 		} catch (AlipayApiException e) {
 			e.printStackTrace();
 		}
-		
+	}
+	
+	public static void main(String[] args) {
+		AlipayToAccount alipay = new AlipayToAccount();
+		String bizNo = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+		alipay.transfer(bizNo, "13651619487@1633.com", "0.1");
 	}
 }

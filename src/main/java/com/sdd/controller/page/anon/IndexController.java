@@ -13,6 +13,7 @@ import com.sdd.controller.WebController;
 import com.sdd.service.ActivityPlanService;
 import com.sdd.service.ActivityService;
 import com.sdd.service.CoPartnerService;
+import com.sdd.service.ContactService;
 import com.sdd.service.NewsService;
 import com.sdd.service.SwiperService;
 import com.sdd.service.TeamActivityService;
@@ -155,23 +156,36 @@ public class IndexController extends WebController {
 	
 	@RequestMapping(value = "/announcement")
 	public String announcement(Map<String, Object> map) throws Exception {
+		List<Map<String, Object>> swiperList = swiperService.getSwiper("5");
+		map.put("swiperList", swiperList);
 		List<Map<String, Object>> newsList = newsService.getNews("1");
 		map.put("newsList", newsList);
 		return "/others/announcement";
 	}
 	
+	@Autowired
+	private ContactService contactService;
+	
 	@RequestMapping(value = "/about")
 	public String about(Map<String, Object> map) throws Exception {
+		List<Map<String, Object>> swiperList = swiperService.getSwiper("5");
+		map.put("swiperList", swiperList);
+		List<Map<String, Object>> contactList = contactService.contactList();
+		map.put("contactList", contactList);
 		return "/others/about";
 	}
 	
 	@RequestMapping(value = "/service")
 	public String service(Map<String, Object> map) throws Exception {
+		List<Map<String, Object>> swiperList = swiperService.getSwiper("5");
+		map.put("swiperList", swiperList);
 		return "/others/service";
 	}
 	
 	@RequestMapping(value = "/help")
 	public String help(Map<String, Object> map) throws Exception {
+		List<Map<String, Object>> swiperList = swiperService.getSwiper("5");
+		map.put("swiperList", swiperList);
 		List<Map<String, Object>> newsList = newsService.getNews("2");
 		map.put("newsList", newsList);
 		return "/others/help";
@@ -179,6 +193,8 @@ public class IndexController extends WebController {
 	
 	@RequestMapping(value = "/agreement")
 	public String agreement(Map<String, Object> map) throws Exception {
+		List<Map<String, Object>> swiperList = swiperService.getSwiper("5");
+		map.put("swiperList", swiperList);
 		return "/others/agreement";
 	}
 	
@@ -186,17 +202,19 @@ public class IndexController extends WebController {
 	public String appDownload(HttpServletRequest request, Map<String, Object> map) throws Exception {
 		String userAgent = request.getHeader("user-agent");
 		String system = Tools.getMapString(getParameters(), "system");
+		List<Map<String, Object>> appleDown = swiperService.getSwiper("6");
+		List<Map<String, Object>> androidDown = swiperService.getSwiper("7");
 		if("".equals(system)){
 			if(userAgent.contains("iPhone") || userAgent.contains("iPod") || userAgent.contains("iPad")){
-				
+				return "redirect:" + appleDown.get(0).get("url").toString();
 			}else{
-				return "redirect:http://www.msdfanli.com/upload/mobile_msd_android.apk";
+				return "redirect:" + androidDown.get(0).get("url").toString();
 			}
 		}else{
 			if("android".equals(system)){
-				return "redirect:http://www.msdfanli.com/upload/mobile_msd_android.apk";
+				return "redirect:" + androidDown.get(0).get("url").toString();
 			}else if("apple".equals(system)){
-				
+				return "redirect:" + appleDown.get(0).get("url").toString();
 			}
 		}
 		return "/others/down";

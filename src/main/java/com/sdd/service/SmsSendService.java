@@ -63,7 +63,7 @@ public class SmsSendService {
     }
     
     @Async
-	public void sendWithDrawNotice(String phone, String account, String money, String alipay, String balance) throws ClientException {
+	public void sendWithDrawNotice(String phone, String money) throws ClientException {
         //可自助调整超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
         System.setProperty("sun.net.client.defaultReadTimeout", "10000");
@@ -81,7 +81,7 @@ public class SmsSendService {
         //必填:短信模板-可在短信控制台中找到
         request.setTemplateCode(withdrawNotice);
         //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
-        request.setTemplateParam("{\"account\":\""+account+"\",\"money\":\""+money+"\",\"pay_account\":\""+alipay+"\",\"balance\":\""+balance+"\"}");
+        request.setTemplateParam("{\"money\":\""+money+"\"}");
         //可选:outId为提供给业务方扩展字段,最终在短信回执消息中将此值带回给调用者
         request.setOutId("");
         //hint 此处可能会抛出异常，注意catch

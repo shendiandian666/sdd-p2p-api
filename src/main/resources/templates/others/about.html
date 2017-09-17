@@ -15,24 +15,7 @@
 <body>
 	<dif th:replace="/common/head" />
 
-	<!--star动画-->
-	<div class="banner">
-		<ul class="bd">
-			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc3.jpg} + ');'">
-			    <a href="javascript:;"></a>
-			</li>
-			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc2.jpg} + ');'">
-			<a href="javascript:;"></a>
-			</li>
-			<li th:style="'background-image:url(' + @{/upload/banner/pc/pc1.jpg} + ');'">
-			<a href="javascript:;"></a>
-			</li>
-		</ul>
-		<ul class="hd"></ul>
-		<div class="btn btn_l prev transition_a">&lt;</div>
-		<div class="btn btn_r next transition_a">&gt;</div>
-	</div>
-	<!--end动画-->
+	<dif th:replace="/others/swiper" />
 
 	<div class="w_1200 box_w_b clearfix">
 		<dl class="about_tab_th round_m_a">
@@ -45,7 +28,7 @@
 			</dd>
 		</dl>
 		<div class="white_box clearfix box_w_b">
-			<div class="about_text">
+			<div class="about_text" style="width: 92%; margin: 0 auto">
 				<h2>关于马上多返利</h2>
 				<p>马上多返利网<!-- 运营公司为上海亿珠网络技术服务有限公司，旗下产品：马上多返利（www.msdfanli.com）。 -->在广大投资人的强烈需求下，于2017年开始上线运营。</p>
 				<p>马上多返利基于网贷平台给用户的正常投资回报之上，再叠加额外的返利给用户，使得用户的投资收益率最大化，深受用户喜爱。</p>
@@ -70,27 +53,17 @@
                         <p>线上分析，线下考察<br>Ｎ道风控手段</p></li>
 				</ul>
 			</div>
-			<ul class="about_contact">
-				<li>
-					<h4>客户服务</h4>
-					<p>服务范围：终端客户的各种问题</p>
-					<p>Q Q：3380006173</p>
-					<p>邮箱：service@msdfanli.com‍</p>
-				</li>
-				<li>
-					<h4>商务合作</h4>
-					<p>合作方向：平台合作、广告投放、深度合作</p>
-					<p>电话：13298516963</p>
-					<p>Q Q：545243400</p>
-					<p>邮箱：buiness@msdfanli.com‍</p>
-				</li>
-				<li>
-					<h4>技术支持</h4>
-					<p>服务范围：各种疑难杂症，平台技术对接，API接口等</p>
-					<p>Q Q：545243400</p>
-					<p>邮箱：support@msdfanli.com‍</p>
-				</li>
-			</ul>
+			<div class="hide_box" style="width: 92%; margin: 0 auto;">
+				<ul class="about_contact">
+					<li th:each="item,status : ${contactList}" th:inline="text">
+						<h4>[[${item.title}]]</h4>
+						<p>[[${item.detail}]]</p>
+						<p th:if="${item.phone != '' && item.phone != null}">[[${item.phone}]]</p>
+						<p th:if="${item.QQ != '' && item.QQ != null}">[[${item.QQ}]]</p>
+						<p th:if="${item.mail != '' && item.mail != null}">[[${item.mail}]]‍</p>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 	<dif th:replace="/common/login_register" />

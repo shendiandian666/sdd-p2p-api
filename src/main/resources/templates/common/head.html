@@ -54,6 +54,13 @@
 				<span> <a th:href="@{/car}"
 					th:class="${#httpServletRequest.getRequestURI().contains('car') ? 'current_nav' : ''}">搭车</a>
 				</span>
+				
+				<span> <a th:href="@{/car}"
+					th:class="${#httpServletRequest.getRequestURI().contains('car') ? 'current_nav' : ''}">借款</a>
+				</span>
+				<span> <a th:href="@{/car}"
+					th:class="${#httpServletRequest.getRequestURI().contains('car') ? 'current_nav' : ''}">信用卡</a>
+				</span>
 				<!--*/-->
 				<span>
 					<a th:href="@{/down}" th:class="${#httpServletRequest.getRequestURI().contains('down') ? 'current_nav' : ''}">APP下载</a>

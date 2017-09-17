@@ -1,5 +1,8 @@
 package com.sdd.service;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +16,8 @@ import com.sdd.model.User;
 import com.sdd.util.JSONResult;
 import com.sdd.util.MD5;
 import com.sdd.util.Tools;
+
+import net.sf.json.JSONObject;
 
 @Service("accountService")
 public class AccountService {
@@ -86,25 +91,49 @@ public class AccountService {
 	@Autowired
 	private SmsSendService smsSendService;
 	
+	@Autowired
+	private AlipayToAccount alipayToAccount;
+	
+	@Autowired
+	private AlipayTransferService alipayTransferService;
+	
 	@Transactional
 	public void withDraw(Map<String, Object> params) throws Exception {
 		//减去余额
 		subBalance(params);
 		//增加已提现金额
 		addRebate(params);
+		String amount = Tools.getMapString(params, "balance");
 		//余额变动记录
 		params.put("type", "3");
-		params.put("remark", "余额提现:" + Tools.getMapString(params, "balance"));
+		DecimalFormat df = new DecimalFormat("#.00");
+		params.put("remark", "余额提现:" + df.format(amount));
 		addRecord(params);
 		//查询余额
-		Map<String, Object> userInfo = getUserInfo(Tools.getMapString(params, "account"));
-		//支付宝转账(转账成功发送短信通知)
-		smsSendService.sendWithDrawNotice(
-				Tools.getMapString(params, "account"), 
-				Tools.getMapString(params, "account"), 
-				Tools.getMapString(params, "balance"), 
-				Tools.getMapString(userInfo, "alipay_account"), 
-				Tools.getMapString(userInfo, "balance"));
+		String account = Tools.getMapString(params, "account");
+		Map<String, Object> userInfo = getUserInfo(account);
+		String alipayAccount = Tools.getMapString(userInfo, "alipay_account");
+		String bizNo = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+		//支付宝转账
+		JSONObject response = alipayToAccount.transfer(bizNo, alipayAccount, amount);
+		//记录支付宝转账记录及返回结果
+		Map<String, Object> transferMap = new HashMap<String, Object>();
+		transferMap.put("biz_no", bizNo);
+		transferMap.put("payee_type", "ALIPAY_LOGONID");
+		transferMap.put("payee_account", alipayAccount);
+		transferMap.put("amount", amount);
+		transferMap.put("remark", "余额提现");
+		transferMap.put("success", response.getString("success"));
+		transferMap.put("orderId", response.getString("orderId"));
+		transferMap.put("code", response.getString("code"));
+		transferMap.put("msg", response.getString("msg"));
+		transferMap.put("subCode", response.getString("subCode"));
+		transferMap.put("subMsg", response.getString("subMsg"));
+		int count = alipayTransferService.addTransfer(transferMap);
+		if(count == 1){
+			//支付宝转账(转账成功发送短信通知)
+			smsSendService.sendWithDrawNotice(account, amount);
+		}
 	}
 	
 	public Double getBalance(String account) throws Exception {
