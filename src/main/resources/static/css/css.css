@@ -201,7 +201,7 @@ body {
 
 .tnav span {
     float: left;
-    padding: 0 0 0 2em;
+    padding: 0 0 0 3em;
 }
 
 .tnav a {
@@ -247,18 +247,12 @@ body {
     z-index: 7;
     position: absolute;
     left: 50%;
-    width: 200px;
-    margin: 0 0 0 -110px;
+    margin: 0 0 0 0;
     background-color: #fff;
-    box-shadow: 0 0 8px rgba(0, 0, 0, .4);
-    padding: 10px;
-    line-height: 28px;
-    text-align: left;
 }
 .sec_qq a { color: #333333; }
 .sec_qq img {
     vertical-align: middle;
-    margin-right: .5em;
 }
 
 .headerwrap {
@@ -437,6 +431,12 @@ body {
 .list_5 li {
     float: left;
     width: 19.9%;
+}
+
+.list_6 li {
+    float: left;
+    text-align:center;
+    width: 10%;
 }
 
 /*优势*/
@@ -1013,6 +1013,15 @@ body {
     box-shadow: 0 15px 15px rgba(0, 0, 0, .2);
 }
 
+/*友情链接*/
+.h_brand_link {
+    padding: 1em 0;
+}
+
+.h_brand_link li {
+    margin: .8em 0;
+    height: 20px;
+}
 /*合作伙伴*/
 .h_brand {
     padding: 1em 0;
@@ -1072,7 +1081,7 @@ body {
 }
 
 .footer_ul {
-    width: 970px;
+    width: 800px;
 }
 
 .footer_ul p {

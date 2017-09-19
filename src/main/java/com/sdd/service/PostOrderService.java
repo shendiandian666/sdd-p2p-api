@@ -105,7 +105,8 @@ public class PostOrderService {
 		String isFirst = activity.get("isFirst") == null ? "" : activity.get("isFirst").toString();
 		params.put("is_first", "1".equals(isFirst) ? "首投" : "2".equals(isFirst) ? "复投" : "异常");
 		params.put("activity_id", activity.get("id"));
-		params.put("platform_name", Tools.getMapString(activity, "name"));
+		String platformName = Tools.getMapString(activity, "name");
+		params.put("platform_name", platformName);
 		dao.save("com.sdd.mapper.PostOrderMapper.add", params);
 		//修改可提现余额
 		params.put("rebate_late", cash_back);
@@ -115,7 +116,7 @@ public class PostOrderService {
 		//添加账户变动记录
 		Map<String, Object> recordMap = new HashMap<String, Object>();
 		recordMap.put("type", "2");
-		recordMap.put("remark", "交单,返现:" + cash_back);
+		recordMap.put("remark", platformName + ",待返现:" + String.format("%.2f", cash_back) + "元");
 		recordMap.put("account", params.get("account"));
 		accountService.addRecord(recordMap);
 		return null;

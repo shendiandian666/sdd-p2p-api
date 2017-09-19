@@ -289,18 +289,8 @@
 			<b>QQ群</b>
 		</h4>
 		<div class="qq_box_more clearfix">
-			<p>
-				<a target="_blank" 
-					href="//shang.qq.com/wpa/qunwpa?idkey=d6f277946c0bd4b0080c1354b79f74fa06e107c57feef0af0e3708a400816107">
-					<img th:src="@{/images/icon/qq.gif}" alt="马上多官方一群" title="马上多官方一群" width="23" height="16">
-					马上多官方一群：248811548
-					</a>
-			</p>
-			<p>
-				<img th:src="@{/images/icon/qq.gif}" alt="qq" width="23" height="16" />马上多官方二群：等待开放
-			</p>
-			<p>
-				<img th:src="@{/images/icon/qq.gif}" alt="qq" width="23" height="16" />马上多官方三群：等待开放
+			<p th:each="item,status : ${qqList}" th:inline="text">
+				<img th:src="@{/images/icon/qq.gif}" th:alt="${item.title}" th:title="${item.title}" width="23" height="16">[[${item.content}]]
 			</p>
 		</div>
 	</div>

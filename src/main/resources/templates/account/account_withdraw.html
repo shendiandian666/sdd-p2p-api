@@ -109,7 +109,7 @@
 							<tfoot>
 								<tr>
 									<th></th>
-									<td><input type="submit" class="shop_btn round_s"
+									<td><input id="widthdraw" type="submit" class="shop_btn round_s"
 										value="提现" /></td>
 								</tr>
 							</tfoot>
@@ -188,9 +188,11 @@
 						layer.msg("提现金额必需大于1元!");
 						return false;
 					}
+					$("#widthdraw").attr("disabled", true);
 					$.post(/*[[@{/api/auth/account/withdraw}]]*/+'', $(this).serializeArray(),function(data, textStatus, request) {
 						if (data.status != '200') {
 							layer.msg(data.message);
+							$("#widthdraw").attr("disabled", false);
 							return;
 						} else {
 							$('#withdraw-popup').hide();

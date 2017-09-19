@@ -30,6 +30,11 @@ public class IndexController extends WebController {
 	@Autowired
 	private SwiperService swiperService;
 	
+	@RequestMapping(value = "/404")
+	public String error(HttpServletRequest request, Map<String, Object> map) throws Exception {
+		return "/404";
+	}
+	
 	@RequestMapping(value = "/web")
 	public String web(HttpServletRequest request, Map<String, Object> map) throws Exception {
 		List<Map<String, Object>> swiperList = swiperService.getSwiper("3");
@@ -233,6 +238,10 @@ public class IndexController extends WebController {
 		
 		List<Map<String, Object>> planList = activityPlanService.getPlanlist(activityId);
 		map.put("planList", planList);
+		
+		List<Map<String, Object>> qqList = newsService.getNews("8");
+		map.put("qqList", qqList);
+		
 		return "/activity";
 	}
 	
@@ -241,6 +250,8 @@ public class IndexController extends WebController {
 	
 	@RequestMapping(value = "/*/news/{id}")
 	public String news(@PathVariable("id")String id, Map<String, Object> map) throws Exception {
+		List<Map<String, Object>> swiperList = swiperService.getSwiper("5");
+		map.put("swiperList", swiperList);
 		map.put("news", newsService.getContent(id));
 		return "/others/news";
 	}

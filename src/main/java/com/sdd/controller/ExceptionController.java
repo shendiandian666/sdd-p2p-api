@@ -31,11 +31,11 @@ public class ExceptionController extends BasicErrorController {
 	public ModelAndView errorHtml(HttpServletRequest request, HttpServletResponse response) {
 		//return super.errorHtml(request, response);
 		HttpStatus status = getStatus(request);
-		if(status != HttpStatus.NOT_FOUND){
-			return new ModelAndView("redirect:/index");
-		}
 		System.out.println("text/html status:"+status);
-		return new ModelAndView("/404", this.getErrorAttributes(request, false));
+		//if(status.equals(HttpStatus.NOT_FOUND)){
+			//return new ModelAndView("/404");
+		//}
+		return new ModelAndView("redirect:/404");
 	}
 
 	

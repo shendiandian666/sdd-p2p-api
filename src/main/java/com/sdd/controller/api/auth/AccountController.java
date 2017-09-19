@@ -63,7 +63,6 @@ public class AccountController extends ApiController {
 		String account = Tools.getMapString(params, "account");
 		/**
 		 * 提供ios审核用start
-		 */
 		if("13298516963".equals(account)){
 			String mobileCode = Tools.getMapString(params, "mobile_code");
 			if("8888".equals(mobileCode)){
@@ -78,7 +77,6 @@ public class AccountController extends ApiController {
 			}
 			return JSONResult.fillResultString(JSONResult.SC_OK, JSONResult.SC_OK_MSG, null);
 		}
-		/**
 		 * 提供ios审核用end
 		 */
 		if(!mobile.equals(account)){
@@ -130,7 +128,6 @@ public class AccountController extends ApiController {
 		String account = Tools.getMapString(params, "account");
 		/**
 		 * 提供ios审核用start
-		 */
 		if("13298516963".equals(account)){
 			String mobileCode = Tools.getMapString(params, "mobile_code");
 			if("8888".equals(mobileCode)){
@@ -149,7 +146,6 @@ public class AccountController extends ApiController {
 			}
 			return JSONResult.fillResultString(JSONResult.SC_OK, JSONResult.SC_OK_MSG, null);
 		}
-		/**
 		 * 提供ios审核用end
 		 */
 		if(!mobile.equals(account)){

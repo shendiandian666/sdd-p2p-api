@@ -84,14 +84,12 @@ public class SMSController extends ApiController {
 		String mobileCode = request.getParameter("mobile_code");
 		/**
 		 * 提供ios审核用start
-		 */
 		if("13298516963".equals(mobile)){
 			if(!"8888".equals(mobileCode)){
 				return JSONResult.fillResultString("1000", "验证码错误", null);
 			}
 			return JSONResult.fillResultString(JSONResult.SC_OK, JSONResult.SC_OK_MSG, null);
 		}
-		/**
 		 * 提供ios审核用end
 		 */
 		// 缓存中获取验证码

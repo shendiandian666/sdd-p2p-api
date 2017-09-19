@@ -75,7 +75,7 @@
 			</if>
 			)
 		</if>
-		order by a.orderby desc
+		order by a.orderby,a.id desc
     </select>
     
     <select id="getHotActivity" resultType="java.util.Map">
@@ -85,7 +85,7 @@
 	  from p2p_activity a,p2p_platform b
 	  where a.platform_id=b.id
 	  and a.status = '1'
-	  order by a.orderby desc
+	  order by a.orderby,a.id desc
     </select>
     
     <update id="updateJoins" parameterType="string">

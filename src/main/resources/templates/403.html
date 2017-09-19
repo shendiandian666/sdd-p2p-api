@@ -1,69 +1,33 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
-
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="renderer" content="webkit" />
+	<meta name="viewport" content="width=1200" />
+	<title>首投活动_P2P理财返利_马上多返利网</title>
+	<meta name="description"
+		content="马上多返利网是一个理财返利平台,为您提供理财返利、P2P返利、网贷返利、投资返利等全方位高收益理财返利活动" />
+	<dif th:replace="/common/common"/>
 </head>
-		 
-<body class="no-skin">
+<body>
+	<dif th:replace="/common/head" />
 
-	<!-- /section:basics/navbar.layout -->
-	<div class="main-container" id="main-container">
-		<!-- /section:basics/sidebar -->
-		<div class="main-content">
-			<div class="main-content-inner">
-				<div class="page-content">
-					<div class="hr hr-18 dotted hr-double"></div>
-					<div class="row">
-						<div class="col-xs-12">
-							<div class="error-container">
-							<div class="well">
-								<h1 class="grey lighter smaller">
-									<span class="blue bigger-125"><i class="icon-sitemap"></i> 403</span> 没有找到此页面
-								</h1>
-								<hr />
-								
-								<div>
-									
-									<div class="space"></div>
-									
-									<h4 class="smaller">检查一下可能性:401</h4>
-									<ul>
-										<li><i class="icon-hand-right blue"></i> 检查请求链接是不是有误</li>
-										<li><i class="icon-hand-right blue"></i> 检查处理类代码是不是有误</li>
-										<li><i class="icon-hand-right blue"></i> 检查环境配置是不是有误</li>
-										<li><i class="icon-hand-right blue"></i> 检查处理类视图映射路径</li>
-									</ul>
-								</div>
-								
-								<hr />
-								<div class="space"></div>
-								
-								<div class="row-fluid">
-									<div id="zhongxin">
-									</div>
-								</div>
-							</div>
-							</div>
-		
-						</div>
-						<!-- /.col -->
-					</div>
-					<!-- /.row -->
-				</div>
-				<!-- /.page-content -->
-			</div>
-		</div>
-		<!-- /.main-content -->
-
-
-		<!-- 返回顶部 -->
-		<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-			<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-		</a>
-
-	</div>
+	<dl class="site_th w_1200">
+        <dd>当前位置：<a th:href="@{/index}">马上多返利</a><em class="china">&gt;</em>404页面不存在</dd>
+    </dl>
+    <div class="white_box clearfix w_1200 box_w_b">
+        <dl class="clearfix box_404">
+            <dt><img src="/upload/404.gif" alt="" width="360" height="350"></dt>
+            <dd class="r_cell">错误代码：404<p>错误信息：网络原因|找不到请求页面|输入网址不正确</p>
+                <div><a href="/" class="shop_btn round_s">返回首页 &gt;</a></div>
+            </dd>
+        </dl>
+    </div>
+	<dif th:replace="/common/login_register" />
+	<dif th:replace="/common/footer" />
 </body>
 </html>
+

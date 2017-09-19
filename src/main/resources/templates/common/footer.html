@@ -1,39 +1,74 @@
 <div th:fragment="footer" class="clearfix footer min_1200"></div>
 
-<div th:fragment="footer_d" class="min_1200 clearfix footer_d">
-	<dl class="w_1200 clearfix footer_d">
-		<dt class="fl">
-			<a th:href="@{/index}">网站首页</a> <em class="china">|</em>
-			<a th:href="@{/first}">首投活动</a> <em class="china">|</em>
-			<a th:href="@{/repetition}">复投活动</a> <em class="china">|</em> 
-			<!--/*--> 
-			<a th:href="@{/car}">搭车</a> <em class="china">|</em>
-			<!--*/-->
-			<a th:href="@{/down}">APP下载</a> <em class="china">|</em>
-			<a th:href="@{/announcement}">公告</a> <em class="china">|</em> 
-			<a th:href="@{/about}">帮助中心</a> <em class="china">|</em>
-			<p>版权所有 &copy; CopyRight 2017 www.msdfanli.com All
-				Rights Reserved. 湘ICP备17014873号-1</p>
-		</dt>
-		<dd class="r_cell">
-			<a href="#" class="f_a"></a> <a href="#" class="f_a f_a2"></a> <a
-				href="#" class="f_a f_a3"></a> <a href="#" class="f_a f_a4"></a> <a
-				href="#" class="f_a f_a5"></a> <a href="#" class="f_a f_a6"></a>
-		</dd>
-	</dl>
+<div class="clearfix footer min_1200">
+    <div class="clearfix footer w_1200">
+        <ul class="fl footer_ul list_3">
+            <li>
+                <h5><span class="round_r f_arrow png"></span>关于我们</h5>
+                <p><a th:href="@{/about}">了解官方</a></p>
+                <p><a th:href="@{/about}">加入我们</a></p>
+                <p><a th:href="@{/about}">合作联系</a></p>
+            </li>
+            <li>
+                <h5><span class="round_r f_arrow f_arrow2 png"></span>帮助中心</h5>
+                <p><a th:href="@{/help}">新手上路</a></p>
+                <p><a th:href="@{/help}">注册登录</a></p>
+                <p><a th:href="@{/help}">投资流程</a></p>
+                <p><a th:href="@{/help}">提现申请</a></p>
+            </li>
+            <li>
+                <h5><span class="round_r f_arrow f_arrow3 png"></span>产品服务</h5>
+                <p><a th:href="@{/first}">首投活动</a></p>
+                <p><a th:href="@{/repetition}">复投活动</a></p>
+                <p><a th:href="@{/down}">APP下载</a></p>
+            </li>
+        </ul>
+        <div class="r_cell footer_share">
+            <h5><span class="round_r f_arrow f_arrow4 png"></span>关注我们</h5>
+            <div class="d">
+                <span class="fl">
+                    <img th:src="@{/upload/QRwap.png}" alt="" width="150" height="150"><p>手机wap端</p>
+                </span>
+                <span class="fl" style="margin-left:20px;">
+                    <img th:src="@{/upload/QRcode.png}" alt="" width="150" height="150"><p>APP下载</p>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix footer min_1200"
+	style="text-align: center; padding-bottom: 20px;">
+	<a rel="nofollow" key="5731b00defbfb02ef3935561" logo_size="124x47"
+		logo_type="realname" href="#"
+		style="margin-right: 20px;"> <img border="0"
+		th:src="@{/upload/sm_124x47.png}" alt="安全联盟认证">
+	</a> <a rel="nofollow" href="#"
+		<img
+		border="0" th:src="@{/upload/360btm.png}"></a> <a rel="nofollow"
+		href="#" style="margin-right: 20px;"> <img th:src="@{/upload/safe_check.png}">
+	</a> <a rel="nofollow" id="jsl_speed_stat0"
+		href="#" style="margin-right: 20px;"> <img
+		th:src="@{/upload/stat.png}">
+	</a>
+</div>
+
+<div class="clearfix footer min_1200"
+	style="text-align: center; padding-bottom: 30px;">
+	<span class="text-center" style="">Copyright Reserved 2017©马上多（www.msdfanli.com ）    |    湘ICP备17014873号-1</span>
 </div>
 
 <div class="ftool" id="ftool">
     <div class="ftool_item">
         <a href="#" class="top_ftoolab ftoolab png" id="ftoolTop" style="display: none;"></a>
     </div>
-    <!--/*--> 
     <div class="ftool_item">
-        <a href="//wpa.qq.com/msgrd?v=3&amp;uin=539199195&amp;site=qq&amp;menu=yes" target="_blank" class="tel_ftoolab ftoolab png"></a>
+        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=1004050304&site=qq&menu=yes" class="tel_ftoolab ftoolab png"></a>
         <div class="ftool_code ftool_code_s" style="display: none; opacity: 0; right: 100px;">在线客服
             <div class="ftool_code_gt">◆</div>
         </div>
     </div>
+    <!--/*--> 
     <div class="ftool_item">
         <a href="#" class="wechat_ftoolab ftoolab png"></a>
         <div class="ftool_code" style="display: none; opacity: 0; right: 100px;">
@@ -45,14 +80,14 @@
     <div class="ftool_item">
         <a href="#" class="qq_ftoolab ftoolab png"></a>
         <div class="ftool_code" style="display: none; opacity: 0; right: 100px;">
-            <img th:src="@{/images/qq.png}" alt="" class="ftool_code_img">
+            <img th:src="@{/upload/qq.png}" alt="" class="ftool_code_img">
             <div class="ftool_code_gt">◆</div>
         </div>
     </div>
     <div class="ftool_item">
         <a href="#" class="phone_ftoolab ftoolab png"></a>
         <div class="ftool_code" style="display: none; opacity: 0; right: 100px;">
-            <img th:src="@{/images/msdfanli.png}" alt="" class="ftool_code_img">
+            <img th:src="@{/upload/QRcode.png}" alt="" class="ftool_code_img">
             <div class="ftool_code_gt">◆</div>
         </div>
     </div>

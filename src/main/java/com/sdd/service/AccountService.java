@@ -107,7 +107,7 @@ public class AccountService {
 		//余额变动记录
 		params.put("type", "3");
 		DecimalFormat df = new DecimalFormat("#.00");
-		params.put("remark", "余额提现:" + df.format(amount));
+		params.put("remark", "余额提现:" + df.format(Float.valueOf(amount)) + "元");
 		addRecord(params);
 		//查询余额
 		String account = Tools.getMapString(params, "account");
@@ -123,7 +123,7 @@ public class AccountService {
 		transferMap.put("payee_account", alipayAccount);
 		transferMap.put("amount", amount);
 		transferMap.put("remark", "余额提现");
-		transferMap.put("success", response.getString("success"));
+		transferMap.put("success", "true".equals(response.getString("success")));
 		transferMap.put("orderId", response.getString("orderId"));
 		transferMap.put("code", response.getString("code"));
 		transferMap.put("msg", response.getString("msg"));

@@ -23,10 +23,8 @@ public class AlipayToAccount {
 	private String privateKey;
 	@Value("${alipay.public.key}")
 	private String alipayPublicKey;
-	@Value("${alipay.payer_show_name}")
-	private String alipayPayerShowName;
-	@Value("${alipay.remark}")
-	private String alipayRemark;
+	private String alipayPayerShowName="马上多返利网";
+	private String alipayRemark="余额提现";
 	
 	
 	public JSONObject transfer(String bizNo, String account, String amount) {
