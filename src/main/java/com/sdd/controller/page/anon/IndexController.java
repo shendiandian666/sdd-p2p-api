@@ -39,7 +39,7 @@ public class IndexController extends WebController {
 	public String web(HttpServletRequest request, Map<String, Object> map) throws Exception {
 		List<Map<String, Object>> swiperList = swiperService.getSwiper("3");
 		map.put("swiperList", swiperList);
-		List<Map<String, Object>> hotList = activityService.getHotActivity(1, 3);
+		List<Map<String, Object>> hotList = activityService.getTopActivity(1, 3);
 		map.put("hotList", hotList);
 		List<Map<String, Object>> list = activityService.getHotActivity(1, 15);
 		map.put("activityList", list);
@@ -52,7 +52,7 @@ public class IndexController extends WebController {
 	public String index(HttpServletRequest request, Map<String, Object> map) throws Exception {
 		List<Map<String, Object>> swiperList = swiperService.getSwiper("3");
 		map.put("swiperList", swiperList);
-		List<Map<String, Object>> hotList = activityService.getHotActivity(1, 3);
+		List<Map<String, Object>> hotList = activityService.getTopActivity(1, 3);
 		map.put("hotList", hotList);
 		List<Map<String, Object>> list = activityService.getHotActivity(1, 15);
 		map.put("activityList", list);

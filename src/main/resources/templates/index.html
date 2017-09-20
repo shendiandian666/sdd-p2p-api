@@ -136,37 +136,37 @@
 	</div>
 
 	<div class="w_1200 box_w clearfix white_box png_img">
-		<ul class="h_list hover_ul">
+		<ul class="h_list i_list hover_ul">
 			<li class="transition_a li_o transition_color transition_move" th:each="item,status : ${activityList}" th:inline="text">
-				<a th:href="@{/getActivity(activity_id=${item.id},title=${item.isFirst == '1' ? 'first' : 'repetition'})}"
-				class="box clearfix">
-					<div class="fl brand_logo_l">
-						<div class="brand_logo_t">
-							<img
-								th:src="@{${item.platform_img}}"
-								alt="" width="120" height="50" />
-								<span class="text_box f_text_box round_s" th:if="${item.isFirst == '1'}">首投</span> 
-								<span class="text_box text_box_orange f_text_box round_s" th:if="${item.isFirst == '2'}">复投</span> 
-						</div>
+			<a th:href="@{/first/getActivity(activity_id=${item.id})}"
+			class="box clearfix transition_a">
+				<div class="fl brand_logo_l">
+					<div class="brand_logo_t">
+						<img
+							th:src="@{${item.platform_img}}"
+							alt="" width="120" height="50" /> 
+							<span class="text_box f_text_box round_s" th:if="${item.isFirst == '1'}">首投</span> 
+							<span class="text_box text_box_orange f_text_box round_s" th:if="${item.isFirst == '2'}">复投</span> 
 					</div>
+				</div>
+				<div class="r_cell">
+					<div class="fr" th:if="${item.status == '1'}">
+						<span class="shop_btn round_s transition_a">我要参加</span>
+					</div>
+					<div class="fr h_list_btn" th:if="${item.status != '1'}">
+                           <span class="shop_btn pause_btn round_s transition_a">活动暂停</span>
+                       </div>
 					<div class="r_cell">
-						<div class="fr" th:if="${item.status == '1'}">
-							<span class="shop_btn round_s transition_a">我要参加</span>
-						</div>
-						<div class="fr h_list_btn" th:if="${item.status != '1'}">
-                            <span class="shop_btn pause_btn round_s transition_a">活动暂停</span>
-                        </div>
-						<div class="r_cell">
-							投<b class="font_20">[[${item.bestDeposit}]]</b>获得<b class="orange_text font_20">[[${item.bestMoney}]]</b>元， 年化<b
-								class="orange_text font_20">≈ [[${item.bestInterest}]]%</b>
-								， 已有<b class="font_20">[[${item.joins}]]</b>人参加活动
-							<ul class="tags">
-                               <li>风控评级：[[${item.risk}]]</li>
-                               <li>[[${item.riskDisplay}]]</li>
-                               <li th:each="tag,stat : ${#strings.arraySplit(item.platform_tags,',')}">[[${tag}]]</li>
-                            </ul>
-						</div>
+						投<b class="font_20">[[${#numbers.formatDecimal(item.bestDeposit, 1, 'COMMA', 0, 'POINT')}]]</b>获得<b class="orange_text font_20">[[${#numbers.formatDecimal(item.bestMoney, 1, 'COMMA', 0, 'POINT')}]]</b>元， 年化<b
+							class="orange_text font_20">≈ [[${#numbers.formatDecimal(item.bestInterest, 1, 'COMMA', 2, 'POINT')}]]%</b>
+							， 已有<b class="font_20">[[${item.joins}]]</b>人参加活动
+						<ul class="tags">
+                              <li>风控评级：[[${item.risk}]]</li>
+                              <li>[[${item.riskDisplay}]]</li>
+                              <li th:each="tag,stat : ${#strings.arraySplit(item.platform_tags,',')}">[[${tag}]]</li>
+                           </ul>
 					</div>
+				</div>
 			</a></li>
 		</ul>
 	</div>

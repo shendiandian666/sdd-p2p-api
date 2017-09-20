@@ -75,7 +75,7 @@
 			</if>
 			)
 		</if>
-		order by a.orderby,a.id desc
+		order by a.orderby desc,a.id desc
     </select>
     
     <select id="getHotActivity" resultType="java.util.Map">
@@ -85,7 +85,18 @@
 	  from p2p_activity a,p2p_platform b
 	  where a.platform_id=b.id
 	  and a.status = '1'
-	  order by a.orderby,a.id desc
+	  order by a.orderby desc,a.id desc
+    </select>
+    
+    <select id="getTopActivity" resultType="java.util.Map">
+	  select a.*,b.name,b.plat_name,b.platform_intro,b.platform_img,b.platform_tags,b.risk, 
+	  b.riskDisplay,b.finance_bg,b.platform_bg,b.bank_manage,b.icp_card,
+	  b.cash_speed,b.principal,b.online,b.remark
+	  from p2p_activity a,p2p_platform b
+	  where a.platform_id=b.id
+	  and a.status = '1'
+	  and a.istop = '1'
+	  order by a.orderby desc,a.id desc
     </select>
     
     <update id="updateJoins" parameterType="string">

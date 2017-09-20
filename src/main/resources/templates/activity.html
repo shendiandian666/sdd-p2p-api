@@ -71,7 +71,9 @@
 				<li class="clearfix li_o"><span class="fl">平台介绍：</span>
 					<div class="r_cell">
 						[[${activity.platform_intro}]]
-						<div class="display_key round_m_a"></div>
+						<div class="display_key round_m_a">
+							<a href="#" th:each="tag,stat : ${#strings.arraySplit(activity.platform_tags,',')}">[[${tag}]]</a>
+						</div>
 					</div></li>
 			</ul>
 			<div id="activity-join-area-loading" class="display_note clearfix"
@@ -92,8 +94,9 @@
 				<div class="act-join-title">
 					<i class="layui-icon">&#xe63c;</i> 在线交单 <span>投资完成后请在下方录入投资信息</span>
 
-					<a onclick="return openPlatformTip()" th:href="${activity.url}"
+					<a th:if="${activity.isFirst == '1'}" onclick="return openPlatformTip()" th:href="${activity.url}"
 						class="layui-btn layui-btn-danger" target="_blank">打开投资链接</a>
+					<span style="color:red;" th:if="${activity.isFirst == '2'}">使用首投账户参与即可</span>
 
 				</div>
 				<form class="layui-form act-join-form" action="" method="post"
@@ -228,7 +231,6 @@
 					<th>年化利率</th>
 					<th>红包</th>
 					<th>体验金</th>
-					<th>其他</th>
 					<th>周期</th>
 					<th>总收益</th>
 					<th>综合年化</th>
@@ -251,8 +253,6 @@
 						'POINT')}]]</td>
 					<td>¥[[${#numbers.formatDecimal(item.bbin, 1, 'COMMA', 0,
 						'POINT')}]]</td>
-					<td>¥[[${#numbers.formatDecimal(item.others, 1, 'COMMA', 0,
-						'POINT')}]]</td>
 					<td>[[${item.days}]]天</td>
 					<td>≈ ¥[[${item.totalIncome_txt}]]</td>
 					<td>≈ [[${#numbers.formatDecimal(item.year_rate, 1, 'COMMA', 2,
@@ -269,9 +269,10 @@
 				<b>详细说明</b>
 			</h4>
 			<div class="d_text" th:utext="${activity.content}"></div>
-			<div class="d_text">
+			<div class="d_text" style="border-top: 1px solid #eee;">
 				<b>活动提示：</b>
 				<ol>
+					<li>所有投资用户<b><font color="red">必需通过马上多返利网链接注册</font></b>,其他地方注册用户无返利</li>
 					<li>马上多只负责与您结算<b><font color="red">返利</font></b>部分，其他金额由投资平台结算。
 					</li>
 					<li>红包金额以对方平台为准，我方不保证一定正确；因对方平台可能随时更改红包规则，我方只保证返现并无责任对红包金额进行赔偿。</li>
