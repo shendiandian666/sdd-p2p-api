@@ -25,6 +25,7 @@ public class ActivityService {
 	 */
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> getActivity(String activityId) throws Exception {
+		updateClicks(activityId);
 		return (Map<String, Object>) dao
 				.findForObject("com.sdd.mapper.ActivityMapper.getActivity", activityId);
 	}
@@ -84,5 +85,15 @@ public class ActivityService {
 	 */
 	public int updateJoins(String activityId) throws Exception {
 		return (int) dao.update("com.sdd.mapper.ActivityMapper.updateJoins", activityId);
+	}
+	
+	/**
+	 * 修改点击数
+	 * @param activityId
+	 * @return
+	 * @throws Exception
+	 */
+	public int updateClicks(String activityId) throws Exception {
+		return (int) dao.update("com.sdd.mapper.ActivityMapper.updateClicks", activityId);
 	}
 }

@@ -3,13 +3,14 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
+	<title th:inline="text">[[${activity.isFirst == '1' ? '首投返利' : '复投返利'}]]-[[${activity.name}]]-马上多</title>
 	<meta charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="renderer" content="webkit" />
 	<meta name="viewport" content="width=1200" />
-	<title th:inline="text">[[${activity.name}]]_P2P理财返利_马上多返利网</title>
+	<meta name="keywords" content="马上多,马上多返利网,理财返利平台,P2P返现,P2P返利,P2P羊毛,网贷返利,理财返利,金融返利">
 	<meta name="description"
-		content="马上多返利网是一个理财返利平台,为您提供理财返利、P2P返利、网贷返利、投资返利等全方位高收益理财返利活动" />
+		content="马上多-是一个理财返利平台,为您提供理财返利、P2P返现、P2P返利、网贷返利、投资返利等全方位高收益理财返利活动" />
 	<dif th:replace="/common/common"/>
 </head>
 <body th:inline="text">
@@ -18,10 +19,10 @@
 	<dl class="site_th w_1200">
 		<dd>
 			当前位置：
-			<a th:href="@{/index}">马上多返利</a> 
-			<em class="china">&gt;</em> 
-			<a th:href="@{/first}" th:if="${#httpServletRequest.getRequestURI().contains('first')}">首投活动</a>
-			<a th:href="@{/repetition}" th:if="${#httpServletRequest.getRequestURI().contains('repetition')}">复投活动</a>
+			<a th:href="@{/index}">马上多</a>
+			<em class="china">&gt;</em>
+			<a th:href="@{/first}" th:if="${#httpServletRequest.getRequestURI().contains('first')}">首投返利</a>
+			<a th:href="@{/repetition}" th:if="${#httpServletRequest.getRequestURI().contains('repetition')}">复投返利</a>
 			<a th:href="@{/car}" th:if="${#httpServletRequest.getRequestURI().contains('car')}">搭车活动</a>
 			<em class="china">&gt;</em>
 			[[${activity.name}]]
@@ -63,9 +64,12 @@
 								class="shop_btn pause_btn round_s transition_a"
 								th:if="${activity.status != '1'}">活动暂停</a>
 								<a href="#"
-								id="activity-calc" class="shop_btn calc_btn">试算</a><span
+								id="activity-calc" class="shop_btn calc_btn">试算</a>
+								<!--/*-->
+								<span
 								class="m_l_b">已有<b class="orange_text font_20">[[${activity.joins}]]</b>人参加活动
 							</span>
+							<!--*/-->
 						</div>
 					</div></li>
 				<li class="clearfix li_o"><span class="fl">平台介绍：</span>
@@ -104,6 +108,7 @@
 					<input type="hidden" name="token" th:value="${session.token}" /> <input
 						type="hidden" name="activity_id" th:value="${activity.id}" /> <input
 						type="hidden" name="activity_name" th:value="${activity.name}" />
+					<!--/*-->
 					<div class="layui-form-item">
 						<label class="layui-form-label">投资人</label>
 						<div class="layui-input-inline" style="width: 320px;">
@@ -117,6 +122,15 @@
 								<i class="layui-icon">&#xe608;</i> 添加
 							</button>
 						</div>
+					</div>
+					<!--*/-->
+					<div class="layui-form-item">
+						<label class="layui-form-label">手机号码</label>
+						<div class="layui-input-inline">
+							<input type="text" name="deposit" lay-verify="required|number"
+								placeholder="" autocomplete="off" class="layui-input" />
+						</div>
+						<div class="layui-form-mid layui-word-aux">平台投资注册手机号</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">投资方案</label>
@@ -156,6 +170,16 @@
 								<i class="layui-icon">&#xe62f;</i> <span>上传</span>
 							</button>
 						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">验证码</label>
+						<div class="layui-input-inline" style="width:120px;">
+							<input type="text" name="deposit" lay-verify="required|number"
+								placeholder="" autocomplete="off" class="layui-input" />
+						</div>
+						<a href="#" id="register_captcha_btn"><img
+								id="register_captcha_image" th:src="@{/images/captcha.png}"
+								width="100" height="37" /></a>
 					</div>
 					<div class="layui-form-item">
 						<div class="layui-input-block">
@@ -215,7 +239,7 @@
 						<div class="text_box_g text_box_g2 round_s">理财不等于存款，网贷有风险，投资需谨慎</div>
 					</div></li>
 			</ul>
-			<p style="padding-left: 25px; padding-right: 25px; color: #888;">马上多返利网仅为信息平台，所有活动不保证100%安全，风控评级仅供参考，不作为安全投资依据，如果对方平台出问题，我方不承担任何责任。我们不包赔也不兜底。</p>
+			<p style="padding-left: 25px; padding-right: 25px; color: #888;">马上多仅为信息平台，所有活动不保证100%安全，风控评级仅供参考，不作为安全投资依据，如果对方平台出问题，我方不承担任何责任。我们不包赔也不兜底。</p>
 		</div>
 	</div>
 
@@ -227,7 +251,7 @@
 					<th>方案</th>
 					<th>投资项目</th>
 					<th>充值金额</th>
-					<th width="80" class="orange_text">马上多返利</th>
+					<th width="80" class="orange_text">马上多</th>
 					<th>年化利率</th>
 					<th>红包</th>
 					<th>体验金</th>
@@ -272,7 +296,7 @@
 			<div class="d_text" style="border-top: 1px solid #eee;">
 				<b>活动提示：</b>
 				<ol>
-					<li>所有投资用户<b><font color="red">必需通过马上多返利网链接注册</font></b>,其他地方注册用户无返利</li>
+					<li>所有投资用户<b><font color="red">必需通过马上多网站链接注册</font></b>,其他地方注册用户无返利</li>
 					<li>马上多只负责与您结算<b><font color="red">返利</font></b>部分，其他金额由投资平台结算。
 					</li>
 					<li>红包金额以对方平台为准，我方不保证一定正确；因对方平台可能随时更改红包规则，我方只保证返现并无责任对红包金额进行赔偿。</li>
@@ -301,8 +325,8 @@
 			<b>免责声明</b>
 		</h4>
 		<div class="d_text">
-			<p>马上多返利仅为信息平台，本身不吸纳用户资金。
-				活动平台不保证100%安全，如出现意外情况（包括但不局限于平台提现困难/逾期/倒闭/跑路等导致无法拿回本金的情况），马上多返利不承担任何责任。</p>
+			<p>马上多仅为信息平台，本身不吸纳用户资金。
+				活动平台不保证100%安全，如出现意外情况（包括但不局限于平台提现困难/逾期/倒闭/跑路等导致无法拿回本金的情况），马上多不承担任何责任。</p>
 		</div>
 	</div>
 

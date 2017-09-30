@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
 import com.sdd.dao.DaoSupport;
 
 @Service
@@ -16,7 +17,8 @@ public class NewsService {
 	private DaoSupport dao;
 	
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> getNews(String type) throws Exception {
+	public List<Map<String, Object>> getNews(int pageNum, int pageSize, String type) throws Exception {
+		PageHelper.startPage(pageNum, pageSize);
 		return (List<Map<String, Object>>) dao.findForList("com.sdd.mapper.NewsMapper.getNews", type);
 	}
 	

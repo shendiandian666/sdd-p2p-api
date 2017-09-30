@@ -34,7 +34,7 @@
 	<div class="header_c min_1200">
 		<div class="w_1200">
 			<h1 class="logo png_img fl">
-				<a href="/"><img th:src="@{/upload/logo.png}" alt="马上多返利" /></a>
+				<a href="/"><img th:src="@{/upload/logo.png}" alt="马上多" /></a>
 			</h1>
 			<div class="tnav" id="slideNav">
 				<span> <a th:href="@{/index}"
@@ -48,8 +48,8 @@
 					<a th:href="@{/down}" th:class="${#httpServletRequest.getRequestURI().contains('down') ? 'current_nav' : ''}">APP下载</a>
 				</span>
 				<!--/*-->
-				<span> <a th:href="@{/index}"
-					th:class="${#httpServletRequest.getRequestURI().contains('car') ? 'current_nav' : ''}">我要借款</a>
+				<span> <a th:href="@{/loan}"
+					th:class="${#httpServletRequest.getRequestURI().contains('loan') ? 'current_nav' : ''}">我要借款</a>
 				</span>
 				<span> <a th:href="@{/car}"
 					th:class="${#httpServletRequest.getRequestURI().contains('car') ? 'current_nav' : ''}">搭车</a>
@@ -57,12 +57,12 @@
 				<span> <a th:href="@{/car}"
 					th:class="${#httpServletRequest.getRequestURI().contains('car') ? 'current_nav' : ''}">信用卡</a>
 				</span>
-				
-				<!--*/-->
 				<span> <a
 					th:href="@{/announcement}"
 					th:class="${#httpServletRequest.getRequestURI().contains('announcement') ? 'current_nav' : ''}">公告</a>
-				</span> <span> <a th:href="@{/about}"
+				</span> 
+				<!--*/-->
+				<span> <a th:href="@{/about}"
 					th:class="${#httpServletRequest.getRequestURI().contains('about') ? 'current_nav' : ''}">关于我们</a>
 				</span>
 			</div>

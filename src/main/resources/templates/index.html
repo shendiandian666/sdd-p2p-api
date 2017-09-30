@@ -3,14 +3,14 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-	<title>马上多-P2P理财返利网_投资返利_P2P贷款 _网贷预警,您的网贷之家</title>
+	<title>马上多 P2P返利_返现_理财_网贷超市-马上多返利网</title>
 	<meta charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="renderer" content="webkit" />
 	<meta name="viewport" content="width=1200" />
-	<meta name="keywords" content="P2P理财返利网，投资返利，P2P网贷，撸羊毛，网贷预警，P2P贷款，互联网金融，投资顾问，贷款，理财产品，理财导购">
+	<meta name="keywords" content="马上多,马上多返利网,理财返利平台,P2P返现,P2P返利,P2P羊毛,网贷超市,理财返利,金融返利">
 	<meta name="description"
-		content="【马上多】互联网金融P2P投资理财导购、理财返利、p2p网贷，做投资者专业的投资顾问！" />
+		content="马上多-是一个理财返利平台,为您提供理财返利、P2P返现、P2P返利、网贷超市、投资返利等全方位高收益理财返利活动" />
 	<dif th:replace="/common/common"/>
 </head>
 <body>
@@ -29,41 +29,6 @@
 	</div>
 	<!--end动画-->
 	
-	<div class="white_box min_1200">
-        <div class="white_box w_1200">
-            <div class="hide_box">
-                <ul class="list_5 h_tool clearfix">
-                    <li>
-                    	<span class="b_arrow png"></span>
-                    	<h5>返利最高</h5>
-                        <p>全网返利最高价</p>
-                    </li>
-                    <li>
-                    	<span class="b_arrow b_arrow2 png"></span>
-                    	<h5>返利最快</h5>
-                        <p>提交订单后<br>1-3个工作日返现</p>
-                    </li>
-                    <li>
-                    	<span class="b_arrow b_arrow3 png"></span>
-                    	<h5>安全保障</h5>
-                        <p>一手渠道<br>返现安全有保障</p>
-                    </li>
-                    <li>
-                    	<span class="b_arrow b_arrow4 png"></span>
-                    	<h5>风险量化</h5>
-                        <p>所有活动附带风控评级<br>风险一目了然</p>
-                    </li>
-                    <li>
-                    	<span class="b_arrow b_arrow5 png"></span>
-                    	<h5>独家风控</h5>
-                        <p>线上分析，线下考察<br>Ｎ道风控手段</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-	<!--end白色背景-->
-	
 	<div class="w_1200 box_w">
 		<div class="hide_box">
 			<ul class="list_3 h_rec hover_ul">
@@ -74,7 +39,7 @@
 							<div class="brand_logo_border round_r">
 								<span class="text_box f_text_box round_s" th:if="${item.isFirst == '1'}">首投</span> 
 								<span class="text_box text_box_orange f_text_box round_s" th:if="${item.isFirst == '2'}">复投</span> 
-								<img th:src="@{${item.platform_img}}" alt="" width="100" height="40" />
+								<img th:src="@{${item.platform_img}}" th:alt="${item.name}" width="100" height="40" />
 							</div>
 						</div>
 						<div class="text">
@@ -82,13 +47,15 @@
 								投<b class="font_20">[[${#numbers.formatDecimal(item.bestDeposit, 1, 'COMMA', 0, 'POINT')}]]</b>获得<b class="orange_text font_20">[[${#numbers.formatDecimal(item.bestMoney, 1, 'COMMA', 0, 'POINT')}]]</b>元， 年化<b
 								class="orange_text font_20">≈ [[${#numbers.formatDecimal(item.bestInterest, 1, 'COMMA', 2, 'POINT')}]]%</b>
 							</p>
+							<!--/*-->
 							<p>
 								已有<b class="font_20">[[${item.joins}]]</b>人参加活动
 							</p>
+							<!--*/-->
 						</div>
 						<ul class="tag_ul clearfix list_2">
-							<li><span class="tag_a round_m">全网最高</span></li>
-							<li><span class="tag_a round_m">返利最快</span></li>
+							<li><span class="tag_a round_m">安全轻松</span></li>
+							<li><span class="tag_a round_m">提现秒到</span></li>
 							<li><span class="tag_a tag_a_box round_m">风控评级：[[${item.risk}]]</span></li>
 							<li><span class="tag_a tag_a_box round_m">[[${item.riskDisplay}]]</span></li>
 						</ul>
@@ -105,7 +72,7 @@
 							<div class="brand_logo_border round_r">
 								<span class="text_box f_text_box round_s" th:if="${item.isFirst == '1'}">首投</span> 
 								<span class="text_box text_box_orange f_text_box round_s" th:if="${item.isFirst == '2'}">复投</span> 
-								<img th:src="@{${item.platform_img}}" alt="" width="100" height="40" />
+								<img th:src="@{${item.platform_img}}" th:alt="${item.name}" width="100" height="40" />
 							</div>
 						</div>
 						<div class="text">
@@ -113,9 +80,11 @@
 								投<b class="font_20">[[${#numbers.formatDecimal(item.bestDeposit, 1, 'COMMA', 0, 'POINT')}]]</b>获得<b class="orange_text font_20">[[${#numbers.formatDecimal(item.bestMoney, 1, 'COMMA', 0, 'POINT')}]]</b>元， 年化<b
 								class="orange_text font_20">≈ [[${#numbers.formatDecimal(item.bestInterest, 1, 'COMMA', 2, 'POINT')}]]%</b>
 							</p>
+							<!--/*-->
 							<p>
 								已有<b class="font_20">[[${item.joins}]]</b>人参加活动
 							</p>
+							<!--*/-->
 						</div>
 						<ul class="tag_ul clearfix list_2">
 							<li><span class="tag_a round_m">全网最高</span></li>
@@ -144,7 +113,7 @@
 					<div class="brand_logo_t">
 						<img
 							th:src="@{${item.platform_img}}"
-							alt="" width="120" height="50" /> 
+							th:alt="${item.name}" width="120" height="50" /> 
 							<span class="text_box f_text_box round_s" th:if="${item.isFirst == '1'}">首投</span> 
 							<span class="text_box text_box_orange f_text_box round_s" th:if="${item.isFirst == '2'}">复投</span> 
 					</div>
@@ -159,7 +128,9 @@
 					<div class="r_cell">
 						投<b class="font_20">[[${#numbers.formatDecimal(item.bestDeposit, 1, 'COMMA', 0, 'POINT')}]]</b>获得<b class="orange_text font_20">[[${#numbers.formatDecimal(item.bestMoney, 1, 'COMMA', 0, 'POINT')}]]</b>元， 年化<b
 							class="orange_text font_20">≈ [[${#numbers.formatDecimal(item.bestInterest, 1, 'COMMA', 2, 'POINT')}]]%</b>
+							<!--/*-->
 							， 已有<b class="font_20">[[${item.joins}]]</b>人参加活动
+							<!--*/-->
 						<ul class="tags">
                               <li>风控评级：[[${item.risk}]]</li>
                               <li>[[${item.riskDisplay}]]</li>
@@ -198,26 +169,15 @@
 			<b class="fl">友情链接</b>
 		</h4>
 		<ul class="list_6 h_brand_link clearfix">
-			<li><a href="https://www.shoujins.com/" target="_blank">首创金服</a></li>
-            <li><a href="https://www.daianla.cn" target="_blank">电商贷款平台</a></li>
-            <li><a href="http://www.tongyirong.com" target="_blank">互联网金融平台</a></li>
-            <li><a href="https://www.xeenho.com/" target="_blank">星火钱包</a></li>
-            <li><a href="http://www.meirijinrong.com" target="_blank">每日金融</a></li>
-            <li><a href="http://www.caijing365.com/" target="_blank">股市直播间 </a></li>
-            <li><a href="http://www.movek.net/ " target="_blank" rel="nofollow">沃动科技</a></li>
+			<li><a href="https://www.fanli.com/" target="_blank">返利网</a></li>
+            <li><a href="https://www.wdzj.cn" target="_blank">网贷之家</a></li>
+            <li><a href="http://www.daiyicha.com" target="_blank">贷易查</a></li>
             <li><a href="http://www.p2b168.com" target="_blank">网贷安全专家</a></li>
-            <li><a href="http://www.cheyr.cn " target="_blank">车e融</a></li>
             <li><a href="http://www.51wddh.com" target="_blank">51网贷</a></li>
-            <li><a href="http://www.jindai5.cn" target="_blank">小额贷款</a></li>
-            <li><a href="http://www.xiaozhu168.com" target="_blank">p2p理财</a></li>
             <li><a href="http://www.wangdai110.com/" target="_blank">网贷110</a></li>
             <li><a href="http://www.yj81.com " target="_blank">炒股入门视频</a></li>
-            <li><a href="http://www.yinqiao.com" target="_blank">网贷返利平台</a></li>
-            <li><a href="http://www.scjzttz.com" target="_blank">成都股票配资</a></li>
             <li><a href="http://www.imoney888.com" target="_blank">在线理财</a></li>
-            <li><a href="https://www.zzwms.com" target="_blank">河南投资理财</a></li>
             <li><a href="http://huaxia.kameng.com/" target="_blank">华夏信用卡申请</a></li>
-            <li><a href="http://www.adkumi.com" target="_blank">酷米移动广告</a></li>
 		</ul>
 		<div class="btn_c">
 		</div>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<title>我要借款-马上多</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=1200" />
+<meta name="keywords"
+	content="马上多,马上多返利网,理财返利平台,P2P返现,P2P返利,P2P羊毛,网贷返利,理财返利,金融返利">
+<meta name="description"
+	content="马上多-是一个理财返利平台,为您提供理财返利、P2P返现、P2P返利、网贷返利、投资返利等全方位高收益理财返利活动" />
+<dif th:replace="/common/common" />
+</head>
+<body>
+	<dif th:replace="/common/head" />
+
+	<dl class="site_th w_1200">
+		<dd>
+			当前位置： <a th:href="@{/index}">马上多</a> <em class="china">&gt;</em> 我要借款
+		</dd>
+	</dl>
+
+	<div class="w_1200 box_w_b clearfix png_img h_tab">
+		<div class="activity_header">
+			<form method="get" th:action="@{/first}">
+				<input type="hidden" name="title" value="first" /> <input
+					type="text" name="keywords" class="fill_text" value="" />
+				<button type="submit" class="shop_btn">搜索</button>
+			</form>
+		</div>
+
+		<div class="white_box clearfix i_box">
+			<ul class="h_list i_list hover_ul list_2">
+				<li class="transition_a li_o transition_color transition_move"
+					th:each="item,status : ${activityList}" th:inline="text"><a
+					th:href="@{/first/getActivity(activity_id=${item.id})}"
+					class="box clearfix transition_a">
+						<div class="fl loan_logo_l">
+							<div class="brand_logo_t">
+								<img th:src="@{/upload/msd.png}" th:alt="${item.name}"
+									width="75" height="75" />
+							</div>
+						</div>
+						<div class="r_cell">
+							<div class="fr" th:if="${item.status == '1'}">
+								<span class="loan_shop_btn round_s transition_a">立即申请</span>
+							</div>
+							<div class="r_cell">
+								极速放款、短周期
+								<ul class="tags">额度：<font color="red"><b>1000 - 200,000.00</b></font>
+								</ul>
+								<ul class="tags">条件：18周岁 | 芝麻信用 | 手机运营商授权
+								</ul>
+							</div>
+						</div>
+				</a></li>
+			</ul>
+		</div>
+		<dl class="page">
+			<dt class="fl" th:inline="text">共[[${pageInfo.pages}]]页，每页[[${pageInfo.pageSize}]]，共计[[${pageInfo.total}]]</dt>
+			<dd class="r_cell">
+				<em th:if="${pageInfo.hasPreviousPage == false}">上一页</em> <a
+					th:href="@{/first(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}"
+					th:if="${pageInfo.hasPreviousPage == true}">上一页</a> <a
+					th:href="@{/first(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}"
+					th:if="${pageInfo.hasPreviousPage == true}" th:inline="text">[[${pageInfo.prePage}]]</a>
+				<b th:inline="text">[[${pageInfo.pageNum}]]</b> <a
+					th:href="@{/first(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}"
+					th:if="${pageInfo.hasNextPage == true}" th:inline="text">[[${pageInfo.nextPage}]]</a>
+				<a
+					th:href="@{/first(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}"
+					th:if="${pageInfo.hasNextPage == true}">下一页</a> <em
+					th:if="${pageInfo.hasNextPage == false}">下一页</em>
+			</dd>
+		</dl>
+	</div>
+
+	<dif th:replace="/common/login_register" />
+
+	<dif th:replace="/common/footer" />
+</body>
+</html>

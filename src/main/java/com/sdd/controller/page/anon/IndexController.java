@@ -74,6 +74,19 @@ public class IndexController extends WebController {
 		return "/first";
 	}
 	
+	@RequestMapping(value = "/loan")
+	public String loan(Map<String, Object> map) throws Exception {
+		Map<String, Object> params = getParameters();
+		params.put("first", "1");
+		List<Map<String, Object>> list = activityService.getActivityList(getPageNum(), getPageSize(), params);
+		map.put("activityList", list);
+		PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(list);
+		map.put("pageInfo", pageInfo);
+		map.put("grade", Tools.getMapString(params, "grade"));
+		map.put("minDays", Tools.getMapString(params, "minDays"));
+		return "/loan";
+	}
+	
 	@RequestMapping(value = "/first/{grade}")
 	public String first(@PathVariable("grade")String grade, Map<String, Object> map) throws Exception {
 		Map<String, Object> params = getParameters();
@@ -163,7 +176,7 @@ public class IndexController extends WebController {
 	public String announcement(Map<String, Object> map) throws Exception {
 		List<Map<String, Object>> swiperList = swiperService.getSwiper("5");
 		map.put("swiperList", swiperList);
-		List<Map<String, Object>> newsList = newsService.getNews("1");
+		List<Map<String, Object>> newsList = newsService.getNews(getPageNum(), getPageSize(), "1");
 		map.put("newsList", newsList);
 		return "/others/announcement";
 	}
@@ -191,7 +204,7 @@ public class IndexController extends WebController {
 	public String help(Map<String, Object> map) throws Exception {
 		List<Map<String, Object>> swiperList = swiperService.getSwiper("5");
 		map.put("swiperList", swiperList);
-		List<Map<String, Object>> newsList = newsService.getNews("2");
+		List<Map<String, Object>> newsList = newsService.getNews(getPageNum(), getPageSize(), "2");
 		map.put("newsList", newsList);
 		return "/others/help";
 	}
@@ -239,7 +252,7 @@ public class IndexController extends WebController {
 		List<Map<String, Object>> planList = activityPlanService.getPlanlist(activityId);
 		map.put("planList", planList);
 		
-		List<Map<String, Object>> qqList = newsService.getNews("8");
+		List<Map<String, Object>> qqList = newsService.getNews(getPageNum(), getPageSize(), "8");
 		map.put("qqList", qqList);
 		
 		return "/activity";

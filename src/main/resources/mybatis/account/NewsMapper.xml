@@ -12,7 +12,7 @@
 	<select id="getNews" parameterType="string" resultType="java.util.Map">
 		select * from p2p_news
 		where 1=1
-		and type = #{_parameter}
+		and type in (${_parameter})
 		order by date desc
 	</select>
 	

@@ -3,20 +3,24 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
+	<title>复投返利-马上多</title>
 	<meta charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="renderer" content="webkit" />
 	<meta name="viewport" content="width=1200" />
-	<title>复投活动_P2P理财返利_马上多返利网</title>
+	<meta name="keywords" content="马上多,马上多返利网,理财返利平台,P2P返现,P2P返利,P2P羊毛,网贷返利,理财返利,金融返利">
 	<meta name="description"
-		content="马上多返利网是一个理财返利平台,为您提供理财返利、P2P返利、网贷返利、投资返利等全方位高收益理财返利活动" />
+		content="马上多-是一个理财返利平台,为您提供理财返利、P2P返现、P2P返利、网贷返利、投资返利等全方位高收益理财返利活动" />
 	<dif th:replace="/common/common"/>
 </head>
 <body>
 	<dif th:replace="/common/head"/>
 
 	<dl class="site_th w_1200">
-        <dd>当前位置：<a th:href="@{/index}">马上多返利</a><em class="china">&gt;</em>复投活动</dd>
+        <dd>当前位置：
+        <a th:href="@{/index}">马上多</a>
+        <em class="china">&gt;</em>
+        复投返利</dd>
     </dl>
     
 	<div class="w_1200 box_w_b clearfix png_img h_tab">
@@ -63,7 +67,7 @@
 						<div class="brand_logo_t">
 							<img
 								th:src="@{${item.platform_img}}"
-								alt="" width="120" height="50" /> 
+								th:alt="${item.name}" width="120" height="50" /> 
 								<span class="text_box f_text_box round_s" th:if="${item.isFirst == '1'}">首投</span> 
 								<span class="text_box text_box_orange f_text_box round_s" th:if="${item.isFirst == '2'}">复投</span> 
 						</div>
@@ -78,7 +82,9 @@
 						<div class="r_cell">
 							投<b class="font_20">[[${#numbers.formatDecimal(item.bestDeposit, 1, 'COMMA', 0, 'POINT')}]]</b>获得<b class="orange_text font_20">[[${#numbers.formatDecimal(item.bestMoney, 1, 'COMMA', 0, 'POINT')}]]</b>元， 年化<b
 								class="orange_text font_20">≈ [[${#numbers.formatDecimal(item.bestInterest, 1, 'COMMA', 2, 'POINT')}]]%</b>
+								<!--/*-->
 								， 已有<b class="font_20">[[${item.joins}]]</b>人参加活动
+								<!--*/-->
 							<ul class="tags">
                                <li>风控评级：[[${item.risk}]]</li>
                                <li>[[${item.riskDisplay}]]</li>
@@ -88,19 +94,19 @@
 					</div>
 				</a></li>
 			</ul>
-			<dl class="page">
-				<dt class="fl" th:inline="text">共[[${pageInfo.pages}]]页，每页[[${pageInfo.pageSize}]]，共计[[${pageInfo.total}]]</dt>
-			    <dd class="r_cell">
-		            <em th:if="${pageInfo.hasPreviousPage == false}">上一页</em>
-		        	<a th:href="@{/repetition(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasPreviousPage == true}">上一页</a>
-		        	<a th:href="@{/repetition(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasPreviousPage == true}" th:inline="text">[[${pageInfo.prePage}]]</a>
-		        	<b th:inline="text">[[${pageInfo.pageNum}]]</b>
-		        	<a th:href="@{/repetition(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasNextPage == true}" th:inline="text">[[${pageInfo.nextPage}]]</a>
-					<a th:href="@{/repetition(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasNextPage == true}">下一页</a>
-		            <em th:if="${pageInfo.hasNextPage == false}">下一页</em>
-			    </dd>
-			</dl>
 		</div>
+		<dl class="page">
+			<dt class="fl" th:inline="text">共[[${pageInfo.pages}]]页，每页[[${pageInfo.pageSize}]]，共计[[${pageInfo.total}]]</dt>
+		    <dd class="r_cell">
+	            <em th:if="${pageInfo.hasPreviousPage == false}">上一页</em>
+	        	<a th:href="@{/repetition(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasPreviousPage == true}">上一页</a>
+	        	<a th:href="@{/repetition(pageNum=${pageInfo.prePage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasPreviousPage == true}" th:inline="text">[[${pageInfo.prePage}]]</a>
+	        	<b th:inline="text">[[${pageInfo.pageNum}]]</b>
+	        	<a th:href="@{/repetition(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasNextPage == true}" th:inline="text">[[${pageInfo.nextPage}]]</a>
+				<a th:href="@{/repetition(pageNum=${pageInfo.nextPage},pageSize=${pageInfo.pageSize})}" th:if="${pageInfo.hasNextPage == true}">下一页</a>
+	            <em th:if="${pageInfo.hasNextPage == false}">下一页</em>
+		    </dd>
+		</dl>
 	</div>
 
 	<dif th:replace="/common/login_register"/>

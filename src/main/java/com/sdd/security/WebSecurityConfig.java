@@ -33,6 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/repetition").permitAll()
 				.antMatchers("/repetition/*").permitAll()
 				.antMatchers("/activity").permitAll()
+				.antMatchers("/loan").permitAll()
 				.antMatchers("/car").permitAll()
 				.antMatchers("/car/detail").permitAll()
 				.antMatchers("/down").permitAll()

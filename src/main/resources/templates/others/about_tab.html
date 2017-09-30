@@ -1,0 +1,9 @@
+<dl class="about_tab_th round_m_a">
+	<dd>
+		<a th:href="@{/announcement}" th:class="${#httpServletRequest.getRequestURI().contains('announcement') ? 'tab_light' : ''}">官方公告</a>
+		<a th:href="@{/about}" th:class="${#httpServletRequest.getRequestURI().contains('about') ? 'tab_light' : ''}">关于我们</a>
+		<a
+			th:href="@{/help}" th:class="${#httpServletRequest.getRequestURI().contains('help') ? 'tab_light' : ''}">帮助中心</a> <a
+			th:href="@{/agreement}" th:class="${#httpServletRequest.getRequestURI().contains('agreement') ? 'tab_light' : ''}">注册协议</a>
+	</dd>
+</dl>

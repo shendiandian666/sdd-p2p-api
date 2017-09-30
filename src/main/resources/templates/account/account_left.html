@@ -1,0 +1,27 @@
+<div class="fl w_200 l_box">
+	<dl class="l_club">
+		<dt class="round_img">
+			<a th:href="@{/page/auth/index}"> <img
+				th:src="@{/images/icon/user_logo.png}" alt="" width="100"
+				height="100" />
+				<h4>
+					<span th:text="${session.safename}"></span>
+				</h4>
+			</a>
+		</dt>
+		<dd th:class="${#httpServletRequest.getRequestURI().contains('account_order') ? 'active' : ''}">
+			<a th:href="@{/page/auth/account_order}">交单记录</a>
+		</dd>
+		<!--/*-->
+		<dd th:class="${#httpServletRequest.getRequestURI().contains('account_investor') ? 'active' : ''}">
+			<a th:href="@{/page/auth/account_investor}">投资人</a>
+		</dd>
+		<!--*/-->
+		<dd th:class="${#httpServletRequest.getRequestURI().contains('account_withdraw') || #httpServletRequest.getRequestURI().contains('account_record') ? 'active' : ''}">
+			<a th:href="@{/page/auth/account_withdraw}">提现</a>
+		</dd>
+		<dd th:class="${#httpServletRequest.getRequestURI().contains('account_setting') ? 'active' : ''}">
+			<a th:href="@{/page/auth/account_setting}">帐号设置</a>
+		</dd>
+	</dl>
+</div>
